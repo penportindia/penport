@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penport India</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    scroll-behavior: smooth;
+}
+nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 50px; background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;
+}
+nav .logo { font-size: 1.8rem; font-weight: 700; }
+nav ul { display: flex; list-style: none; }
+nav ul li { margin-left: 30px; }
+nav ul li a {
+    text-decoration: none; color: #fff; font-weight: 500; transition: color 0.3s;
+}
+nav ul li a:hover { color: #f4b400; }
+.hero {
+    height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    align-items: center; text-align: center; padding: 0 20px;
+}
+.hero h1 {
+    font-size: 4rem; font-weight: 700;
+    background: linear-gradient(45deg, #f4b400, #ff6f61);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: fadeIn 2s ease forwards;
+}
+.hero p { font-size: 1.2rem; margin: 20px 0; max-width: 600px; animation: fadeIn 2s ease forwards 0.5s; }
+.cta-button {
+    background: linear-gradient(45deg, #f4b400, #ff6f61); color: #fff;
+    padding: 12px 30px; text-decoration: none; border-radius: 50px;
+    font-size: 1.1rem; font-weight: 600; transition: transform 0.3s, box-shadow 0.3s;
+}
+.cta-button:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+
+section {
+    padding: 80px 50px;
+    text-align: center;
+}
+section h2 {
+    font-size: 2.8rem; margin-bottom: 40px; position: relative; display: inline-block;
+}
+section h2::after {
+    content: ''; display: block; width: 60px; height: 4px;
+    background: #f4b400; margin: 10px auto 0; border-radius: 2px;
+}
+
+.section-dark {
+    background: linear-gradient(145deg, #1e1e2f, #2e2e3f);
+    color: #fff;
+}
+.section-glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    margin: 40px auto;
+    max-width: 1200px;
+    padding: 60px 30px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: transform 0.4s, box-shadow 0.4s;
+}
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+.card h3 {
+    margin-bottom: 15px;
+    background: linear-gradient(45deg, #f4b400, #ff6f61);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.contact p { font-size: 1.1rem; margin-bottom: 10px; }
+
+footer {
+    text-align: center; padding: 30px 20px;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); font-size: 0.9rem;
+}
+.social-links {
+    margin-top: 20px;
+}
+.social-links a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+.social-links a:hover { color: #f4b400; }
+
+.author {
+    font-style: italic;
+    color: #f4b400;
+    margin-top: 30px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Penport India</div>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<section class="hero" id="home">
+    <h1>Penport India</h1>
+    <p>We empower your digital journey with cutting-edge solutions and a passion for innovation.</p>
+    <a href="#services" class="cta-button">Get Started</a>
+</section>
+
+<section class="section-dark" id="about">
+    <div class="section-glass">
+        <h2>About Us</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Who We Are</h3>
+                <p>Penport India is a premier digital agency driving innovation and success for businesses worldwide.</p>
+            </div>
+            <div class="card">
+                <h3>Our Mission</h3>
+                <p>To revolutionize digital experiences by combining creativity, strategy, and technology.</p>
+            </div>
+            <div class="card">
+                <h3>Why Choose Us</h3>
+                <p>We deliver exceptional results, building long-term partnerships with every client we serve.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-dark" id="services">
+    <div class="section-glass">
+        <h2>Services</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Web Development</h3>
+                <p>Custom websites & apps that are fast, responsive, and user-friendly.</p>
+            </div>
+            <div class="card">
+                <h3>Digital Marketing</h3>
+                <p>Drive traffic, generate leads, and boost sales with data-driven marketing.</p>
+            </div>
+            <div class="card">
+                <h3>Graphic Designing</h3>
+                <p>Eye-catching designs that elevate your brand identity and engagement.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-dark" id="projects">
+    <div class="section-glass">
+        <h2>Projects</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>School Management Software</h3>
+                <p>An all-in-one School Management Software designed to simplify administrative processes. From attendance tracking to grading and communication, this software provides an integrated solution for schools to manage student data, schedules, and reports efficiently. It enhances collaboration between students, teachers, and parents, ensuring a smooth and organized school environment.</p>
+            </div>
+            <div class="card">
+                <h3>Employee Management Software</h3>
+                <p>Our Employee Management Software streamlines the management of employee data, attendance, payroll, and performance evaluations. Designed to reduce manual work and increase efficiency, it provides real-time access to important HR data, helping organizations improve employee productivity and ensure compliance.</p>
+            </div>
+            <div class="card">
+                <h3>Admission Campaigning Design</h3>
+                <p>A comprehensive Admission Campaigning Design that supports schools in managing their student enrollment process. This design includes automated lead tracking, personalized communication, and easy follow-ups, helping schools to reach a wider audience and streamline the application process for better student engagement and increased enrollments.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-dark contact" id="contact">
+    <div class="section-glass">
+        <h2>Contact Us</h2>
+        <p>Email: penportindia@gmail.com</p>
+        <p>Phone: +91-7004848750</p>
+        <div class="social-links">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    &copy; 2025 Penport India. All rights reserved.
+</footer>
+
+</body>
+</html>
