@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Penport India</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* Added minimal styles for projects section */
+  .projects-section {
+    padding: 3rem 0;
+    background: #f9f9f9;
+  }
+  .projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  .project-card:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  }
+  .project-title {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  .project-description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    color: #555;
+  }
+  .project-link {
+    color: #0a66c2;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .project-link:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-container">
+      <div class="logo">Penport India</div>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#developer" class="nav-link">Developer</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="home" class="hero-section">
+    <div class="container hero-container">
+      <h1>Building Digital Dreams</h1>
+      <p>Transforming ideas into reality with code, creativity, and cutting-edge technology.</p>
+    </div>
+  </section>
+
+  <!-- DEVELOPER SECTION -->
+  <section id="developer" class="developer-section">
+    <div class="container developer-container">
+      
+      <!-- Developer Card -->
+      <div class="dev-card">
+        <img
+          src="https://i.ibb.co/sp57bZN0/Whats-App-Image-2025-08-11-at-2-06-39-PM.jpg"
+          alt="Raushan Singh"
+          class="dev-photo"
+        />
+        <div class="dev-info">
+          <h1>Hello, I'm <span>Raushan Singh</span></h1>
+          <p class="bio">
+            A passionate Full Stack Developer who builds modern and responsive web applications with a focus on user experience.
+          </p>
+
+          <div class="btn-group">
+            <a href="https://wa.me/917004848750?text=Hello%20Raushan%2C%20I%20want%20to%20discuss%20a%20project" 
+               class="btn primary" target="_blank" rel="noopener" aria-label="Get a project via WhatsApp">Get a Project</a>
+
+            <div class="social-icons" role="group" aria-label="Social media links">
+                <a href="https://www.facebook.com/raushan.raj.1650332" aria-label="Facebook" target="_blank" rel="noopener" class="social-icon">
+                    <!-- Facebook SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#1877F2" viewBox="0 0 24 24">
+                    <path d="M22.675 0h-21.35C.594 0 0 .593 0 1.326v21.348C0 23.406.594 24 1.326 24h11.495v-9.294H9.691v-3.622h3.13V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.466.099 2.797.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.313h3.588l-.467 3.622h-3.121V24h6.116c.73 0 1.324-.594 1.324-1.326V1.326C24 .593 23.406 0 22.675 0z"/>
+                    </svg>
+                </a>
+
+                <a href="https://www.instagram.com/insraushan/profilecard/?igsh=aWZ6eDFzNGk1MXRq" aria-label="Instagram" target="_blank" rel="noopener" class="social-icon">
+                    <!-- Instagram SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#E4405F" viewBox="0 0 24 24">
+                    <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5a4.25 4.25 0 00-4.25-4.25h-8.5zm8.5 3.25a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/>
+                    </svg>
+                </a>
+
+                <a href="https://www.youtube.com/channel/your-channel" aria-label="YouTube" target="_blank" rel="noopener" class="social-icon">
+                    <!-- YouTube SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#FF0000" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a2.995 2.995 0 00-2.108-2.116C19.695 3.5 12 3.5 12 3.5s-7.695 0-9.39.57a2.995 2.995 0 00-2.108 2.116A31.06 31.06 0 000 12a31.06 31.06 0 00.502 5.814 2.995 2.995 0 002.108 2.116C4.305 20.5 12 20.5 12 20.5s7.695 0 9.39-.57a2.995 2.995 0 002.108-2.116A31.06 31.06 0 0024 12a31.06 31.06 0 00-.502-5.814zM9.75 15.568V8.432l6.25 3.568-6.25 3.568z"/>
+                    </svg>
+                </a>
+                </div>
+
+          </div>
+
+          <!-- Skills -->
+          <div class="skills" aria-label="Skills">
+            <div class="skill">HTML</div>
+            <div class="skill">CSS</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">React</div>
+            <div class="skill">Node.js</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Me -->
+      <div class="about-me">
+        <h2>About Me</h2>
+        <p>
+          I am dedicated to creating efficient, scalable, and visually appealing web applications.
+          Always eager to learn and implement the latest technologies to deliver top-notch digital experiences.
+        </p>
+
+        <!-- Stats -->
+        <div class="stats" role="list" aria-label="Developer statistics">
+          <div class="stat" role="listitem">
+            <span>15+</span> Projects Completed
+          </div>
+          <div class="stat" role="listitem">
+            <span>100%</span> Client Satisfaction
+          </div>
+          <div class="stat" role="listitem">
+            <span>3+</span> Years Experience
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="projects" class="projects-section">
+        <div class="container projects-container">
+            <h2>My Projects</h2>
+
+            <div class="projects-grid">
+            <div class="project-card" tabindex="0">
+                <h3 class="project-title">School Management System</h3>
+                <p class="project-description">A comprehensive system to manage student records, attendance, and academics efficiently.</p>
+                <a href="#" target="_blank" rel="noopener" class="project-link" aria-label="View School Management Project">View Details</a>
+            </div>
+
+            <div class="project-card" tabindex="0">
+                <h3 class="project-title">Employee Management System</h3>
+                <p class="project-description">Tool to handle employee data, payroll, leave management, and performance tracking.</p>
+                <a href="#" target="_blank" rel="noopener" class="project-link" aria-label="View Employee Management Project">View Details</a>
+            </div>
+
+            <div class="project-card" tabindex="0">
+                <h3 class="project-title">ID Card Solution</h3>
+                <p class="project-description">Custom ID card design and generation system for schools and organizations.</p>
+                <a href="#" target="_blank" rel="noopener" class="project-link" aria-label="View ID Card Solution Project">View Details</a>
+            </div>
+
+            <div class="project-card" tabindex="0">
+                <h3 class="project-title">Admission Campaign Design</h3>
+                <p class="project-description">Creative and effective campaign designs to boost school admissions.</p>
+                <a href="#" target="_blank" rel="noopener" class="project-link" aria-label="View Admission Campaign Design Project">View Details</a>
+            </div>
+            </div>
+        </div>
+        </section>
+   
+    <!-- CONTACT SECTION -->
+        <section id="contact" class="contact-section">
+        <div class="container contact-container">
+            <h2>Contact Me</h2>
+            <p>Feel free to reach out via phone or email.</p>
+            <ul class="contact-info" aria-label="Contact information">
+            <li><strong>Phone:</strong> <a href="tel:+917004848750">7004848750</a></li>
+            <li><strong>Email:</strong> <a href="mailto:penportindia@gmail.com">penportindia@gmail.com</a></li>
+            </ul>
+        </div>
+        </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-container">
+      &copy; 2025 Penport India. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>
