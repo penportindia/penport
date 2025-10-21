@@ -30,11 +30,18 @@
         .logo {display:flex;align-items:center;gap:0.5rem;text-decoration:none;}
         .logo img {height:80px;}
         .logo span {font-size:1.5rem;font-weight:700;color:var(--secondary-color);}
-        .nav-links {display:flex;align-items:center;}
-        .nav-links a {color:var(--text-color-dark);text-decoration:none;font-weight:500;margin-left:1.5rem;transition:color 0.3s ease;position:relative;}
-        .nav-links a:hover {color:var(--primary-color);}
-        .nav-links a::after {content:'';position:absolute;left:0;bottom:-5px;width:0;height:2px;background-color:var(--primary-color);transition:width 0.3s ease;}
-        .nav-links a:hover::after {width:100%;}
+        
+        /* Header Quote Style */
+        .navbar-quote {
+            font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+            font-weight: 500;
+            color: var(--primary-color);
+            letter-spacing: 0.05em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            margin-left: auto; 
+            padding-right: 1.5rem;
+        }
+        
         .menu-toggle {display:none;font-size:2rem;background:none;border:none;cursor:pointer;}
         .hero-image-full {margin-top:2rem;}
         .hero-image-full img {width:100%;height:auto;border-radius:1rem;}
@@ -44,26 +51,136 @@
         .hero-content h1 span {color:var(--primary-color);}
         .hero-content h2 {font-size:clamp(1.2rem,3vw,2rem);font-weight:500;margin-bottom:1rem;color:var(--text-color-dark);}
         .hero-content p {font-size:1.1rem;margin-bottom:2rem;color:#4b5563;}
-        .hero-buttons-container {display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
-        .btn {display:inline-block;padding:0.75rem 1.75rem;background-color:var(--primary-color);color:var(--text-color-light);border-radius:9999px;font-weight:600;text-decoration:none;transition:background-color 0.3s ease,transform 0.3s ease;}
-        .btn:hover {background-color:var(--secondary-color);transform:translateY(-2px);}
-        .projects-card {background-color:var(--bg-color-dark);border-radius:1rem;padding:1rem 1.5rem;display:flex;align-items:center;gap:1rem;box-shadow:0 4px 15px rgba(0,0,0,0.05);transition:transform 0.3s ease,box-shadow 0.3s ease;cursor:pointer;}
-        .projects-card:hover {transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
-        .projects-card h3 {font-size:1.25rem;font-weight:600;color:var(--secondary-color);margin:0;}
-        .projects-card i {font-size:2rem;color:var(--primary-color);}
-        .hero-image-container {display:flex;flex-direction:column;align-items:center;text-align:center;}
-        .hero-image {margin-bottom:1.5rem;}
+        
+        /* Hero buttons container - Now only for the Demo Cards Row */
+        .hero-buttons-container {
+            display: flex;
+            flex-direction: column; 
+            gap: 1.5rem; 
+            align-items: flex-start; 
+            max-width: 100%; 
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb; /* Divider line below Contact Us */
+            margin-top: 1rem;
+        }
+        
+        /* Contact Us Button Style */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.75rem;
+            background-color: #D35400; /* Darker Orange/Red */
+            color: var(--text-color-light);
+            border-radius: 9999px; /* Full pill shape retained for Contact Us */
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease,transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        /* New container for Demo cards to keep them in one horizontal row */
+        .demo-cards-row {
+            display: flex;
+            gap: 1%; /* Gap reduced to make space for 3 cards */
+            flex-wrap: nowrap; /* Ensure they stay in one row on large screens */
+            width: 100%; /* Take full width */
+            justify-content: space-between; /* Space out cards evenly */
+        }
+        
+        /* Demo Project Cards - Width and Padding adjustment */
+        .projects-card {
+            border-radius: 0.5rem; /* Lighter rounding */
+            padding: 0.8rem 1rem; /* Height reduced by lowering vertical padding */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease,box-shadow 0.3s ease;
+            cursor: pointer;
+            flex-shrink: 0; 
+            color: var(--text-color-light); /* Text color set to light for contrast on colored backgrounds */
+            font-size: 1rem; 
+            font-weight: 600;
+            
+            /* Equal width for all three cards */
+            width: 32%; 
+            text-align: center; /* Center content */
+            display: flex; /* Flexbox for centering content inside card */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .projects-card:hover {transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+        .projects-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: inherit; /* Inherit color from projects-card (which is var(--text-color-light)) */
+            margin: 0;
+            line-height: 1.2;
+        }
+        .projects-card i {
+            font-size: 1.5rem; 
+            color: inherit; /* Inherit color from projects-card (which is var(--text-color-light)) */
+            margin-bottom: 0.25rem;
+        }
+
+        /* Hero Image Container - Add text styling */
+        .hero-image-container {
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            text-align:center;
+        }
+        .hero-image {margin-bottom:1rem;} /* Margin adjusted for new text */
         .hero-image img {width:250px;height:250px;border-radius:50%;object-fit:cover;box-shadow:0 10px 20px rgba(0,0,0,0.1);}
-        .social-icons {display:flex;gap:1.5rem;justify-content:center;}
-        .social-icons a {font-size:2rem;color:var(--text-color-dark);transition:color 0.3s ease,transform 0.3s ease;}
-        .social-icons a:hover {color:var(--primary-color);transform:translateY(-2px);}
+
+        /* New style for "Founder Developer" text */
+        .founder-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            margin-top: 0.5rem; /* Space between image and text */
+            margin-bottom: 1rem; /* Space between text and icons */
+        }
+
+        /* Social Icons - Modern & Colorful */
+        .social-icons {
+            display:flex;
+            gap:1.5rem;
+            justify-content:center;
+            margin-top: 0; /* Adjusted margin */
+        }
+        .social-icons a {
+            font-size:2rem;
+            color:var(--text-color-dark);
+            transition:transform 0.3s ease, filter 0.3s ease; /* Added filter for hover effect */
+        }
+        /* Individual Social Media Brand Colors */
+        .social-icons a.facebook { color: #3b5998; } /* Facebook Blue */
+        .social-icons a.instagram { 
+            background: radial-gradient(at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.1rem; /* Slightly larger for gradient visibility */
+        } /* Instagram Gradient */
+        .social-icons a.youtube { color: #FF0000; } /* YouTube Red */
+
+        .social-icons a:hover {
+            transform:translateY(-2px);
+            filter: brightness(1.1); /* Slightly brighter on hover */
+        }
+
         .projects {background-color:var(--bg-color-dark);padding:4rem 0;border-top:1px solid #e5e7eb;}
         .section-title {text-align:center;font-size:clamp(2rem,4vw,2.5rem);font-weight:700;color:var(--secondary-color);margin-bottom:3rem;}
         .projects-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
-        .project-card {background-color:var(--bg-color-dark);border-radius:1rem;padding:2rem;box-shadow:0 4px 15px rgba(0,0,0,0.05);transition:transform 0.3s ease,box-shadow 0.3s ease;text-align:center;cursor:pointer;}
-        .project-card:hover {transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
-        .project-card i {font-size:3rem;color:var(--primary-color);margin-bottom:1rem;}
-        .project-card h3 {font-size:1.25rem;color:var(--secondary-color);margin-bottom:0.5rem;font-weight:600;}
+        
+        /* Service Cards (project-card) base styling */
+        .project-card {border-radius:1rem;padding:2rem;box-shadow:0 4px 15px rgba(0,0,0,0.15);transition:transform 0.3s ease,box-shadow 0.3s ease;text-align:center;cursor:pointer; color: var(--text-color-light);}
+        .project-card:hover {transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+        .project-card i {font-size:3rem; color: var(--text-color-light); margin-bottom:1rem;}
+        .project-card h3 {font-size:1.25rem;color:var(--text-color-light);margin-bottom:0.5rem;font-weight:600;}
+        .project-card p {color: rgba(255, 255, 255, 0.8);}
+        
         .contact {background-color:var(--bg-color-light);padding:4rem 0;border-top:1px solid #e5e7eb;}
         .contact-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
         .contact-card {background-color:var(--bg-color-dark);border-radius:1rem;padding:2rem;box-shadow:0 4px 15px rgba(0,0,0,0.05);transition:transform 0.3s ease,box-shadow 0.3s ease;display:flex;flex-direction:column;align-items:center;text-align:center;}
@@ -76,9 +193,21 @@
         @media (max-width:768px){
             .hero{flex-direction:column;text-align:center;gap:2rem;}
             .hero-image-container{order:-1;}
-            .nav-links{display:none;flex-direction:column;background:var(--bg-color-light);position:absolute;top:100%;right:0;width:200px;box-shadow:0 4px 15px rgba(0,0,0,0.1);}
-            .nav-links.active{display:flex;}
-            .menu-toggle{display:block;}
+            .hero-buttons-container { align-items: center; } 
+            .demo-cards-row { justify-content: center; } 
+            .projects-card {
+                width: 48%; /* 2 columns on mobile */
+                margin-bottom: 10px;
+                padding: 0.8rem 0.5rem;
+            }
+            .navbar-quote { display: none; }
+            .btn { margin-bottom: 0 !important; } /* Reset inline style on mobile to align correctly */
+            
+            .hero-image { margin-bottom:0.5rem; }
+            .founder-text { font-size: 0.9rem; margin-top: 0.25rem; margin-bottom: 0.75rem; }
+            .social-icons { gap: 1rem; }
+            .social-icons a { font-size: 1.8rem; }
+            .social-icons a.instagram { font-size: 1.9rem; }
         }
         .modal {display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgba(0,0,0,0.8);backdrop-filter:blur(5px);}
         .modal-content {background-color:var(--bg-color-light);margin:10% auto;padding:2rem;border-radius:1rem;max-width:800px;box-shadow:0 5px 15px rgba(0,0,0,0.3);position:relative;}
@@ -97,11 +226,7 @@
                 <img src="https://i.ibb.co/7thpHMc1/Penport-logo-01.png" alt="PenportIndia Logo" loading="lazy" />
                 <span>PenportIndia</span>
             </a>
-            <button class="menu-toggle" aria-label="Toggle Menu"><i class="bi bi-list"></i></button>
-            <div class="nav-links">
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </div>
+            <div class="navbar-quote">Simplifying Complexity Through Code</div>
         </nav>
     </div>
 </header>
@@ -115,21 +240,36 @@
                 <h1 id="hero-title">Hello, I'm <span>Raushan</span></h1>
                 <h2>Web Developer & Graphic Designer</h2>
                 <p>I am a Full-Stack Web Developer with over 4 years of extensive experience. My expertise is in creating & designing websites, Mobile Apps, and Desktop Applications.</p>
+                
+                <a href="https://wa.me/917004848750" target="_blank" class="btn" rel="noopener noreferrer" style="margin-bottom: 1rem;">Contact Us</a>
+                
                 <div class="hero-buttons-container">
-                    <a href="https://wa.me/917004848750" target="_blank" class="btn" rel="noopener noreferrer">Contact Us</a>
-                    <div class="projects-card open-demo" data-project-id="0" role="button" tabindex="0">
-                        <i class="bi bi-folder-fill"></i><div><h3>Demo</h3></div>
+                    
+                    <div class="demo-cards-row">
+                        <div class="projects-card open-demo" data-project-id="3" role="button" tabindex="0" style="background-color: #FFC300;">
+                            <i class="bi bi-person-badge"></i><div><h3>ID Card Sol.</h3></div>
+                        </div>
+                        
+                        <div class="projects-card open-demo" data-project-id="0" role="button" tabindex="0" style="background-color: #3498DB;">
+                            <i class="bi bi-person-workspace"></i><div><h3>School ERP</h3></div>
+                        </div>
+                        
+                        <div class="projects-card open-demo" data-project-id="4" role="button" tabindex="0" style="background-color: #E74C3C;">
+                            <i class="bi bi-people-fill"></i><div><h3>HR Mgt.</h3></div>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
             <div class="hero-image-container">
                 <div class="hero-image">
                     <img src="https://i.ibb.co/jkSskD73/IMG-20250924-123033.jpg" alt="Raushan's profile picture" loading="lazy"/>
                 </div>
+                <div class="founder-text">Founder Developer</div> 
                 <div class="social-icons" aria-label="Social media links">
-                    <a href="https://www.facebook.com/raushan.raj.1650332" target="_blank" aria-label="Facebook" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
-                    <a href="https://www.instagram.com/insraushan/profilecard/?igsh=aWZ6eDFzNGk1MXRq" target="_blank" aria-label="Instagram" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a>
-                    <a href="https://youtube.com/yourchannel" target="_blank" aria-label="YouTube" rel="noopener noreferrer"><i class="bi bi-youtube"></i></a>
+                    <a href="https://www.facebook.com/raushan.raj.1650332" target="_blank" aria-label="Facebook" rel="noopener noreferrer" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://www.instagram.com/insraushan/profilecard/?igsh=aWZ6eDFzNGk1MXRq" target="_blank" aria-label="Instagram" rel="noopener noreferrer" class="instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://youtube.com/yourchannel" target="_blank" aria-label="YouTube" rel="noopener noreferrer" class="youtube"><i class="bi bi-youtube"></i></a>
                 </div>
             </div>
         </section>
@@ -137,34 +277,40 @@
 </main>
 <section class="projects" id="projects" aria-labelledby="projects-title">
     <div class="container">
-        <h2 class="section-title" id="projects-title">My Projects</h2>
+        <h2 class="section-title" id="projects-title">Our Services</h2>
         <div class="projects-grid">
-            <article class="project-card open-demo" data-project-id="0" tabindex="0" role="button">
+            
+            <article class="project-card" tabindex="0" role="button" style="background-color: #FF9800;">
                 <i class="bi bi-globe"></i>
                 <h3>Web Application Development</h3>
                 <p>Building responsive, fast, and user-friendly web apps using modern frameworks and technologies.</p>
             </article>
-            <article class="project-card open-demo" data-project-id="1" tabindex="0" role="button">
+            
+            <article class="project-card open-demo" data-project-id="1" tabindex="0" role="button" style="background-color: #9C27B0;">
                 <i class="bi bi-megaphone"></i>
                 <h3>Campaign Design</h3>
                 <p>Creative and impactful campaign graphics and marketing materials tailored to your brand.</p>
             </article>
-            <article class="project-card open-demo" data-project-id="2" tabindex="0" role="button">
+            
+            <article class="project-card" tabindex="0" role="button" style="background-color: #607D8B;">
                 <i class="bi bi-laptop"></i>
                 <h3>Software Development</h3>
                 <p>Custom software solutions for desktop and mobile platforms, focusing on performance.</p>
             </article>
-            <article class="project-card" tabindex="0">
+            
+            <article class="project-card" tabindex="0" style="background-color: #00BCD4;">
                 <i class="bi bi-vector-pen"></i>
                 <h3>UI/UX Design</h3>
                 <p>Designing intuitive interfaces and user experiences for better engagement.</p>
             </article>
-            <article class="project-card" tabindex="0">
+            
+            <article class="project-card" tabindex="0" style="background-color: #F44336;">
                 <i class="bi bi-palette"></i>
                 <h3>Graphic Design</h3>
                 <p>Professional logo design, branding, and visual identity creation.</p>
             </article>
-            <article class="project-card" tabindex="0">
+            
+            <article class="project-card" tabindex="0" style="background-color: #E91E63;">
                 <i class="bi bi-phone"></i>
                 <h3>Mobile App Development</h3>
                 <p>Developing sleek mobile applications for Android and iOS platforms.</p>
@@ -212,16 +358,61 @@ const modal=document.getElementById('demoModal');
 const closeBtn=document.querySelector('.close-btn');
 const videoPlayer=document.getElementById('videoPlayer');
 const videoTitle=document.getElementById('video-title');
-const menuToggle=document.querySelector('.menu-toggle');
-const navLinks=document.querySelector('.nav-links');
+
 let lastFocusedElement;
-menuToggle.addEventListener('click',()=>{navLinks.classList.toggle('active');});
-const projectDemos=[{title:"School ERP System",videoUrl:"https://www.youtube.com/embed/4O_zb5-0Q-o"},
-{title:"Campaign Design",videoUrl:"https://www.youtube.com/embed/g8d15z4o5yA"},
-{title:"Custom Software Solution",videoUrl:"https://www.youtube.com/embed/xJ6vRzU_4dE"}];
-function openModal(projectIndex){lastFocusedElement=document.activeElement;const project=projectDemos[projectIndex];if(project){videoPlayer.src=project.videoUrl+"?autoplay=1";videoTitle.textContent=project.title;modal.style.display="block";modal.setAttribute("aria-hidden","false");const focusable=modal.querySelectorAll("button,[href],input,select,textarea,[tabindex]:not([tabindex='-1'])");if(focusable.length){focusable[0].focus();}}}
-function closeModal(){modal.style.display="none";modal.setAttribute("aria-hidden","true");videoPlayer.src="";if(lastFocusedElement)lastFocusedElement.focus();}
-demoTriggers.forEach(trigger=>{trigger.addEventListener('click',()=>{const id=trigger.getAttribute('data-project-id');openModal(id);});trigger.addEventListener('keydown',e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();const id=trigger.getAttribute('data-project-id');openModal(id);}});});
+
+
+const projectDemos=[
+    // 0: School ERP Management (Bright Blue Card)
+    {title:"School ERP Management Demo",videoUrl:"https://www.youtube.com/embed/g8d15z4o5yA"}, 
+    
+    // 1: Campaign Design (Services - Purple Card)
+    {title:"Campaign Design",videoUrl:"https://www.youtube.com/embed/g8d15z4o5yA"},
+    
+    // 2: Custom Software Solution (पुराना, इस्तेमाल नहीं)
+    {title:"Custom Software Solution",videoUrl:"https://www.youtube.com/embed/xJ6vRzU_4dE"},
+    
+    // 3: ID Card Solution (Golden Yellow Card)
+    {title:"ID Card Solution Demo",videoUrl:"https://drive.google.com/file/d/1rqNv5hwVHLTSgbDALQnN7UOfFu1-J7mC/preview"}, 
+    
+    // 4: HR Management (Bright Red Card)
+    {title:"HR Management Demo",videoUrl:"https://www.youtube.com/embed/Lw99S63YfJk"} 
+];
+
+function openModal(projectIndex){
+    lastFocusedElement=document.activeElement;
+    const project=projectDemos[projectIndex];
+    if(project){
+        videoPlayer.src=project.videoUrl+"?autoplay=1";
+        videoTitle.textContent=project.title;
+        modal.style.display="block";
+        modal.setAttribute("aria-hidden","false");
+        const focusable=modal.querySelectorAll("button,[href],input,select,textarea,[tabindex]:not([tabindex='-1'])");
+        if(focusable.length){focusable[0].focus();}
+    }
+}
+
+function closeModal(){
+    modal.style.display="none";
+    modal.setAttribute("aria-hidden","true");
+    videoPlayer.src="";
+    if(lastFocusedElement)lastFocusedElement.focus();
+}
+
+demoTriggers.forEach(trigger=>{
+    trigger.addEventListener('click',()=>{
+        const id=trigger.getAttribute('data-project-id');
+        openModal(id);
+    });
+    trigger.addEventListener('keydown',e=>{
+        if(e.key==="Enter"||e.key===" "){
+            e.preventDefault();
+            const id=trigger.getAttribute('data-project-id');
+            openModal(id);
+        }
+    });
+});
+
 closeBtn.addEventListener('click',closeModal);
 window.addEventListener('click',e=>{if(e.target===modal)closeModal();});
 window.addEventListener('keydown',e=>{if(e.key==="Escape"&&modal.style.display==="block")closeModal();});
