@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>TWFA - Next Gen ERP</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #3730A3;
+            --bg-main: #F8FAFC;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            scrollbar-width: none;
+        }
+        ::-webkit-scrollbar { display: none; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- LOGIN UI --- */
+        .login-hero {
+            background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+            height: 45vh;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-box {
+            background: white;
+            padding: 20px;
+            border-radius: 35px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            z-index: 10;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .glass-input-box {
+            background: #F1F5F9;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+        .glass-input-box:focus-within {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.1);
+        }
+
+        /* --- DASHBOARD UI --- */
+        .app-header {
+            background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+            padding: 60px 25px 80px;
+            border-bottom-left-radius: 45px;
+            border-bottom-right-radius: 45px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 0 20px;
+            margin-top: -45px;
+        }
+
+        .modern-card {
+            background: white;
+            padding: 18px 10px;
+            border-radius: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #F1F5F9;
+            transition: 0.2s;
+        }
+        .modern-card:active { transform: scale(0.92); background: #F8FAFC; }
+
+        .icon-circle {
+            width: 54px;
+            height: 54px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.08);
+        }
+
+        /* --- NAV DOCK --- */
+        .bottom-nav-dock {
+            position: fixed;
+            bottom: 25px;
+            left: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 12px 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .nav-tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94A3B8;
+            font-size: 10px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .nav-tab.active { color: white; }
+        .nav-tab.active i {
+            background: var(--primary);
+            padding: 10px;
+            border-radius: 18px;
+            transform: translateY(-8px);
+            box-shadow: 0 8px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        /* LOADER */
+        .loader-overlay {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-loader" class="loader-overlay hidden">
+        <div class="w-12 h-12 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin"></div>
+        <p class="mt-4 font-black text-slate-400 text-[10px] tracking-[0.3em] uppercase">Processing</p>
+    </div>
+
+    <div id="login-portal">
+        <div class="login-hero">
+            <div class="logo-box">
+                <img src="https://i.ibb.co/9kGbqWb7/Logo.png" class="w-24 h-24 object-contain" alt="Logo">
+            </div>
+            <div class="text-center mt-6">
+                <h1 class="text-white text-3xl font-extrabold tracking-tight">THE WINGS</h1>
+                <p class="text-indigo-200 text-[11px] font-bold tracking-[0.4em] uppercase opacity-80">Foundation Academy</p>
+            </div>
+        </div>
+
+        <div class="px-8 -mt-10">
+            <div class="bg-white rounded-[40px] p-8 shadow-xl">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-black text-slate-800"></h2>
+                    <p class="text-slate-400 text-sm font-medium"></p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="glass-input-box flex items-center px-5 py-4 rounded-2xl">
+                        <i data-lucide="phone" class="w-5 h-5 text-indigo-500 mr-4"></i>
+                        <input type="tel" id="login-phone" placeholder="Mobile Number" class="bg-transparent w-full outline-none font-bold text-slate-700">
+                    </div>
+
+                    <div class="glass-input-box flex items-center px-5 py-4 rounded-2xl relative">
+                        <i data-lucide="lock" class="w-5 h-5 text-indigo-500 mr-4"></i>
+                        <input type="password" id="login-pass" placeholder="Security Key" class="bg-transparent w-full outline-none font-bold text-slate-700">
+                        <button onclick="togglePassword()" class="text-slate-300">
+                            <i data-lucide="eye" id="eye-icon" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <button onclick="Auth.handleLogin()" class="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black shadow-lg shadow-indigo-200 active:scale-95 transition-all">
+                        LOGIN NOW
+                    </button>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <a href="#" class="text-xs font-bold text-indigo-500 uppercase tracking-widest"></a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest">Developed by Penport India</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="app-shell" class="hidden">
+        <div class="app-header">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <button id="back-btn" onclick="App.navigate('home')" class="hidden bg-white/20 p-3 rounded-2xl backdrop-blur-md">
+                        <i data-lucide="arrow-left" class="w-6 h-6 text-white"></i>
+                    </button>
+                    <div>
+                        <p id="sub-title" class="text-[10px] font-black text-indigo-200 uppercase tracking-widest">BRANCH</p>
+                        <h2 id="welcome-msg" class="text-2xl font-bold text-white tracking-tight">Hi, <span id="user-display-name">User</span></h2>
+                    </div>
+                </div>
+                <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/10">
+                    <i data-lucide="bell-ring" class="w-6 h-6 text-white"></i>
+                </div>
+            </div>
+
+            <div id="role-tag" class="mt-6 inline-flex items-center px-4 py-2 bg-white/10 border border-white/10 rounded-full">
+                <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                <span id="user-display-role" class="text-[10px] font-black text-white uppercase tracking-widest">ROLE</span>
+            </div>
+            <h2 id="page-title" class="hidden text-2xl font-black text-white mt-4 uppercase">Module</h2>
+        </div>
+
+        <div id="main-content" class="relative z-20 pb-32"></div>
+
+        <div class="bottom-nav-dock">
+            <div onclick="App.navigate('home')" class="nav-tab active" id="btn-home">
+                <i data-lucide="layout-grid" class="w-6 h-6 mb-1"></i><span>Home</span>
+            </div>
+            <div onclick="App.loadModule('homework')" class="nav-tab" id="btn-hw">
+                <i data-lucide="book-open" class="w-6 h-6 mb-1"></i><span>Tasks</span>
+            </div>
+            <div onclick="App.loadModule('notice')" class="nav-tab" id="btn-notif">
+                <i data-lucide="megaphone" class="w-6 h-6 mb-1"></i><span>Alerts</span>
+            </div>
+            <div onclick="App.navigate('profile')" class="nav-tab" id="btn-profile">
+                <i data-lucide="user-circle" class="w-6 h-6 mb-1"></i><span>Profile</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. FIREBASE (ORIGINAL) ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDCGsnpr6SVf7rbSnRi2ipt5suZD99B2u4",
+            databaseURL: "https://student-database-1882d-default-rtdb.firebaseio.com",
+            projectId: "student-database-1882d"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // --- 2. APP CORE (ALL FEATURES RESTORED) ---
+        const App = {
+            state: { user: null, role: null, phone: null, siblings: [], branchName: 'MAIN' },
+            
+            roleMap: {
+                'TEACHER': [
+                    { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/teacher/attendance.js' },
+                    { id: 'att_view', label: 'History', icon: 'calendar-range', color: 'bg-emerald-500', file: 'modules/teacher/att_view.js' },
+                    { id: 'routine', label: 'Routine', icon: 'clock-4', color: 'bg-violet-600', file: 'modules/teacher/routine.js' },
+                    { id: 'syllabus', label: 'Syllabus', icon: 'book-text', color: 'bg-rose-500', file: 'modules/teacher/syllabus.js' },
+                    { id: 'exam', label: 'Exams', icon: 'clipboard-list', color: 'bg-sky-500', file: 'modules/teacher/exam.js' },
+                    { id: 'homework', label: 'Homework', icon: 'edit-2', color: 'bg-amber-500', file: 'modules/teacher/homework.js' },
+                    { id: 'notice', label: 'Post Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/teacher/notice.js' },
+                    { id: 'payout', label: 'Salary', icon: 'banknote', color: 'bg-slate-700', file: 'modules/teacher/payout.js' }
+                ],
+                'STUDENT': [
+                    { id: 'att', label: 'Attendance', icon: 'calendar-check-2', color: 'bg-indigo-600', file: 'modules/student/attendance.js' },
+                    { id: 'fees', label: 'Fee Card', icon: 'wallet-2', color: 'bg-emerald-600', file: 'modules/student/fees.js' },
+                    { id: 'routine', label: 'Time Table', icon: 'timer', color: 'bg-violet-600', file: 'modules/student/routine.js' },
+                    { id: 'syllabus', label: 'Syllabus', icon: 'library-big', color: 'bg-red-500', file: 'modules/student/syllabus.js' },
+                    { id: 'exam', label: 'Results', icon: 'graduation-cap', color: 'bg-blue-600', file: 'modules/student/exam.js' },
+                    { id: 'homework', label: 'Homework', icon: 'pen-line', color: 'bg-orange-500', file: 'modules/student/homework.js' },
+                    { id: 'notice', label: 'Notices', icon: 'bell-ring', color: 'bg-sky-500', file: 'modules/student/notice.js' }
+                ],
+                'PRINCIPAL': [
+                    { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/principal/attendance.js' },
+                    { id: 'att_view', label: 'Overview', icon: 'bar-chart-3', color: 'bg-emerald-500', file: 'modules/principal/att_view.js' },
+                    { id: 'routine', label: 'Routine', icon: 'clock', color: 'bg-violet-600', file: 'modules/principal/routine.js' },
+                    { id: 'syllabus', label: 'Curriculum', icon: 'book', color: 'bg-rose-500', file: 'modules/principal/syllabus.js' },
+                    { id: 'exam', label: 'Exam Ctrl', icon: 'files', color: 'bg-sky-500', file: 'modules/principal/exam.js' },
+                    { id: 'homework', label: 'Homework', icon: 'edit-3', color: 'bg-amber-500', file: 'modules/principal/homework.js' },
+                    { id: 'notice', label: 'Broadcaster', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/principal/notice.js' },
+                    { id: 'payout', label: 'Accounts', icon: 'landmark', color: 'bg-slate-700', file: 'modules/principal/payout.js' }
+                ],
+                'COORDINATOR': [
+                    { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/coordinator/attendance.js' },
+                    { id: 'att_view', label: 'Logs', icon: 'calendar-days', color: 'bg-emerald-500', file: 'modules/coordinator/att_view.js' },
+                    { id: 'routine', label: 'Routine', icon: 'clock', color: 'bg-violet-600', file: 'modules/coordinator/routine.js' },
+                    { id: 'syllabus', label: 'Syllabus', icon: 'book-open', color: 'bg-rose-500', file: 'modules/coordinator/syllabus.js' },
+                    { id: 'exam', label: 'Exams', icon: 'file-spreadsheet', color: 'bg-sky-500', file: 'modules/coordinator/exam.js' },
+                    { id: 'homework', label: 'Homework', icon: 'edit-3', color: 'bg-amber-500', file: 'modules/coordinator/homework.js' },
+                    { id: 'notice', label: 'Notices', icon: 'bell', color: 'bg-orange-500', file: 'modules/coordinator/notice.js' },
+                    { id: 'payout', label: 'Payout', icon: 'banknote', color: 'bg-slate-700', file: 'modules/coordinator/payout.js' }
+                ]
+            },
+
+            async fetchBranchName(branchId) {
+                if(!branchId) return "Main Campus";
+                try {
+                    const snap = await db.ref(`foundation/branches/${branchId}/name`).once('value');
+                    return snap.val() || branchId;
+                } catch(e) { return branchId; }
+            },
+
+            navigate(tab) {
+                document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+                document.getElementById('back-btn').classList.add('hidden');
+                document.getElementById('welcome-msg').classList.remove('hidden');
+                document.getElementById('role-tag').classList.remove('hidden');
+                document.getElementById('page-title').classList.add('hidden');
+                
+                if(tab === 'home') {
+                    document.getElementById('btn-home').classList.add('active');
+                    this.renderDashboard();
+                } else if(tab === 'profile') {
+                    document.getElementById('btn-profile').classList.add('active');
+                    this.renderProfile();
+                }
+                lucide.createIcons();
+            },
+
+            renderDashboard() {
+                const menu = this.roleMap[this.state.role];
+                let html = `<div class="dashboard-grid pb-10">`;
+                menu.forEach(m => {
+                    html += `
+                    <div onclick="App.loadModule('${m.id}')" class="modern-card">
+                        <div class="icon-circle ${m.color}">
+                            <i data-lucide="${m.icon}" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <span class="text-[9px] font-black text-slate-500 uppercase text-center leading-tight tracking-tight">${m.label}</span>
+                    </div>`;
+                });
+                html += `</div>`;
+                document.getElementById('main-content').innerHTML = html;
+                lucide.createIcons();
+            },
+
+            async loadModule(moduleId) {
+                const module = this.roleMap[this.state.role].find(m => m.id === moduleId);
+                if (!module) return;
+
+                document.getElementById('welcome-msg').classList.add('hidden');
+                document.getElementById('role-tag').classList.add('hidden');
+                document.getElementById('page-title').classList.remove('hidden');
+                document.getElementById('page-title').innerText = module.label;
+                document.getElementById('back-btn').classList.remove('hidden');
+
+                document.getElementById('main-content').innerHTML = `
+                    <div class="mx-6 mt-10 bg-white rounded-[35px] p-12 flex flex-col items-center justify-center text-center shadow-lg">
+                        <div class="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+                        <p class="mt-4 text-slate-400 font-black text-[10px] tracking-widest uppercase">Opening ${module.label}...</p>
+                    </div>`;
+
+                const oldScript = document.getElementById('module-script');
+                if (oldScript) oldScript.remove();
+                const script = document.createElement('script');
+                script.id = 'module-script';
+                script.src = `${module.file}?v=${new Date().getTime()}`;
+                script.onload = () => {
+                    const func = `render_${moduleId}`;
+                    if (typeof window[func] === 'function') window[func](this.state.user);
+                };
+                document.body.appendChild(script);
+            },
+
+            renderProfile() {
+                const u = this.state.user;
+                const isStudent = this.state.role === 'STUDENT';
+                const name = isStudent ? u.profile?.studentName : u.name;
+                const subTitle = isStudent 
+                    ? `Class ${u.academic?.class || '-'} (${u.academic?.section || '-'})` 
+                    : (u.designation || 'Staff Member');
+
+                let profileHTML = `
+                    <div class="px-6 -mt-12 space-y-6 pb-20">
+                        <div class="bg-white rounded-[45px] p-8 flex flex-col items-center text-center shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white/50 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full -mr-16 -mt-16 opacity-50"></div>
+                            
+                            <div class="w-28 h-28 bg-gradient-to-br from-indigo-600 to-violet-700 rounded-[40px] flex items-center justify-center text-4xl font-black text-white shadow-2xl mb-6 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                                ${(name || '?').charAt(0).toUpperCase()}
+                            </div>
+                            
+                            <h3 class="text-2xl font-black text-slate-800 tracking-tight leading-tight">${name || 'User'}</h3>
+                            <div class="mt-2 px-4 py-1.5 bg-indigo-50 rounded-full">
+                                <p class="text-[10px] font-black text-indigo-600 uppercase tracking-[2px]">
+                                    ${subTitle}
+                                </p>
+                            </div>
+                        </div>
+
+                        ${isStudent && this.state.siblings?.length > 1 ? `
+                            <div onclick="App.showAccountSwitcher()" class="group relative bg-gradient-to-r from-slate-900 to-slate-800 p-6 rounded-[35px] shadow-xl active:scale-95 transition-all cursor-pointer overflow-hidden">
+                                <div class="absolute right-[-10%] top-[-20%] w-40 h-40 bg-white/5 rounded-full"></div>
+                                <div class="flex items-center justify-between relative z-10">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md">
+                                            <i data-lucide="users" class="w-6 h-6 text-indigo-400"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white font-bold text-sm">Switch Student</h4>
+                                            <p class="text-slate-400 text-[10px] uppercase font-bold tracking-tighter">${this.state.siblings.length} Profiles Available</p>
+                                        </div>
+                                    </div>
+                                    <div class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center group-hover:bg-indigo-600 transition-colors">
+                                        <i data-lucide="chevron-right" class="w-5 h-5 text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <div class="bg-white rounded-[40px] p-8 shadow-sm border border-slate-50">
+                            <div class="flex items-center gap-3 mb-8">
+                                <div class="w-1 h-6 bg-indigo-600 rounded-full"></div>
+                                <h4 class="text-xs font-black text-slate-800 uppercase tracking-widest">
+                                    Personal Dossier
+                                </h4>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 gap-8">
+                                ${isStudent ? `
+                                    ${this.row('Father\'s Name', u.parents?.father?.name, 'user')}
+                                    ${this.row('Mother\'s Name', u.parents?.mother?.name, 'heart')}
+                                    ${this.row('Date of Birth', u.profile?.dob, 'calendar')}
+                                    ${this.row('Contact Number', u.contact?.phone1, 'phone')}
+                                    ${this.row('Folio / PEN ID', `${u.profile?.folio} / ${u.govtMapping?.udise?.penNo || 'NA'}`, 'fingerprint')}
+                                    ${this.row('Residential Address', u.contact?.address, 'map-pin')}
+                                ` : `
+                                    ${this.row('Employee ID', u.empId, 'hash')}
+                                    ${this.row('Official Designation', u.designation, 'briefcase')}
+                                    ${this.row('Mobile Number', u.phone, 'phone')}
+                                    ${this.row('Aadhaar Number', u.aadhaar, 'fingerprint')}
+                                    ${this.row('Home Address', u.address, 'map-pin')}
+                                `}
+                            </div>
+                        </div>
+
+                        <button onclick="location.reload()" class="w-full bg-rose-50 text-rose-600 font-black py-6 rounded-[30px] flex items-center justify-center gap-3 hover:bg-rose-100 active:scale-95 transition-all">
+                            <i data-lucide="log-out" class="w-5 h-5"></i> SIGN OUT
+                        </button>
+                    </div>
+                `;
+
+                document.getElementById('main-content').innerHTML = profileHTML;
+                lucide.createIcons();
+            },
+
+            // Helper Row with Icons
+            row(label, value, icon) {
+                return `
+                    <div class="flex items-start gap-4">
+                        <div class="mt-1 w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center">
+                            <i data-lucide="${icon || 'circle'}" class="w-4 h-4 text-slate-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-[9px] text-slate-400 font-black uppercase tracking-[1px] mb-0.5">${label}</p>
+                            <p class="text-[14px] font-bold text-slate-700">${value || 'Not Provided'}</p>
+                        </div>
+                    </div>
+                `;
+            },
+
+            // Advance Account Switcher UI
+            async showAccountSwitcher() {
+                const siblingsHTML = this.state.siblings.map(s => `
+                    <div onclick="App.confirmSwitch('${s.profile.folio}')" class="flex items-center justify-between p-5 bg-slate-50 rounded-3xl mb-3 border-2 border-transparent active:border-indigo-600 active:bg-indigo-50 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white font-black">
+                                ${s.profile.studentName.charAt(0)}
+                            </div>
+                            <div class="text-left">
+                                <p class="font-black text-slate-800 text-sm">${s.profile.studentName}</p>
+                                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-tighter">Folio: ${s.profile.folio}</p>
+                            </div>
+                        </div>
+                        <div class="w-6 h-6 rounded-full border-2 border-slate-200"></div>
+                    </div>
+                `).join('');
+
+                Swal.fire({
+                    title: '<span class="text-xl font-black text-slate-800">Switch Account</span>',
+                    html: `<div class="mt-4 max-h-[400px] overflow-y-auto pr-2">${siblingsHTML}</div>`,
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    customClass: {
+                        popup: 'rounded-[45px] px-2 pb-8',
+                    }
+                });
+            },
+
+            async confirmSwitch(folio) {
+                Swal.close();
+                const newStudent = this.state.siblings.find(s => s.profile.folio == folio);
+                if(newStudent) {
+                    this.state.user = newStudent;
+                    if(this.fetchBranchName) this.state.branchName = await this.fetchBranchName(newStudent.academic.branch);
+                    
+                    // Update Dashboard Elements
+                    document.getElementById('user-display-name').innerText = newStudent.profile.studentName;
+                    document.getElementById('sub-title').innerText = this.state.branchName;
+                    
+                    // Success Animation
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Profile Switched',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    
+                    this.navigate('home');
+                }
+            }
+        };
+
+        // --- 3. AUTH (ALL ORIGINAL LOGIC) ---
+        const Auth = {
+            async handleLogin() {
+                const phone = document.getElementById('login-phone').value.trim();
+                const pass = document.getElementById('login-pass').value.trim();
+                
+                if (!phone || !pass) return Swal.fire('Error', 'Fields cannot be empty', 'warning');
+
+                document.getElementById('app-loader').classList.remove('hidden');
+
+                try {
+                    let user = null; let role = null;
+                    const eSnap = await db.ref('employees').orderByChild('phone').equalTo(phone).once('value');
+                    
+                    if (eSnap.exists()) {
+                        eSnap.forEach(c => { 
+                            let d = c.val(); 
+                            if (d.password == pass || d.password == btoa(pass)) { 
+                                user = d; 
+                                const desig = (d.designation || "").toUpperCase();
+                                role = desig.includes('PRINCIPAL') ? 'PRINCIPAL' : desig.includes('COORDINATOR') ? 'COORDINATOR' : 'TEACHER';
+                            }
+                        });
+                    }
+
+                    if (!user) {
+                        const sSnap = await db.ref('student').orderByChild('contact/phone1').equalTo(phone).once('value');
+                        if (sSnap.exists()) {
+                            let siblings = []; sSnap.forEach(child => { siblings.push(child.val()); });
+                            App.state.siblings = siblings;
+                            user = siblings.find(s => s.profile.folio.toString() === pass);
+                            if (user) role = 'STUDENT';
+                        }
+                    }
+
+                    if (user && role) {
+                        App.state.user = user; App.state.role = role; App.state.phone = phone;
+                        const bId = (role === 'STUDENT' ? user.academic.branch : user.branch);
+                        App.state.branchName = await App.fetchBranchName(bId);
+
+                        document.getElementById('login-portal').classList.add('hidden');
+                        document.getElementById('app-shell').classList.remove('hidden');
+                        document.getElementById('user-display-name').innerText = user.name || user.profile?.studentName;
+                        document.getElementById('user-display-role').innerText = role;
+                        document.getElementById('sub-title').innerText = App.state.branchName;
+                        
+                        App.navigate('home');
+                    } else {
+                        Swal.fire('Login Failed', 'Invalid Phone or Security Pin', 'error');
+                    }
+                } catch (e) {
+                    Swal.fire('Network Error', 'Check your connection', 'error');
+                } finally {
+                    document.getElementById('app-loader').classList.add('hidden');
+                }
+            }
+        };
+
+        function togglePassword() {
+            const passInput = document.getElementById('login-pass');
+            passInput.type = passInput.type === 'password' ? 'text' : 'password';
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
