@@ -2,7 +2,7 @@ if (typeof window.currentViewDate === 'undefined') {
     window.currentViewDate = new Date();
 }
 
-window.render_att_view = async function(user) {
+window.render_att_view. = async function(user) {
     const container = document.getElementById('main-content');
     if (!container) return;
 
@@ -166,3 +166,4 @@ window.showFestPopup = (t, d) => {
 window.closeFestModal = () => { 
     document.getElementById('festivalModal').classList.replace('flex', 'hidden'); 
 };
+
