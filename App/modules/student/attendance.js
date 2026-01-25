@@ -1,138 +1,166 @@
-/**
- * THE WINGS - Student Attendance (ULTRA CLEAN VERSION)
- * Card Stats | Premium Header | Minimal UI
- */
-
 if (typeof window.currentViewDate === 'undefined') {
     window.currentViewDate = new Date();
 }
 
 window.render_att = async function(user) {
     const container = document.getElementById('main-content');
+    if (!container) return;
+
     const viewDate = window.currentViewDate;
     const year = viewDate.getFullYear();
     const month = viewDate.getMonth();
-    
     const monthKey = `${year}-${String(month + 1).padStart(2, '0')}`;
     const monthName = viewDate.toLocaleString('default', { month: 'long' });
 
     container.innerHTML = `
         <div class="flex flex-col items-center justify-center py-40">
-            <div class="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <div class="w-10 h-10 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin"></div>
         </div>`;
 
     try {
-        const snapshot = await db.ref(`attendance/${monthKey}`).once('value');
-        const monthData = snapshot.val() || {};
-        
-        const { class: sClass, section: sSec } = user.academic;
-        const sFolio = user.profile.folio;
+        const [attSnapshot, holSnapshot] = await Promise.all([
+            db.ref(`attendance/${monthKey}`).once('value'),
+            db.ref(`erp_holidays_simple`).once('value')
+        ]);
 
-        let stats = { P: 0, A: 0, L: 0 };
+        const monthData = attSnapshot.val() || {};
+        const holidayData = holSnapshot.val() || {};
+        
+        const sClass = String(user?.academic?.class || "");
+        const sSec = String(user?.academic?.section || "");
+        const sFolio = String(user?.profile?.folio || "");
+
+        let stats = { P: 0, A: 0 };
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+        const festivalMap = {};
+        if (holidayData) {
+            Object.values(holidayData).forEach(h => {
+                if (h.target === "Students" || h.target === "All") {
+                    festivalMap[h.start] = h.title;
+                }
+            });
+        }
+
         let calendarHtml = '';
         for (let i = 0; i < firstDay; i++) {
-            calendarHtml += `<div class="aspect-square"></div>`;
+            calendarHtml += `<div></div>`;
         }
 
         for (let day = 1; day <= daysInMonth; day++) {
             const dateStr = `${monthKey}-${String(day).padStart(2, '0')}`;
-            const status = monthData[dateStr]?.student?.[sClass]?.[sSec]?.[sFolio];
+            
+            let status = null;
+            if (monthData[dateStr] && monthData[dateStr].student) {
+                const studentNodes = monthData[dateStr].student;
+                if (studentNodes[sClass] && studentNodes[sClass][sSec]) {
+                    status = studentNodes[sClass][sSec][sFolio];
+                }
+            }
+
+            const festivalTitle = festivalMap[dateStr];
             const isSunday = new Date(year, month, day).getDay() === 0;
 
             let style = "bg-slate-50 text-slate-400 border-transparent";
             let icon = `<span class="text-xs font-bold">${day}</span>`;
+            let clickAction = "";
 
-            if (isSunday) {
-                style = "bg-rose-100 text-rose-500 border-rose-200/50";
-                icon = `<span class="text-[9px] font-black">SUN</span>`;
-            } else if (status === 'P') {
-                style = "bg-emerald-500 text-white shadow-lg shadow-emerald-200";
-                icon = `<i data-lucide="check" class="w-3.5 h-3.5" stroke-width="4"></i>`;
+            if (status === 'P') {
+                style = "bg-emerald-500 text-white shadow-lg shadow-emerald-100 scale-105";
+                icon = `<i data-lucide="check" class="w-4 h-4" stroke-width="4"></i>`;
                 stats.P++;
-            } else if (status === 'A') {
-                style = "bg-rose-500 text-white shadow-lg shadow-rose-200";
-                icon = `<i data-lucide="x" class="w-3.5 h-3.5" stroke-width="4"></i>`;
+            } 
+            else if (status === 'A') {
+                style = "bg-rose-500 text-white shadow-lg shadow-rose-100";
+                icon = `<i data-lucide="x" class="w-4 h-4" stroke-width="4"></i>`;
                 stats.A++;
-            } else if (status === 'L') {
-                style = "bg-amber-400 text-white shadow-lg shadow-amber-200";
-                icon = `<span class="text-[10px] font-black">L</span>`;
-                stats.L++;
+            }
+            else if (festivalTitle) {
+                style = "bg-indigo-600 text-white shadow-md cursor-pointer";
+                icon = `<i data-lucide="party-popper" class="w-3 h-3"></i>`;
+                clickAction = `onclick="window.showFestivalPopup('${festivalTitle.replace(/'/g, "\\'")}', '${day} ${monthName}')"`;
+            } 
+            else if (isSunday) {
+                style = "bg-rose-50 text-rose-500 border-rose-100";
+                icon = `<span class="text-[9px] font-black">SUN</span>`;
             }
 
             calendarHtml += `
                 <div class="flex flex-col items-center justify-center p-1">
-                    <div class="w-full aspect-square max-w-[42px] ${style} border rounded-[15px] flex items-center justify-center transition-all duration-300 active:scale-75">
+                    <div ${clickAction} class="w-10 h-10 ${style} border rounded-2xl flex items-center justify-center transition-all">
                         ${icon}
                     </div>
                 </div>`;
         }
 
         container.innerHTML = `
-            <div class="mt-20 px-5 pb-10">
-                
-                <div class="bg-white rounded-[2.5rem] p-3 shadow-[0_15px_40px_rgba(0,0,0,0.04)] border border-slate-100 flex items-center justify-between mb-8">
-                    <button onclick="changeMonth(-1, '${encodeURIComponent(JSON.stringify(user))}')" 
-                        class="w-12 h-12 flex items-center justify-center bg-slate-50 rounded-2xl text-slate-600 active:bg-blue-600 active:text-white transition-all">
-                        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            <div class="mt-6 px-6 pb-12 max-w-md mx-auto">
+                <div class="flex items-center justify-between mb-8 bg-white p-2 rounded-3xl shadow-sm border border-slate-100">
+                    <button onclick="window.changeMonth(-1, '${encodeURIComponent(JSON.stringify(user))}')" class="p-3 bg-slate-50 rounded-2xl text-slate-600 active:bg-blue-500 active:text-white transition-all">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
                     </button>
-                    
-                    <h2 class="text-xl font-black text-slate-800 tracking-tight capitalize">${monthName} ${year}</h2>
-                    
-                    <button onclick="changeMonth(1, '${encodeURIComponent(JSON.stringify(user))}')" 
-                        class="w-12 h-12 flex items-center justify-center bg-slate-50 rounded-2xl text-slate-600 active:bg-blue-600 active:text-white transition-all">
-                        <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                    <div class="text-center">
+                        <h2 class="text-lg font-black text-slate-800 leading-none">${monthName}</h2>
+                        <p class="text-[10px] font-bold text-blue-500 uppercase tracking-tighter mt-1">${year} ATTENDANCE</p>
+                    </div>
+                    <button onclick="window.changeMonth(1, '${encodeURIComponent(JSON.stringify(user))}')" class="p-3 bg-slate-50 rounded-2xl text-slate-600 active:bg-blue-500 active:text-white transition-all">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
                     </button>
                 </div>
 
-                <div class="grid grid-cols-3 gap-3 mb-10">
-                    <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-50 flex flex-col items-center">
-                        <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-2">
-                             <i data-lucide="user-check" class="w-4 h-4"></i>
-                        </div>
-                        <span class="text-lg font-black text-slate-800">${stats.P}</span>
-                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Present</span>
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="bg-white border-b-4 border-emerald-500 rounded-3xl p-5 shadow-sm text-center">
+                        <span class="text-3xl font-black text-slate-800">${stats.P}</span>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Days Present</p>
                     </div>
-
-                    <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-50 flex flex-col items-center">
-                        <div class="w-8 h-8 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mb-2">
-                             <i data-lucide="user-x" class="w-4 h-4"></i>
-                        </div>
-                        <span class="text-lg font-black text-slate-800">${stats.A}</span>
-                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Absent</span>
-                    </div>
-
-                    <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-50 flex flex-col items-center">
-                        <div class="w-8 h-8 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-2">
-                             <i data-lucide="clock" class="w-4 h-4"></i>
-                        </div>
-                        <span class="text-lg font-black text-slate-800">${stats.L}</span>
-                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Leave</span>
+                    <div class="bg-white border-b-4 border-rose-500 rounded-3xl p-5 shadow-sm text-center">
+                        <span class="text-3xl font-black text-slate-800">${stats.A}</span>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Days Absent</p>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-[3rem] p-7 shadow-2xl shadow-slate-200/40 border border-slate-50">
-                    <div class="grid grid-cols-7 gap-1 mb-6">
+                <div class="bg-white rounded-[2.5rem] p-6 shadow-xl shadow-slate-200/40 border border-slate-50">
+                    <div class="grid grid-cols-7 gap-1 mb-4">
                         ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => `
                             <div class="text-[10px] font-black ${d === 'Sun' ? 'text-rose-400' : 'text-slate-300'} text-center uppercase">${d}</div>
                         `).join('')}
                     </div>
-                    
-                    <div class="grid grid-cols-7 gap-y-3">
+                    <div class="grid grid-cols-7 gap-y-2">
                         ${calendarHtml}
                     </div>
                 </div>
+            </div>
 
+            <div id="festivalModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-6">
+                <div class="bg-white w-full max-w-xs rounded-[2.5rem] p-8 text-center shadow-2xl transition-transform duration-300" id="modalContent">
+                    <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="party-popper" class="w-10 h-10"></i>
+                    </div>
+                    <h3 id="festTitle" class="text-2xl font-black text-slate-800 leading-tight mb-2"></h3>
+                    <p id="festDate" class="text-blue-500 font-bold uppercase text-xs tracking-widest mb-6"></p>
+                    <button onclick="window.closeFestModal()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold active:scale-95 transition-all">Cool, Thanks!</button>
+                </div>
             </div>
         `;
-
         lucide.createIcons();
 
     } catch (error) {
         console.error("Attendance Error:", error);
+        container.innerHTML = `<div class="p-10 text-center text-slate-500">Attendance data not available.</div>`;
     }
+};
+
+window.showFestivalPopup = function(title, date) {
+    const modal = document.getElementById('festivalModal');
+    document.getElementById('festTitle').innerText = title;
+    document.getElementById('festDate').innerText = date;
+    modal.classList.replace('hidden', 'flex');
+};
+
+window.closeFestModal = function() {
+    const modal = document.getElementById('festivalModal');
+    modal.classList.replace('flex', 'hidden');
 };
 
 window.changeMonth = function(diff, encodedUser) {
