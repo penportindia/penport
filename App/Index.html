@@ -329,46 +329,80 @@
         },
         
         roleMap: {
+            'STUDENT': [
+                { id: 'att', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/student/attendance.js' },
+                { id: 'fees', label: 'Due & Demand', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/student/fees.js' },
+                { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/student/routine.js' },
+                { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/student/syllabus.js' },
+                { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/student/exam.js' },
+                { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/student/homework.js' },
+                { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/student/notice.js' },
+                { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/student/support.js' }
+            ],
             'TEACHER': [
                 { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/teacher/attendance.js' },
-                { id: 'att_view', label: 'History', icon: 'calendar-range', color: 'bg-emerald-500', file: 'modules/teacher/att_view.js' },
-                { id: 'routine', label: 'Routine', icon: 'clock-4', color: 'bg-violet-600', file: 'modules/teacher/routine.js' },
-                { id: 'syllabus', label: 'Syllabus', icon: 'book-text', color: 'bg-rose-500', file: 'modules/teacher/syllabus.js' },
-                { id: 'exam', label: 'Exams', icon: 'clipboard-list', color: 'bg-sky-500', file: 'modules/teacher/exam.js' },
-                { id: 'homework', label: 'Homework', icon: 'edit-2', color: 'bg-amber-500', file: 'modules/teacher/homework.js' },
-                { id: 'notice', label: 'Post Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/teacher/notice.js' },
-                { id: 'payout', label: 'Salary', icon: 'banknote', color: 'bg-slate-700', file: 'modules/teacher/payout.js' },
-                { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-emerald-600', file: 'modules/student/support.js' }
-            ],
-            'STUDENT': [
-                { id: 'att', label: 'Attendance', icon: 'calendar-check-2', color: 'bg-indigo-600', file: 'modules/student/attendance.js' },
-                { id: 'fees', label: 'Fee', icon: 'wallet-2', color: 'bg-emerald-600', file: 'modules/student/fees.js' },
-                { id: 'routine', label: 'Class Routine', icon: 'calendar-days', color: 'bg-violet-600', file: 'modules/student/routine.js' },
-                { id: 'syllabus', label: 'Syllabus', icon: 'library-big', color: 'bg-red-500', file: 'modules/student/syllabus.js' },
-                { id: 'exam', label: 'Exam Schedule', icon: 'file-text', color: 'bg-blue-600', file: 'modules/student/exam.js' },
-                { id: 'homework', label: 'Homework', icon: 'pen-line', color: 'bg-orange-500', file: 'modules/student/homework.js' },
-                { id: 'notice', label: 'Notices', icon: 'bell-ring', color: 'bg-sky-500', file: 'modules/student/notice.js' },
-                { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-emerald-600', file: 'modules/student/support.js' }
-            ],
-            'PRINCIPAL': [
-                { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/principal/attendance.js' },
-                { id: 'att_view', label: 'Overview', icon: 'bar-chart-3', color: 'bg-emerald-500', file: 'modules/principal/att_view.js' },
-                { id: 'routine', label: 'Routine', icon: 'clock', color: 'bg-violet-600', file: 'modules/principal/routine.js' },
-                { id: 'syllabus', label: 'Curriculum', icon: 'book', color: 'bg-rose-500', file: 'modules/principal/syllabus.js' },
-                { id: 'exam', label: 'Exam Ctrl', icon: 'files', color: 'bg-sky-500', file: 'modules/principal/exam.js' },
-                { id: 'homework', label: 'Homework', icon: 'edit-3', color: 'bg-amber-500', file: 'modules/principal/homework.js' },
-                { id: 'notice', label: 'Broadcaster', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/principal/notice.js' },
-                { id: 'payout', label: 'Accounts', icon: 'landmark', color: 'bg-slate-700', file: 'modules/principal/payout.js' }
+                { id: 'att_view', label: 'Logs', icon: 'calendar-check-2', color: 'bg-emerald-500', file: 'modules/teacher/att_view.js' },
+                { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/teacher/routine.js' },
+                { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/teacher/syllabus.js' },
+                { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/teacher/exam.js' },
+                { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/teacher/homework.js' },
+                { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/teacher/notice.js' },
+                { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/teacher/payout.js' },
+                { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/teacher/support.js' }
             ],
             'COORDINATOR': [
                 { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/coordinator/attendance.js' },
-                { id: 'att_view', label: 'Logs', icon: 'calendar-days', color: 'bg-emerald-500', file: 'modules/coordinator/att_view.js' },
-                { id: 'routine', label: 'Routine', icon: 'clock', color: 'bg-violet-600', file: 'modules/coordinator/routine.js' },
-                { id: 'syllabus', label: 'Syllabus', icon: 'book-open', color: 'bg-rose-500', file: 'modules/coordinator/syllabus.js' },
-                { id: 'exam', label: 'Exams', icon: 'file-spreadsheet', color: 'bg-sky-500', file: 'modules/coordinator/exam.js' },
-                { id: 'homework', label: 'Homework', icon: 'edit-3', color: 'bg-amber-500', file: 'modules/coordinator/homework.js' },
-                { id: 'notice', label: 'Notices', icon: 'bell', color: 'bg-orange-500', file: 'modules/coordinator/notice.js' },
-                { id: 'payout', label: 'Payout', icon: 'banknote', color: 'bg-slate-700', file: 'modules/coordinator/payout.js' }
+                { id: 'att_view', label: 'Logs', icon: 'calendar-check-2', color: 'bg-emerald-500', file: 'modules/coordinator/att_view.js' },
+                { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/coordinator/routine.js' },
+                { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/coordinator/student_list.js' },
+                { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/coordinator/staff_list.js' },
+                { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/coordinator/syllabus.js' },
+                { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/coordinator/homework.js' },
+                { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/coordinator/exam.js' },
+                { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/coordinator/notice.js' },
+                { id: 'due_demand', label: 'Due & Demand', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/coordinator/due_demand.js' },
+                { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/coordinator/payout.js' },
+                { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/coordinator/support.js' }
+            ],
+            'PRINCIPAL': [
+                { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/principal/attendance.js' },
+                { id: 'att_view', label: 'Logs', icon: 'calendar-check-2', color: 'bg-emerald-500', file: 'modules/principal/att_view.js' },
+                { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/principal/routine.js' },
+                { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/principal/student_list.js' },
+                { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/principal/staff_list.js' },
+                { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/principal/syllabus.js' },
+                { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/principal/homework.js' },
+                { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/principal/exam.js' },
+                { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/principal/notice.js' },
+                { id: 'due_demand', label: 'Due & Demand', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/principal/due_demand.js' },
+                { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/principal/payout.js' },
+                { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/principal/support.js' }
+            ],
+            'ACCOUNTANT': [
+                { id: 'due_demand', label: 'Fee Collection', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/accountant/due_demand.js' },
+                { id: 'payout', label: 'Staff Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/accountant/payout.js' },
+                { id: 'expenses', label: 'Daily Expenses', icon: 'trending-down', color: 'bg-rose-600', file: 'modules/accountant/expenses.js' },
+                { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/accountant/student_list.js' },
+                { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/accountant/staff_list.js' },
+                { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/accountant/notice.js' },
+                { id: 'accounts_report', label: 'Finance Report', icon: 'bar-chart-3', color: 'bg-gray-800', file: 'modules/accountant/finance_report.js' },
+                { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/accountant/support.js' }
+            ],
+            'ADMIN': [
+                { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/admin/attendance.js' },
+                { id: 'att_view', label: 'Logs', icon: 'calendar-check-2', color: 'bg-emerald-500', file: 'modules/admin/att_view.js' },
+                { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/admin/routine.js' },
+                { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/admin/student_list.js' },
+                { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/admin/staff_list.js' },
+                { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/admin/syllabus.js' },
+                { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/admin/homework.js' },
+                { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/admin/exam.js' },
+                { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/admin/notice.js' },
+                { id: 'due_demand', label: 'Fee Collection', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/admin/due_demand.js' },
+                { id: 'payout', label: 'Staff Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/admin/payout.js' },
+                { id: 'expenses', label: 'Daily Expenses', icon: 'trending-down', color: 'bg-rose-600', file: 'modules/admin/expenses.js' },
+                { id: 'accounts_report', label: 'Finance Report', icon: 'bar-chart-3', color: 'bg-gray-800', file: 'modules/admin/finance_report.js' },
+                { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/admin/support.js' }
             ]
         },
 
@@ -890,3 +924,4 @@
     // Lucide initialization safety
     if(window.lucide) lucide.createIcons();
 </script>
+
