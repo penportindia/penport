@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Firebase Architect | Pro Edition</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            padding: 40px 20px;
+        }
+
+        .main-wrapper { max-width: 1200px; margin: 0 auto; }
+
+        header { text-align: center; margin-bottom: 40px; }
+        header h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header p { color: var(--text-dim); margin-top: 10px; }
+
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 24px;
+        }
+
+        .config-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; align-items: end; }
+        .input-box { display: flex; flex-direction: column; gap: 8px; }
+        .input-box label { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        
+        input[type="text"] {
+            background: #0f172a; border: 1px solid var(--border); border-radius: 8px; padding: 12px; color: white; outline: none; width: 100%;
+        }
+        input:focus { border-color: var(--accent); }
+
+        .btn { padding: 12px 24px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-transform: uppercase; font-size: 12px; }
+        .btn-load { background: var(--accent); color: #000; }
+        .btn-load:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .btn-export { background: var(--success); color: white; width: 100%; }
+        .btn-delete { background: var(--danger); color: white; padding: 4px 8px; font-size: 10px; border-radius: 4px; }
+        .btn-upload { background: var(--accent); color: #000; width: 100%; margin-top: 15px; }
+        .btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+        .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; }
+        @media (max-width: 950px) { .content-grid { grid-template-columns: 1fr; } }
+
+        .tree-container {
+            background: #0f172a; border-radius: 12px; padding: 20px; min-height: 400px; max-height: 600px; overflow-y: auto; border: 1px solid var(--border);
+        }
+        
+        .tree-list { list-style: none; padding-left: 5px; }
+        .tree-list ul { display: none; padding-left: 20px; border-left: 1px solid rgba(255,255,255,0.05); }
+        
+        .tree-node-item {
+            display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; margin: 2px 0; border-radius: 6px; cursor: pointer;
+        }
+        .tree-node-item:hover { background: rgba(255, 255, 255, 0.03); }
+        .tree-node-item.active { background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); }
+
+        .node-info { display: flex; align-items: center; gap: 12px; flex-grow: 1; }
+        .toggle-icon { color: var(--accent); font-weight: bold; width: 15px; cursor: pointer; font-size: 16px; }
+
+        .upload-wrapper {
+            margin-top: 15px; padding: 25px; border: 2px dashed var(--border); border-radius: 12px; text-align: center; position: relative; cursor: pointer;
+        }
+        .upload-wrapper:hover { border-color: var(--accent); background: rgba(255,255,255,0.02); }
+        #fileInput { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+        #status {
+            position: fixed; bottom: 25px; right: 25px; padding: 15px 25px; border-radius: 10px; color: white; display: none; z-index: 10000; font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+
+
+    <div class="glass-card">
+        <div class="config-section">
+            <div class="input-box">
+                <label>API Key</label>
+                <input type="text" id="apiKey" placeholder="AIzaSy...">
+            </div>
+            <div class="input-box">
+                <label>Project ID</label>
+                <input type="text" id="projectId" placeholder="erp-database-id">
+            </div>
+            <div class="input-box">
+                <label>Database URL</label>
+                <input type="text" id="databaseURL" placeholder="https://...firebaseio.com">
+            </div>
+            <button class="btn btn-load" onclick="initConn()">Connect DB</button>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="glass-card">
+            <h3 style="margin-bottom: 20px; font-size: 16px; color: var(--accent);">DATABASE EXPLORER</h3>
+            <div class="tree-container" id="treeView">
+                <p style="color: var(--text-dim); text-align: center; padding-top: 80px;">Enter credentials to load data tree.</p>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h3 style="margin-bottom: 20px; font-size: 16px; color: var(--accent);">CONTROL PANEL</h3>
+            
+            <div style="margin-bottom: 25px;">
+                <label style="font-size: 10px; color: var(--text-dim);">SELECTED TARGET PATH</label>
+                <div id="pathDisplay" style="background: #0f172a; padding: 14px; border-radius: 8px; margin-top: 8px; color: var(--accent); font-family: monospace; border: 1px solid var(--border); word-break: break-all;">/ (Root)</div>
+            </div>
+
+            <button class="btn btn-export" id="exportBtn" onclick="doExport()" disabled>Download JSON Export</button>
+
+            <div style="margin-top: 35px; border-top: 1px solid var(--border); padding-top: 25px;">
+                <h4 style="font-size: 13px; margin-bottom: 12px; color: var(--text-main);">Choose JSON Path</h4>
+                <div class="upload-wrapper">
+                    <p id="fileName" style="color: var(--text-dim); font-size: 13px;">📁 Click Hear</p>
+                    <input type="file" id="fileInput" accept=".json" onchange="filePicked(event)">
+                </div>
+                <button class="btn btn-upload" id="uploadBtn" onclick="doUpload()" disabled>Uoload</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="status"></div>
+
+<script>
+    let app = null;
+    let fullData = null;
+    let currentPath = "/";
+    let fileJson = null;
+
+    function notify(text, type = 'info') {
+        const s = document.getElementById('status');
+        s.innerText = text;
+        s.style.background = type === 'error' ? '#ef4444' : type === 'success' ? '#22c55e' : '#38bdf8';
+        s.style.display = 'block';
+        setTimeout(() => s.style.display = 'none', 3500);
+    }
+
+    async function initConn() {
+        const config = {
+            apiKey: document.getElementById('apiKey').value.trim(),
+            projectId: document.getElementById('projectId').value.trim(),
+            databaseURL: document.getElementById('databaseURL').value.trim(),
+        };
+
+        if(!config.apiKey || !config.databaseURL) return notify("Missing Config", "error");
+
+        try {
+            if (!app) app = firebase.initializeApp(config);
+            notify("Syncing Database...");
+            refreshData();
+        } catch (e) { notify(e.message, "error"); }
+    }
+
+    async function refreshData() {
+        const snap = await firebase.database().ref('/').get();
+        if(snap.exists()) {
+            fullData = snap.val();
+            renderTree(fullData);
+            document.getElementById('exportBtn').disabled = false;
+        } else {
+            document.getElementById('treeView').innerHTML = "Database is Empty";
+        }
+    }
+
+    function renderTree(data) {
+        const box = document.getElementById('treeView');
+        box.innerHTML = `<ul class="tree-list">${createNodes(data, "")}</ul>`;
+    }
+
+    function createNodes(data, path) {
+        let html = '';
+        if (data && typeof data === 'object') {
+            Object.keys(data).forEach(key => {
+                const p = path ? `${path}/${key}` : key;
+                const hasChild = typeof data[key] === 'object' && data[key] !== null;
+                const safeId = p.replace(/\//g, '-');
+                
+                html += `
+                    <li>
+                        <div class="tree-node-item" onclick="selectNode('${p}', this)">
+                            <div class="node-info">
+                                <span class="toggle-icon" onclick="toggle('${safeId}', event)">${hasChild ? '▹' : '•'}</span>
+                                <span style="font-size: 13px;">${key}</span>
+                            </div>
+                            <button class="btn-delete" onclick="delNode('${p}', event)">Delete</button>
+                        </div>
+                        ${hasChild ? `<ul id="ul-${safeId}" class="tree-list">${createNodes(data[key], p)}</ul>` : ''}
+                    </li>`;
+            });
+        }
+        return html;
+    }
+
+    function toggle(id, e) {
+        e.stopPropagation();
+        const ul = document.getElementById(`ul-${id}`);
+        if(ul) {
+            const isOff = ul.style.display === '' || ul.style.display === 'none';
+            ul.style.display = isOff ? 'block' : 'none';
+            e.target.innerText = isOff ? '▿' : '▹';
+        }
+    }
+
+    function selectNode(path, el) {
+        currentPath = path;
+        document.getElementById('pathDisplay').innerText = `/${path}`;
+        document.querySelectorAll('.tree-node-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        if(fileJson) document.getElementById('uploadBtn').disabled = false;
+    }
+
+    async function delNode(path, e) {
+        e.stopPropagation();
+        if(!confirm(`Permanent Delete: /${path}?`)) return;
+        try {
+            await firebase.database().ref(path).remove();
+            notify("Deleted Successfully", "success");
+            refreshData();
+        } catch (err) { notify(err.message, "error"); }
+    }
+
+    function doExport() {
+        const parts = currentPath === "/" ? [] : currentPath.split('/');
+        let target = fullData;
+        for (let p of parts) { target = target[p]; }
+
+        let exportObj = {};
+        if(currentPath === "/") {
+            exportObj = fullData;
+        } else {
+            let ptr = exportObj;
+            for(let i=0; i<parts.length; i++) {
+                if(i === parts.length-1) ptr[parts[i]] = target;
+                else { ptr[parts[i]] = {}; ptr = ptr[parts[i]]; }
+            }
+        }
+
+        const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `ERP_Export_${currentPath.replace(/\//g, '_')}.json`;
+        a.click();
+        notify("JSON Exported", "success");
+    }
+
+    function filePicked(e) {
+        const file = e.target.files[0];
+        if(!file) return;
+        document.getElementById('fileName').innerText = `Selected: ${file.name}`;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            try {
+                fileJson = JSON.parse(ev.target.result);
+                document.getElementById('uploadBtn').disabled = false;
+                notify("File Validated");
+            } catch { notify("Invalid JSON", "error"); }
+        };
+        reader.readAsText(file);
+    }
+
+    async function doUpload() {
+        try {
+            const ref = currentPath === "/" ? "" : currentPath;
+            notify("Syncing Ditto Data...");
+            // Ditto upload: Using set/update to replicate exact JSON structure
+            await firebase.database().ref(ref).update(fileJson);
+            notify("Ditto Sync Complete!", "success");
+            refreshData();
+        } catch (e) { notify(e.message, "error"); }
+    }
+</script>
+
+</body>
+</html>
