@@ -366,7 +366,7 @@ window.openHomeworkModal = async function (editId = null, existingData = null, o
         showCancelButton: true,
         cancelButtonText: 'Cancel',
         width: '450px',
-        padding: '2rem',
+        padding: '1rem',
         customClass: {
             popup: 'rounded-[35px] border-none shadow-2xl',
             title: 'text-2xl font-bold text-slate-800 pt-2',
@@ -758,4 +758,5 @@ window.viewAttachments = function (hw) {
             document.head.appendChild(style);
         }
     });
+
 };
