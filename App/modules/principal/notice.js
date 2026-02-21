@@ -217,17 +217,6 @@ window.downloadFile = function(url, filename) {
         link.click();
         document.body.removeChild(link);
     }
-
-    if (typeof Swal !== 'undefined') {
-        Swal.fire({
-            icon: 'info',
-            title: 'Download Started',
-            toast: true,
-            position: 'bottom',
-            showConfirmButton: false,
-            timer: 2000
-        });
-    }
 };
 
 function renderFeed(data) {
