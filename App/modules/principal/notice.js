@@ -203,22 +203,30 @@ window.applyFilters = function() {
     renderFeed(filtered);
 };
 
-window.downloadFile = async function(url, filename) {
-    try {
-        const response = await fetch(url);
-        const blob = await response.blob();
-        const blobUrl = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = blobUrl;
-        a.download = filename || 'download';
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(blobUrl);
-        document.body.removeChild(a);
-        Swal.fire({ icon: 'success', title: 'Downloading...', toast: true, position: 'bottom', showConfirmButton: false, timer: 1500 });
-    } catch (e) {
-        window.open(url, '_blank');
+window.downloadFile = function(url, filename) {
+    const isAndroid = /Android/i.test(navigator.userAgent);
+
+    if (isAndroid) {
+        window.location.href = url;
+    } else {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename || 'download';
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            icon: 'info',
+            title: 'Download Started',
+            toast: true,
+            position: 'bottom',
+            showConfirmButton: false,
+            timer: 2000
+        });
     }
 };
 
