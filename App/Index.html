@@ -15,7 +15,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
 
     <style>
         :root {
@@ -330,8 +329,7 @@
             apiKey: "AIzaSyDCGsnpr6SVf7rbSnRi2ipt5suZD99B2u4",
             databaseURL: "https://student-database-1882d-default-rtdb.firebaseio.com",
             projectId: "student-database-1882d",
-            messagingSenderId: "420379838808",
-            appId: "1:420379838808:web:bb4206ea2fed40f3907d2d"
+            messagingSenderId: "420379838808"
         };
         try {
             if (!firebase.apps.length) {
@@ -341,37 +339,21 @@
             console.error("Firebase Initialization Error:", err);
         }
         const db = firebase.database();
-        const messaging = firebase.messaging();
-
-        let swRegistration = null;
-        
-        messaging.onMessage((payload) => {
-            console.log("Foreground Push Received:", payload);
-
-            if (!payload.notification) return;
-
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                title: payload.notification.title,
-                text: payload.notification.body,
-                timer: 6000,
-                showConfirmButton: false
-            });
-        });
 
         const CLOUDINARY_UPLOAD_PRESET = 'twfauplode';
         const CLOUDINARY_CLOUD_NAME = 'dxci08oys';
 
 
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', async () => {
-                try {
-                    swRegistration = await navigator.serviceWorker.register('/sw.js');
-                    console.log("Service Worker Registered");
-                } catch (err) {
-                    console.log("SW Registration Failed", err);
-                }
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => {
+                        console.log('SW Registered');
+                        if ('Notification' in window && Notification.permission === 'default') {
+                            Notification.requestPermission();
+                        }
+                    })
+                    .catch(err => console.log('SW Registration Failed', err));
             });
         }
 
@@ -471,7 +453,7 @@
 
                 noticesRef.off();
 
-                noticesRef.limitToLast(5).on('child_added', (snapshot) => {
+                noticesRef.limitToLast(1).on('child_added', (snapshot) => {
                     const notice = snapshot.val();
                     if (!notice || !this.state.user) return;
 
@@ -1027,35 +1009,6 @@
                 if (subEl) subEl.innerText = branchName || "";
 
                 App.initNoticeListener?.();
-                if ('Notification' in window) {
-
-                    Notification.requestPermission().then(permission => {
-
-                        if ('serviceWorker' in navigator) {
-
-                            navigator.serviceWorker.register('/sw.js')
-                            .then(registration => {
-
-                                console.log("Service Worker Registered");
-
-                                return messaging.getToken({
-                                    vapidKey: "BGmZbmU6KSjJSWuW3vDCwel2Y_JZ5sFG11TRbXvvYnutWzvF2CaHaF6izX06tDvXLqGafkrF5fHAUD-RwbQnPT0",
-                                    serviceWorkerRegistration: registration
-                                });
-
-                            })
-                            .then(token => {
-                                console.log("FCM Token:", token);
-                            })
-                            .catch(error => {
-                                console.error(error);
-                            });
-
-                        }
-
-                    });
-
-                }
                 history.replaceState({ type: 'page', value: 'home' }, '', '?page=home');
                 handleRoute();
 
