@@ -1,0 +1,22 @@
+{
+  "name": "The Wings Foundation Academy App",
+  "short_name": "SchoolOS",
+  "start_url": "/Index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F8FAFC",
+  "theme_color": "#4F46E5",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/ym5yxYwM/Penport-logo-001.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.ibb.co/ym5yxYwM/Penport-logo-001.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
