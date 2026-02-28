@@ -17,7 +17,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="manifest" href="/manifest.json">
 
     <style>
         :root {
@@ -346,20 +345,6 @@
         const CLOUDINARY_UPLOAD_PRESET = 'twfauplode';
         const CLOUDINARY_CLOUD_NAME = 'dxci08oys';
 
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => {
-                        console.log('SW Registered');
-                        if ('Notification' in window && Notification.permission === 'default') {
-                            Notification.requestPermission();
-                        }
-                    })
-                    .catch(err => console.log('SW Registration Failed', err));
-            });
-        }
-
         const App = {
             state: {
                 user: null,
@@ -448,132 +433,6 @@
                     { id: 'accounts_report', label: 'Finance Report', icon: 'bar-chart-3', color: 'bg-gray-800', file: 'modules/admin/finance_report.js' },
                     { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/admin/support.js' }
                 ]
-            },
-
-            initNoticeListener() {
-                console.log("🚀 Notification System Live");
-                const noticesRef = db.ref('notices');
-
-                noticesRef.off();
-
-                noticesRef.limitToLast(1).on('child_added', (snapshot) => {
-                    const notice = snapshot.val();
-                    if (!notice || !this.state.user) return;
-
-                    const isFresh = (Date.now() - notice.timestamp) < 40000;
-                    if (isFresh) {
-                        this.processIncomingNotice(notice);
-                    }
-                }, (error) => console.error("Notice Listener Error:", error));
-            },
-
-            processIncomingNotice(notice) {
-                const { user, role, branchName } = this.state;
-
-                if (!notice || !user || !role || !branchName) return;
-
-                const normalize = (v) =>
-                    typeof v === 'string' ? v.trim().toUpperCase() : '';
-
-                const currentRole = normalize(role);
-                const currentBranch = normalize(branchName);
-
-                const noticeTarget = normalize(notice.target);
-                const noticeBranch = normalize(notice.branch);
-                const noticeClass = normalize(notice.class);
-                const noticeSection = normalize(notice.section);
-
-                const isStudent = currentRole === 'STUDENT';
-                const isStaff = currentRole !== 'STUDENT';
-
-                const targetMatch =
-                    noticeTarget === 'ALL' ||
-                    noticeTarget === 'BOTH' ||
-                    (isStudent && noticeTarget === 'STUDENTS') ||
-                    (isStaff && noticeTarget === 'STAFF');
-
-                if (!targetMatch) return;
-
-                const branchMatch =
-                    noticeBranch === 'ALL' ||
-                    noticeBranch === currentBranch;
-
-                if (!branchMatch) return;
-
-                if (isStudent) {
-                    const userClass = normalize(user?.academic?.class);
-                    const userSection = normalize(user?.academic?.section);
-
-                    if (!userClass || !userSection) return;
-
-                    const classMatch =
-                        noticeClass === 'ALL' ||
-                        noticeClass === userClass;
-
-                    const sectionMatch =
-                        noticeSection === 'ALL' ||
-                        noticeSection === userSection;
-
-                    if (!classMatch || !sectionMatch) return;
-                }
-
-                this.triggerNotificationUI(notice);
-            },
-
-            triggerNotificationUI(notice) {
-                const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3');
-                audio.volume = 0.4;
-                audio.play().catch(() => console.log("Audio playback blocked by browser policy"));
-
-                if (Notification.permission === "granted") {
-                    try {
-                        new Notification(`New Notice: ${notice.title}`, {
-                            body: notice.msg,
-                            icon: '/icon-192.png'
-                        });
-                    } catch (e) { }
-                }
-
-                Swal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    width: '380px',
-                    showConfirmButton: true,
-                    confirmButtonText: 'VIEW DETAILS',
-                    timer: 10000,
-                    timerProgressBar: true,
-                    background: '#ffffff',
-                    html: `
-                    <div class="flex items-start gap-4 text-left p-1">
-                        <div class="relative flex-shrink-0">
-                            <div class="absolute inset-0 bg-indigo-500 rounded-2xl animate-ping opacity-15"></div>
-                            <div class="relative w-12 h-12 bg-gradient-to-tr from-indigo-600 to-violet-600 rounded-2xl flex items-center justify-center shadow-lg">
-                                <i data-lucide="bell-ring" class="text-white w-6 h-6"></i>
-                            </div>
-                        </div>
-                        <div class="flex-1 overflow-hidden">
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest">New Announcement</span>
-                                <span class="text-[10px] text-slate-400 font-medium italic">Just now</span>
-                            </div>
-                            <h3 class="text-[14px] font-bold text-slate-800 leading-tight truncate">${notice.title || 'No Title'}</h3>
-                            <p class="text-[12px] text-slate-500 line-clamp-2 mt-1 leading-relaxed">${notice.msg || ''}</p>
-                        </div>
-                    </div>
-                `,
-                    didOpen: (el) => {
-                        if (window.lucide) lucide.createIcons();
-                        el.style.borderRadius = '20px';
-                        el.style.border = '1px solid rgba(0,0,0,0.05)';
-                    },
-                    customClass: {
-                        popup: 'shadow-[0_15px_40px_rgba(0,0,0,0.12)] p-4',
-                        confirmButton: 'w-full mt-3 bg-slate-900 hover:bg-black text-white text-[11px] font-bold py-3 rounded-xl transition-all duration-300 tracking-wider',
-                        timerProgressBar: 'bg-gradient-to-r from-indigo-500 to-purple-500 h-[3px]'
-                    }
-                }).then((res) => {
-                    if (res.isConfirmed) this.loadModule('notice');
-                });
             },
 
             async fetchBranchName(branchId) {
@@ -881,6 +740,10 @@
                     });
 
                     this.navigate('home');
+
+                    if (window.fcmTokenFromApp) {
+                        await saveFCMToken(this.state.user, this.state.role);
+                    }
                 }
             }
         };
@@ -987,6 +850,7 @@
                         }));
 
                         this.applyUserSession(user, role, App.state.branchName);
+                        await saveFCMToken(user, role);
                     } else {
                         Swal.fire('Login Failed', 'Invalid Phone or Security Pin', 'error');
                     }
@@ -1042,9 +906,25 @@
                     showCancelButton: true,
                     confirmButtonColor: '#e11d48',
                     confirmButtonText: 'Yes, Sign Out'
-                }).then((result) => {
+                }).then(async (result) => {
+
                     if (result.isConfirmed) {
+
+                        if (window.fcmTokenFromApp) {
+                            try {
+                                await removeFCMToken();
+                            } catch (e) {
+                                console.error("Logout FCM Error:", e);
+                            }
+                        }
+
                         localStorage.removeItem('school_app_session');
+                        window.fcmTokenFromApp = null;
+                        App.state.user = null;
+                        App.state.role = null;
+                        App.state.phone = null;
+                        App.state.siblings = [];
+
                         window.location.reload();
                     }
                 });
@@ -1078,6 +958,82 @@
         }
 
         if (window.lucide) lucide.createIcons();
+        async function saveFCMToken(user, role) {
+
+            if (!window.fcmTokenFromApp) return;
+
+            const token = window.fcmTokenFromApp;
+            const phone = App.state.phone || null;
+
+            let profiles = {};
+
+            if (role === 'STUDENT') {
+
+                const siblings = App.state.siblings || [];
+
+                siblings.forEach(sib => {
+
+                    const studentId = sib.profile?.id || sib.profile?.folio;
+
+                    if (!studentId) return;
+
+                    profiles[studentId] = {
+                        branch: sib.academic?.branch || null,
+                        class: sib.academic?.class || null,
+                        section: sib.academic?.section || null,
+                        roll: sib.profile?.folio || null
+                    };
+                });
+
+            } else {
+
+                const empId = user.empId || user.id;
+
+                profiles[empId] = {
+                    branch: user.branch || null,
+                    class: null,
+                    section: null,
+                    roll: empId
+                };
+            }
+
+            const tokenData = {
+                token: token,
+                role: role,
+                phone: phone,
+                profiles: profiles,
+                updatedAt: Date.now()
+            };
+
+            try {
+                await db.ref('fcmTokens/' + token).update(tokenData);
+                console.log("FCM Token Saved Fullproof");
+            } catch (e) {
+                console.error("FCM Save Error:", e);
+            }
+        }
+        window.receiveFCMToken = async function(token) {
+
+            if (!token) return;
+
+            if (window.fcmTokenFromApp === token) return;
+
+            window.fcmTokenFromApp = token;
+
+            if (App.state.user && App.state.role) {
+                await saveFCMToken(App.state.user, App.state.role);
+            }
+        };
+        async function removeFCMToken() {
+            if (!window.fcmTokenFromApp) return;
+
+            try {
+                await db.ref('fcmTokens/' + window.fcmTokenFromApp).remove();
+                console.log("FCM Token Removed");
+            } catch (e) {
+                console.error("FCM Remove Error:", e);
+            }
+        }
     </script>
 </body>
 
