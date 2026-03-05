@@ -185,6 +185,8 @@
             align-items: center;
             justify-content: center;
         }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 
@@ -617,20 +619,33 @@
             renderDashboard() {
                 const menu = this.roleMap[this.state.role];
                 if (!menu) return;
-                let html = `<div class="dashboard-grid pb-10">`;
-                menu.forEach(m => {
-                    html += `
-                <div onclick="App.loadModule('${m.id}')" class="modern-card">
-                    <div class="icon-circle ${m.color}">
-                        <i data-lucide="${m.icon}" class="w-7 h-7 text-white"></i>
-                    </div>
-                    <span class="text-[9px] font-black text-slate-500 uppercase text-center leading-tight tracking-tight">${m.label}</span>
-                </div>`;
-                });
+
+                let html = `<div class="no-scrollbar flex overflow-x-auto snap-x snap-mandatory gap-0 w-full">`;
+
+                for (let i = 0; i < menu.length; i += 9) {
+                    const chunk = menu.slice(i, i + 9);
+                    html += `<div class="min-w-full grid grid-cols-3 gap-4 p-4 snap-center">`;
+                    
+                    chunk.forEach(m => {
+                        html += `
+                        <div onclick="App.loadModule('${m.id}')" class="flex flex-col items-center justify-center p-2 active:scale-95 transition-transform">
+                            <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm mb-2 ${m.color}">
+                                <i data-lucide="${m.icon}" class="w-7 h-7 text-white"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-600 uppercase text-center leading-tight">${m.label}</span>
+                        </div>`;
+                    });
+
+                    html += `</div>`;
+                }
+
                 html += `</div>`;
+
                 const content = document.getElementById('main-content');
-                if (content) content.innerHTML = html;
-                if (window.lucide) lucide.createIcons();
+                if (content) {
+                    content.innerHTML = html;
+                    if (window.lucide) lucide.createIcons();
+                }
             },
 
             cleanupCurrentModule() {
@@ -1084,4 +1099,3 @@
 </body>
 
 </html>
-
