@@ -940,10 +940,12 @@
                             user = d;
 
                             const designation = (d.designation || '').toUpperCase();
-
-                            if (designation.includes('PRINCIPAL')) role = 'PRINCIPAL';
+                            if (designation.includes('ADMIN')) role = 'ADMIN';
+                            else if (designation.includes('PRINCIPAL')) role = 'PRINCIPAL';
                             else if (designation.includes('COORDINATOR')) role = 'COORDINATOR';
-                            else role = 'TEACHER';
+                            else if (designation.includes('ACCOUNTANT')) role = 'ACCOUNTANT';
+                            else if (designation.includes('TEACHER')) role = 'TEACHER';
+                            else if (designation.includes('STUDENT')) role = 'STUDENT';
 
                             return true;
                         });
@@ -1082,3 +1084,4 @@
 </body>
 
 </html>
+
