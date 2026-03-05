@@ -185,6 +185,27 @@
             align-items: center;
             justify-content: center;
         }
+        .menu-label {
+            display: block;
+            width: 100%;
+            max-width: 92px;
+            text-align: center;
+            line-height: 1.2;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            word-break: keep-all;
+            overflow-wrap: normal;
+        }
+
+        .menu-label.single-word {
+            white-space: nowrap;
+        }
+
+        .menu-label.multi-word {
+            white-space: normal;
+        }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .tap-effect:active { transform: scale(0.92); transition: 0.1s; }
@@ -629,24 +650,17 @@
                     html += `<div class="min-w-full grid grid-cols-3 gap-y-10 gap-x-2 px-6 snap-center items-start content-start">`;
 
                     chunk.forEach(m => {
+                        const wordClass = m.label.trim().split(/\s+/).length === 1 ? 'single-word' : 'multi-word';
+
                         html += `
                         <div onclick="App.loadModule('${m.id}')" class="tap-effect flex flex-col items-center cursor-pointer">
-                            
+
                             <div class="w-16 h-16 rounded-[22px] flex items-center justify-center mb-3 shadow-lg relative overflow-hidden ${m.color}">
                                 <div class="absolute inset-0 bg-white/10 opacity-60"></div>
                                 <i data-lucide="${m.icon}" class="w-8 h-8 text-white relative z-10 drop-shadow-md"></i>
                             </div>
 
-                            <span
-                                class="text-[11px] font-bold text-slate-700 uppercase text-center leading-[1.2] tracking-tighter px-0.5"
-                                style="
-                                    display:block;
-                                    width:100%;
-                                    max-width:92px;
-                                    white-space:normal;
-                                    word-break:keep-all;
-                                    overflow-wrap:normal;
-                                ">
+                            <span class="menu-label ${wordClass}">
                                 ${m.label}
                             </span>
 
@@ -659,7 +673,6 @@
                 html += `</div>`;
 
                 const content = document.getElementById('main-content');
-
                 if (content) {
                     content.innerHTML = html;
                     if (window.lucide) lucide.createIcons();
