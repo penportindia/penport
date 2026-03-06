@@ -244,13 +244,56 @@
                 </div>
 
                 <div class="space-y-4">
-                    <div class="glass-input-box flex items-center px-5 py-4 rounded-2xl">
+                    <div class="flex justify-end px-2">
+                        <button onclick="toggleHelpNote()" class="flex items-center text-xs font-bold text-indigo-500 hover:text-indigo-700 transition-colors">
+                            <i data-lucide="help-circle" class="w-4 h-4 mr-1"></i>
+                            Need Help?
+                        </button>
+                    </div>
+
+                    <div id="help-note" class="hidden bg-indigo-50/50 border-t-4 border-indigo-600 p-6 rounded-b-xl shadow-md max-w-sm">
+                        <h4 class="text-indigo-900 font-black text-sm mb-4 tracking-tight">LOGIN INSTRUCTIONS</h4>
+                        
+                        <ul class="space-y-4 text-xs text-indigo-900/80 font-medium">
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-600 font-bold">•</span>
+                                <span>Use 10-digit registered mobile number (Without country code).</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-600 font-bold">•</span>
+                                <span>Student Login: Use Folio Number as Security Key.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-600 font-bold">•</span>
+                                <span>Staff: Contact School Admin for Security Key.</span>
+                            </li>
+                        </ul>
+
+                        <div class="mt-6 pt-4 border-t border-indigo-200">
+                            <p class="text-[10px] text-indigo-400 font-bold uppercase mb-3 text-center tracking-widest">Need Assistance?</p>
+                            
+                            <div class="flex justify-center gap-3">
+                                <a href="tel:+917742986877" 
+                                class="flex items-center justify-center bg-indigo-600 text-white px-4 py-2 rounded-lg text-[13px] font-extrabold uppercase shadow-sm hover:bg-indigo-700 transition-all w-full">
+                                    Call Now
+                                </a>
+
+                                <a href="https://api.whatsapp.com/send?phone=917742986877" 
+                                target="_self"
+                                class="flex items-center justify-center bg-green-500 text-white px-4 py-2 rounded-lg text-[13px] font-extrabold uppercase shadow-sm hover:bg-green-600 transition-all w-full">
+                                    WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-input-box flex items-center px-5 py-4 rounded-2xl border border-slate-100">
                         <i data-lucide="phone" class="w-5 h-5 text-indigo-500 mr-4"></i>
                         <input type="tel" id="login-phone" placeholder="Mobile Number"
                             class="bg-transparent w-full outline-none font-bold text-base text-slate-700">
                     </div>
 
-                    <div class="glass-input-box flex items-center px-5 py-4 rounded-2xl relative">
+                    <div class="glass-input-box flex items-center px-5 py-4 rounded-2xl relative border border-slate-100">
                         <i data-lucide="lock" class="w-5 h-5 text-indigo-500 mr-4"></i>
                         <input type="password" id="login-pass" placeholder="Security Key"
                             class="bg-transparent w-full outline-none font-bold text-base text-slate-700">
@@ -828,7 +871,7 @@
                                 ${this.row('Date of Birth', u.profile?.dob, 'calendar')}
                                 ${this.row('Contact Number', u.contact?.phone1, 'phone')}
                                 ${this.row(
-                                    'Folio / PEN ID',
+                                    'Folio / PEN NO',
                                     `${u.profile?.folio} / ${u.govtMapping?.udise?.penNo
                                         ? 'X'.repeat(
                                             u.govtMapping.udise.penNo.toString().length - 4
@@ -1126,6 +1169,15 @@
         }
 
         if (window.lucide) lucide.createIcons();
+
+        function toggleHelpNote() {
+            const note = document.getElementById('help-note');
+            if (note.classList.contains('hidden')) {
+                note.classList.remove('hidden');
+            } else {
+                note.classList.add('hidden');
+            }
+        }
     </script>
 </body>
 
