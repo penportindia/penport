@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Full Stack Developer Raushan - Web, App, Software & Graphic Design Services">
     <meta property="og:title" content="Penport India - Raushan Portfolio">
     <meta property="og:description" content="Web Developer & Graphic Designer with 4+ years experience in Web, Mobile, and Software Development.">
     <meta property="og:image" content="https://i.ibb.co/jkSskD73/IMG-20250924-123033.jpg">
     <meta property="og:type" content="website">
     <title>Penport India</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <style>
         :root {
             --primary-color: #E75647;
@@ -21,401 +24,679 @@
             --bg-color-light: #ffffff;
             --bg-color-dark: #f9fafb;
         }
-        *, *::before, *::after {margin:0;padding:0;box-sizing:border-box;}
-        html {scroll-behavior:smooth;}
-        body {font-family:'Poppins',sans-serif;background-color:var(--bg-color-light);color:var(--text-color-dark);line-height:1.6;}
-        .container {max-width:1200px;margin:0 auto;padding:0 1.5rem;}
-        .header {background-color:var(--bg-color-light);box-shadow:0 2px 10px rgba(0,0,0,0.05);position:sticky;top:0;z-index:1000;padding:0.5rem 0;}
-        .navbar {display:flex;justify-content:space-between;align-items:center;position:relative;}
-        .logo {display:flex;align-items:center;gap:0.5rem;text-decoration:none;}
-        .logo img {height:80px;}
-        .logo span {font-size:1.5rem;font-weight:700;color:var(--secondary-color);}
-        
-        /* Header Quote Style */
-        .navbar-quote {
-            font-size: clamp(0.8rem, 1.5vw, 1.2rem);
-            font-weight: 500;
-            color: var(--primary-color);
-            letter-spacing: 0.05em;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-            margin-left: auto; 
-            padding-right: 1.5rem;
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        .menu-toggle {display:none;font-size:2rem;background:none;border:none;cursor:pointer;}
-        .hero-image-full {margin-top:2rem;}
-        .hero-image-full img {width:100%;height:auto;border-radius:1rem;}
-        .hero {display:flex;align-items:center;justify-content:space-between;min-height:calc(100vh - 80px - 2rem);padding:4rem 0;flex-wrap:wrap;}
-        .hero-content {max-width:600px;}
-        .hero-content h1 {font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:var(--secondary-color);margin-bottom:0.5rem;}
-        .hero-content h1 span {color:var(--primary-color);}
-        .hero-content h2 {font-size:clamp(1.2rem,3vw,2rem);font-weight:500;margin-bottom:1rem;color:var(--text-color-dark);}
-        .hero-content p {font-size:1.1rem;margin-bottom:2rem;color:#4b5563;}
-        
-        /* Hero buttons container - Now only for the Demo Cards Row */
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color-light);
+            color: var(--text-color-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .hero-image-full {
+            margin-top: 2rem;
+        }
+
+        .hero-image-full img {
+            width: 100%;
+            height: auto;
+            border-radius: 1rem;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: calc(100vh - 80px - 2rem);
+            padding: 4rem 0;
+            flex-wrap: wrap;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary-color);
+        }
+
+        .hero-content h2 {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--text-color-dark);
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #4b5563;
+        }
+
         .hero-buttons-container {
             display: flex;
-            flex-direction: column; 
-            gap: 1.5rem; 
-            align-items: flex-start; 
-            max-width: 100%; 
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: flex-start;
+            max-width: 100%;
             padding-top: 1rem;
-            border-top: 1px solid #e5e7eb; /* Divider line below Contact Us */
+            border-top: 1px solid #e5e7eb;
             margin-top: 1rem;
         }
-        
-        /* Contact Us Button Style */
+
         .btn {
             display: inline-block;
             padding: 0.75rem 1.75rem;
-            background-color: #D35400; /* Darker Orange/Red */
+            background-color: #D35400;
             color: var(--text-color-light);
-            border-radius: 9999px; /* Full pill shape retained for Contact Us */
+            border-radius: 9999px;
             font-weight: 600;
             text-decoration: none;
-            transition: background-color 0.3s ease,transform 0.3s ease;
-            flex-shrink: 0;
+            transition: all 0.3s ease;
         }
+
         .btn:hover {
             background-color: var(--secondary-color);
             transform: translateY(-2px);
         }
-        
-        /* New container for Demo cards to keep them in one horizontal row */
+
         .demo-cards-row {
             display: flex;
-            gap: 1%; /* Gap reduced to make space for 3 cards */
-            flex-wrap: nowrap; /* Ensure they stay in one row on large screens */
-            width: 100%; /* Take full width */
-            justify-content: space-between; /* Space out cards evenly */
+            gap: 1%;
+            flex-wrap: nowrap;
+            width: 100%;
+            justify-content: space-between;
         }
-        
-        /* Demo Project Cards - Width and Padding adjustment */
+
         .projects-card {
-            border-radius: 0.5rem; /* Lighter rounding */
-            padding: 0.8rem 1rem; /* Height reduced by lowering vertical padding */
+            border-radius: 0.5rem;
+            padding: 0.8rem 1rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease,box-shadow 0.3s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
-            flex-shrink: 0; 
-            color: var(--text-color-light); /* Text color set to light for contrast on colored backgrounds */
-            font-size: 1rem; 
+            flex-shrink: 0;
+            color: var(--text-color-light);
+            font-size: 1rem;
             font-weight: 600;
-            
-            /* Equal width for all three cards */
-            width: 32%; 
-            text-align: center; /* Center content */
-            display: flex; /* Flexbox for centering content inside card */
+            width: 32%;
+            text-align: center;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
-        .projects-card:hover {transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+
+        .projects-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
         .projects-card h3 {
             font-size: 1rem;
             font-weight: 600;
-            color: inherit; /* Inherit color from projects-card (which is var(--text-color-light)) */
+            color: inherit;
             margin: 0;
             line-height: 1.2;
         }
+
         .projects-card i {
-            font-size: 1.5rem; 
-            color: inherit; /* Inherit color from projects-card (which is var(--text-color-light)) */
+            font-size: 1.5rem;
+            color: inherit;
             margin-bottom: 0.25rem;
         }
 
-        /* Hero Image Container - Add text styling */
         .hero-image-container {
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            text-align:center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
-        .hero-image {margin-bottom:1rem;} /* Margin adjusted for new text */
-        .hero-image img {width:250px;height:250px;border-radius:50%;object-fit:cover;box-shadow:0 10px 20px rgba(0,0,0,0.1);}
 
-        /* New style for "Founder Developer" text */
+        .hero-image {
+            margin-bottom: 1rem;
+        }
+
+        .hero-image img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
         .founder-text {
             font-size: 1rem;
             font-weight: 500;
             color: var(--secondary-color);
-            margin-top: 0.5rem; /* Space between image and text */
-            margin-bottom: 1rem; /* Space between text and icons */
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
         }
 
-        /* Social Icons - Modern & Colorful */
         .social-icons {
-            display:flex;
-            gap:1.5rem;
-            justify-content:center;
-            margin-top: 0; /* Adjusted margin */
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 0;
         }
+
         .social-icons a {
-            font-size:2rem;
-            color:var(--text-color-dark);
-            transition:transform 0.3s ease, filter 0.3s ease; /* Added filter for hover effect */
+            font-size: 2rem;
+            color: var(--text-color-dark);
+            transition: all 0.3s ease;
         }
-        /* Individual Social Media Brand Colors */
-        .social-icons a.facebook { color: #3b5998; } /* Facebook Blue */
+
+        .social-icons a.facebook { 
+            color: #3b5998; 
+        }
+
         .social-icons a.instagram { 
             background: radial-gradient(at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 2.1rem; /* Slightly larger for gradient visibility */
-        } /* Instagram Gradient */
-        .social-icons a.youtube { color: #FF0000; } /* YouTube Red */
+            font-size: 2.1rem;
+        } 
+
+        .social-icons a.youtube { 
+            color: #FF0000; 
+        }
 
         .social-icons a:hover {
-            transform:translateY(-2px);
-            filter: brightness(1.1); /* Slightly brighter on hover */
+            transform: translateY(-2px);
+            filter: brightness(1.1);
         }
 
-        .projects {background-color:var(--bg-color-dark);padding:4rem 0;border-top:1px solid #e5e7eb;}
-        .section-title {text-align:center;font-size:clamp(2rem,4vw,2.5rem);font-weight:700;color:var(--secondary-color);margin-bottom:3rem;}
-        .projects-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
-        
-        /* Service Cards (project-card) base styling */
-        .project-card {border-radius:1rem;padding:2rem;box-shadow:0 4px 15px rgba(0,0,0,0.15);transition:transform 0.3s ease,box-shadow 0.3s ease;text-align:center;cursor:pointer; color: var(--text-color-light);}
-        .project-card:hover {transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.2);}
-        .project-card i {font-size:3rem; color: var(--text-color-light); margin-bottom:1rem;}
-        .project-card h3 {font-size:1.25rem;color:var(--text-color-light);margin-bottom:0.5rem;font-weight:600;}
-        .project-card p {color: rgba(255, 255, 255, 0.8);}
-        
-        .contact {background-color:var(--bg-color-light);padding:4rem 0;border-top:1px solid #e5e7eb;}
-        .contact-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
-        .contact-card {background-color:var(--bg-color-dark);border-radius:1rem;padding:2rem;box-shadow:0 4px 15px rgba(0,0,0,0.05);transition:transform 0.3s ease,box-shadow 0.3s ease;display:flex;flex-direction:column;align-items:center;text-align:center;}
-        .contact-card:hover {transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
-        .contact-card i {font-size:3rem;color:var(--primary-color);margin-bottom:1rem;}
-        .contact-card h3 {font-size:1.25rem;color:var(--secondary-color);margin-bottom:0.5rem;font-weight:600;}
-        .contact-card a {color:#4b5563;text-decoration:none;font-size:1rem;transition:color 0.3s ease;}
-        .contact-card a:hover {color:var(--primary-color);}
-        .footer {text-align:center;padding:2rem 0;background-color:var(--secondary-color);color:var(--text-color-light);margin-top:2rem;}
-        @media (max-width:768px){
-            .hero{flex-direction:column;text-align:center;gap:2rem;}
-            .hero-image-container{order:-1;}
-            .hero-buttons-container { align-items: center; } 
-            .demo-cards-row { justify-content: center; } 
-            .projects-card {
-                width: 48%; /* 2 columns on mobile */
-                margin-bottom: 10px;
-                padding: 0.8rem 0.5rem;
-            }
-            .navbar-quote { display: none; }
-            .btn { margin-bottom: 0 !important; } /* Reset inline style on mobile to align correctly */
-            
-            .hero-image { margin-bottom:0.5rem; }
-            .founder-text { font-size: 0.9rem; margin-top: 0.25rem; margin-bottom: 0.75rem; }
-            .social-icons { gap: 1rem; }
-            .social-icons a { font-size: 1.8rem; }
-            .social-icons a.instagram { font-size: 1.9rem; }
+        .projects {
+            background-color: var(--bg-color-dark);
+            padding: 4rem 0;
+            border-top: 1px solid #e5e7eb;
         }
-        .modal {display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgba(0,0,0,0.8);backdrop-filter:blur(5px);}
-        .modal-content {background-color:var(--bg-color-light);margin:10% auto;padding:2rem;border-radius:1rem;max-width:800px;box-shadow:0 5px 15px rgba(0,0,0,0.3);position:relative;}
-        .close-btn {color:var(--text-color-dark);font-size:2rem;font-weight:bold;position:absolute;top:10px;right:20px;cursor:pointer;}
-        .close-btn:hover{color:var(--primary-color);}
-        .video-container {position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:0.5rem;}
-        .video-container iframe {position:absolute;top:0;left:0;width:100%;height:100%;}
-        .project-details {margin-top:1.5rem;text-align:center;}
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 3rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text-color-light);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .project-card i {
+            font-size: 3rem;
+            color: var(--text-color-light);
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.25rem;
+            color: var(--text-color-light);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .project-card p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact {
+            background-color: var(--bg-color-light);
+            padding: 4rem 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .contact-card {
+            background-color: var(--bg-color-dark);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .contact-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .contact-card a {
+            color: #4b5563;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .contact-card a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--secondary-color);
+            color: var(--text-color-light);
+            margin-top: 2rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--bg-color-light);
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .close-btn {
+            color: var(--text-color-dark);
+            font-size: 2rem;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .project-details {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-image-container {
+                order: -1;
+            }
+
+            .hero-buttons-container {
+                align-items: center;
+            }
+
+            .demo-cards-row {
+                justify-content: space-between;
+                flex-wrap: nowrap;
+                gap: 5px;
+            }
+
+            .projects-card {
+                width: 32%;
+                padding: 0.6rem 2px;
+                margin-bottom: 0;
+            }
+            
+            .projects-card i {
+                font-size: 1.2rem;
+            }
+
+            .projects-card h3 {
+                font-size: 0.7rem;
+                white-space: nowrap;
+            }
+
+            .btn {
+                margin-bottom: 0 !important;
+            }
+
+            .hero-image {
+                margin-bottom: 0.5rem;
+            }
+
+            .founder-text {
+                font-size: 0.9rem;
+                margin-top: 0.25rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .social-icons {
+                gap: 1rem;
+            }
+
+            .social-icons a {
+                font-size: 1.8rem;
+            }
+
+            .social-icons a.instagram {
+                font-size: 1.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .demo-cards-row {
+                gap: 4px;
+            }
+            .projects-card h3 {
+                font-size: 0.65rem;
+            }
+            .projects-card i {
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 <body>
-<header class="header">
-    <div class="container">
-        <nav class="navbar">
-            <a href="#" class="logo" aria-label="PenportIndia Home">
-                <img src="https://i.ibb.co/7thpHMc1/Penport-logo-01.png" alt="PenportIndia Logo" loading="lazy" />
-                <span>PenportIndia</span>
-            </a>
-            <div class="navbar-quote">Simplifying Complexity Through Code</div>
-        </nav>
+    <div class="container hero-image-full">
+        <img src="https://i.ibb.co/1fBDhzRq/Penport-logo-00.png" alt="Penport India Logo" loading="lazy"/>
     </div>
-</header>
-<div class="container hero-image-full">
-    <img src="https://i.ibb.co/1fBDhzRq/Penport-logo-00.png" alt="Another picture" loading="lazy"/>
-</div>
-<main>
-    <div class="container">
-        <section class="hero" aria-labelledby="hero-title">
-            <div class="hero-content">
-                <h1 id="hero-title">Hello, I'm <span>Raushan</span></h1>
-                <h2>Web Developer & Graphic Designer</h2>
-                <p>I am a Full-Stack Web Developer with over 4 years of extensive experience. My expertise is in creating & designing websites, Mobile Apps, and Desktop Applications.</p>
-                
-                <a href="https://wa.me/917004848750" target="_blank" class="btn" rel="noopener noreferrer" style="margin-bottom: 1rem;">Contact Us</a>
-                
-                <div class="hero-buttons-container">
+
+    <main>
+        <div class="container">
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero-content">
+                    <h1 id="hero-title">Hello, I'm <span>Raushan</span></h1>
+                    <h2 style="font-size: 1.8rem;">
+                        I am a <span id="typing"></span>
+                    </h2>
+                    <p>
+                        With over 4 years of extensive experience. 
+                        My expertise is in creating & designing websites, Mobile Apps, and Desktop Applications.
+                    </p>
                     
-                    <div class="demo-cards-row">
-                        <div class="projects-card open-demo" data-project-id="3" role="button" tabindex="0" style="background-color: #FFC300;">
-                            <i class="bi bi-person-badge"></i><div><h3>ID Card Sol.</h3></div>
-                        </div>
-                        
-                        <div class="projects-card open-demo" data-project-id="0" role="button" tabindex="0" style="background-color: #3498DB;">
-                            <i class="bi bi-person-workspace"></i><div><h3>School ERP</h3></div>
-                        </div>
-                        
-                        <div class="projects-card open-demo" data-project-id="4" role="button" tabindex="0" style="background-color: #E74C3C;">
-                            <i class="bi bi-people-fill"></i><div><h3>HR Mgt.</h3></div>
+                    <a href="https://wa.me/917004848750" target="_blank" class="btn" rel="noopener noreferrer" style="margin-bottom: 1rem;">Contact Us</a>
+                    
+                    <div class="hero-buttons-container">
+                        <div class="demo-cards-row">
+                            <div class="projects-card open-demo" data-project-id="3" role="button" tabindex="0" style="background-color: #FFC300;">
+                                <i class="bi bi-person-badge"></i>
+                                <div><h3>ID Card Sol.</h3></div>
+                            </div>
+                            <div class="projects-card open-demo" data-project-id="0" role="button" tabindex="0" style="background-color: #3498DB;">
+                                <i class="bi bi-person-workspace"></i>
+                                <div><h3>School ERP</h3></div>
+                            </div>
+                            <div class="projects-card open-demo" data-project-id="4" role="button" tabindex="0" style="background-color: #E74C3C;">
+                                <i class="bi bi-people-fill"></i>
+                                <div><h3>HR Mgt.</h3></div>
+                            </div>
                         </div>
                     </div>
-                    
+                </div>
+
+                <div class="hero-image-container">
+                    <div class="hero-image">
+                        <img src="https://i.ibb.co/HTqcD3FX/Raushan-Singh.jpg" alt="Raushan's profile picture" loading="lazy"/>
+                    </div>
+                    <div class="founder-text" style="
+                        font-family: 'Segoe UI', sans-serif;
+                        font-weight: 700;
+                        font-size: 20px;
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
+                        color: #555;
+                        border-bottom: 1px solid #ddd;
+                        display: inline-block;
+                        padding-bottom: 5px;
+                    ">
+                        Founder Developer
+                    </div>
+                    <div class="social-icons" aria-label="Social media links">
+                        <a href="https://www.facebook.com/raushan.raj.1650332" target="_blank" aria-label="Facebook" rel="noopener noreferrer" class="facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="https://www.instagram.com/insraushan/profilecard/?igsh=aWZ6eDFzNGk1MXRq" target="_blank" aria-label="Instagram" rel="noopener noreferrer" class="instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="https://youtube.com/yourchannel" target="_blank" aria-label="YouTube" rel="noopener noreferrer" class="youtube"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <section class="projects" id="projects" aria-labelledby="projects-title">
+        <div class="container">
+            <h2 class="section-title" id="projects-title">Our Services</h2>
+            <div class="projects-grid">
+                <article class="project-card" tabindex="0" role="button" style="background-color: #FF9800;">
+                    <i class="bi bi-globe"></i>
+                    <h3>Web Application Development</h3>
+                    <p>Building responsive, fast, and user-friendly web apps using modern frameworks and technologies.</p>
+                </article>
+
+                <article class="project-card open-demo" data-project-id="1" tabindex="0" role="button" style="background-color: #9C27B0;">
+                    <i class="bi bi-megaphone"></i>
+                    <h3>Campaign Design</h3>
+                    <p>Creative and impactful campaign graphics and marketing materials tailored to your brand.</p>
+                </article>
+
+                <article class="project-card" tabindex="0" role="button" style="background-color: #607D8B;">
+                    <i class="bi bi-laptop"></i>
+                    <h3>Software Development</h3>
+                    <p>Custom software solutions for desktop and mobile platforms, focusing on performance.</p>
+                </article>
+
+                <article class="project-card" tabindex="0" role="button" style="background-color: #00BCD4;">
+                    <i class="bi bi-vector-pen"></i>
+                    <h3>UI/UX Design</h3>
+                    <p>Designing intuitive interfaces and user experiences for better engagement.</p>
+                </article>
+
+                <article class="project-card" tabindex="0" role="button" style="background-color: #F44336;">
+                    <i class="bi bi-palette"></i>
+                    <h3>Graphic Design</h3>
+                    <p>Professional logo design, branding, and visual identity creation.</p>
+                </article>
+
+                <article class="project-card" tabindex="0" role="button" style="background-color: #E91E63;">
+                    <i class="bi bi-phone"></i>
+                    <h3>Mobile App Development</h3>
+                    <p>Developing sleek mobile applications for Android and iOS platforms.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+        <div class="container">
+            <h2 class="section-title" id="contact-title">Contact Me</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <i class="bi bi-telephone-fill"></i>
+                    <h3>Phone Number</h3>
+                    <a href="tel:+917004848750">+91 70048 48750</a>
+                </div>
+                <div class="contact-card">
+                    <i class="bi bi-envelope-fill"></i>
+                    <h3>Email Address</h3>
+                    <a href="mailto:penportindia@gmail.com">penportindia@gmail.com</a>
                 </div>
             </div>
-            <div class="hero-image-container">
-                <div class="hero-image">
-                    <img src="https://i.ibb.co/jkSskD73/IMG-20250924-123033.jpg" alt="Raushan's profile picture" loading="lazy"/>
-                </div>
-                <div class="founder-text">Founder Developer</div> 
-                <div class="social-icons" aria-label="Social media links">
-                    <a href="https://www.facebook.com/raushan.raj.1650332" target="_blank" aria-label="Facebook" rel="noopener noreferrer" class="facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="https://www.instagram.com/insraushan/profilecard/?igsh=aWZ6eDFzNGk1MXRq" target="_blank" aria-label="Instagram" rel="noopener noreferrer" class="instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="https://youtube.com/yourchannel" target="_blank" aria-label="YouTube" rel="noopener noreferrer" class="youtube"><i class="bi bi-youtube"></i></a>
-                </div>
-            </div>
-        </section>
-    </div>
-</main>
-<section class="projects" id="projects" aria-labelledby="projects-title">
-    <div class="container">
-        <h2 class="section-title" id="projects-title">Our Services</h2>
-        <div class="projects-grid">
-            
-            <article class="project-card" tabindex="0" role="button" style="background-color: #FF9800;">
-                <i class="bi bi-globe"></i>
-                <h3>Web Application Development</h3>
-                <p>Building responsive, fast, and user-friendly web apps using modern frameworks and technologies.</p>
-            </article>
-            
-            <article class="project-card open-demo" data-project-id="1" tabindex="0" role="button" style="background-color: #9C27B0;">
-                <i class="bi bi-megaphone"></i>
-                <h3>Campaign Design</h3>
-                <p>Creative and impactful campaign graphics and marketing materials tailored to your brand.</p>
-            </article>
-            
-            <article class="project-card" tabindex="0" role="button" style="background-color: #607D8B;">
-                <i class="bi bi-laptop"></i>
-                <h3>Software Development</h3>
-                <p>Custom software solutions for desktop and mobile platforms, focusing on performance.</p>
-            </article>
-            
-            <article class="project-card" tabindex="0" style="background-color: #00BCD4;">
-                <i class="bi bi-vector-pen"></i>
-                <h3>UI/UX Design</h3>
-                <p>Designing intuitive interfaces and user experiences for better engagement.</p>
-            </article>
-            
-            <article class="project-card" tabindex="0" style="background-color: #F44336;">
-                <i class="bi bi-palette"></i>
-                <h3>Graphic Design</h3>
-                <p>Professional logo design, branding, and visual identity creation.</p>
-            </article>
-            
-            <article class="project-card" tabindex="0" style="background-color: #E91E63;">
-                <i class="bi bi-phone"></i>
-                <h3>Mobile App Development</h3>
-                <p>Developing sleek mobile applications for Android and iOS platforms.</p>
-            </article>
         </div>
-    </div>
-</section>
-<section class="contact" id="contact" aria-labelledby="contact-title">
-    <div class="container">
-        <h2 class="section-title" id="contact-title">Contact Me</h2>
-        <div class="contact-grid">
-            <div class="contact-card">
-                <i class="bi bi-telephone-fill"></i>
-                <h3>Phone Number</h3>
-                <a href="tel:+917004848750">+91 70048 48750</a>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 PenportIndia. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div id="demoModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <span class="close-btn" role="button" aria-label="Close">&times;</span>
+            <div class="video-container">
+                <iframe id="videoPlayer" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
             </div>
-            <div class="contact-card">
-                <i class="bi bi-envelope-fill"></i>
-                <h3>Email Address</h3>
-                <a href="mailto:penportindia@gmail.com">penportindia@gmail.com</a>
+            <div class="project-details">
+                <h3 id="modal-title">Project Demo</h3>
+                <p id="video-title">Project Title will appear here.</p>
             </div>
         </div>
     </div>
-</section>
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2024 PenportIndia. All Rights Reserved.</p>
-    </div>
-</footer>
-<div id="demoModal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-        <span class="close-btn" role="button" aria-label="Close">&times;</span>
-        <div class="video-container">
-            <iframe id="videoPlayer" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
-        </div>
-        <div class="project-details">
-            <h3 id="modal-title">Project Demo</h3>
-            <p id="video-title">Project Title will appear here.</p>
-        </div>
-    </div>
-</div>
-<script>
-const demoTriggers=document.querySelectorAll('.open-demo');
-const modal=document.getElementById('demoModal');
-const closeBtn=document.querySelector('.close-btn');
-const videoPlayer=document.getElementById('videoPlayer');
-const videoTitle=document.getElementById('video-title');
 
-let lastFocusedElement;
+    <script>
+        AOS.init();
 
+        var typed = new Typed('#typing', {
+            strings: ['Full-Stack Developer', 'Graphic Designer', 'UI/UX Expert'],
+            typeSpeed: 60,
+            backSpeed: 40,
+            backDelay: 1500,
+            loop: true,
+            cursorChar: '|'
+        });
 
-const projectDemos=[
-    // 0: School ERP Management (Bright Blue Card)
-    {title:"School ERP Management Demo",videoUrl:"https://www.youtube.com/embed/g8d15z4o5yA"}, 
-    
-    // 1: Campaign Design (Services - Purple Card)
-    {title:"Campaign Design",videoUrl:"https://www.youtube.com/embed/g8d15z4o5yA"},
-    
-    // 2: Custom Software Solution (पुराना, इस्तेमाल नहीं)
-    {title:"Custom Software Solution",videoUrl:"https://www.youtube.com/embed/xJ6vRzU_4dE"},
-    
-    // 3: ID Card Solution (Golden Yellow Card)
-    {title:"ID Card Solution Demo",videoUrl:"https://drive.google.com/file/d/1rqNv5hwVHLTSgbDALQnN7UOfFu1-J7mC/preview"}, 
-    
-    // 4: HR Management (Bright Red Card)
-    {title:"HR Management Demo",videoUrl:"https://www.youtube.com/embed/Lw99S63YfJk"} 
-];
+        const demoTriggers = document.querySelectorAll('.open-demo');
+        const modal = document.getElementById('demoModal');
+        const closeBtn = document.querySelector('.close-btn');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const videoTitle = document.getElementById('video-title');
 
-function openModal(projectIndex){
-    lastFocusedElement=document.activeElement;
-    const project=projectDemos[projectIndex];
-    if(project){
-        videoPlayer.src=project.videoUrl+"?autoplay=1";
-        videoTitle.textContent=project.title;
-        modal.style.display="block";
-        modal.setAttribute("aria-hidden","false");
-        const focusable=modal.querySelectorAll("button,[href],input,select,textarea,[tabindex]:not([tabindex='-1'])");
-        if(focusable.length){focusable[0].focus();}
-    }
-}
+        let lastFocusedElement;
 
-function closeModal(){
-    modal.style.display="none";
-    modal.setAttribute("aria-hidden","true");
-    videoPlayer.src="";
-    if(lastFocusedElement)lastFocusedElement.focus();
-}
+        const projectDemos = [
+            {title: "School ERP Management Demo", videoUrl: "https://www.youtube.com/embed/g8d15z4o5yA"}, 
+            {title: "Campaign Design", videoUrl: "https://www.youtube.com/embed/g8d15z4o5yA"},
+            {title: "Custom Software Solution", videoUrl: "https://www.youtube.com/embed/xJ6vRzU_4dE"},
+            {title: "ID Card Solution Demo", videoUrl: "https://drive.google.com/file/d/1rqNv5hwVHLTSgbDALQnN7UOfFu1-J7mC/preview"}, 
+            {title: "HR Management Demo", videoUrl: "https://www.youtube.com/embed/Lw99S63YfJk"} 
+        ];
 
-demoTriggers.forEach(trigger=>{
-    trigger.addEventListener('click',()=>{
-        const id=trigger.getAttribute('data-project-id');
-        openModal(id);
-    });
-    trigger.addEventListener('keydown',e=>{
-        if(e.key==="Enter"||e.key===" "){
-            e.preventDefault();
-            const id=trigger.getAttribute('data-project-id');
-            openModal(id);
+        function openModal(projectIndex) {
+            lastFocusedElement = document.activeElement;
+            const project = projectDemos[projectIndex];
+            if (project) {
+                videoPlayer.src = project.videoUrl + "?autoplay=1";
+                videoTitle.textContent = project.title;
+                modal.style.display = "block";
+                modal.setAttribute("aria-hidden", "false");
+                const focusable = modal.querySelectorAll("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
+                if (focusable.length) {
+                    focusable[0].focus();
+                }
+            }
         }
-    });
-});
 
-closeBtn.addEventListener('click',closeModal);
-window.addEventListener('click',e=>{if(e.target===modal)closeModal();});
-window.addEventListener('keydown',e=>{if(e.key==="Escape"&&modal.style.display==="block")closeModal();});
-</script>
+        function closeModal() {
+            modal.style.display = "none";
+            modal.setAttribute("aria-hidden", "true");
+            videoPlayer.src = "";
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
+        }
+
+        demoTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const id = trigger.getAttribute('data-project-id');
+                openModal(id);
+            });
+            trigger.addEventListener('keydown', e => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    const id = trigger.getAttribute('data-project-id');
+                    openModal(id);
+                }
+            });
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        window.addEventListener('click', e => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        window.addEventListener('keydown', e => {
+            if (e.key === "Escape" && modal.style.display === "block") {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
