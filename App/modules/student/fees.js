@@ -238,11 +238,10 @@ window.render_fees = async function(user) {
                                     <span class="text-2xl mr-1 opacity-80">₹</span>${Math.abs(netBalance).toLocaleString()}
                                 </h2>
                             </div>
-                            <div class="px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg flex items-center gap-2">
-                                <div class="w-2 h-2 rounded-full ${isAdvance ? 'bg-emerald-400' : 'bg-rose-400'} animate-pulse"></div>
-                                <p class="text-[10px] font-bold uppercase tracking-wider">
-                                    ${isAdvance ? 'Advance' : 'Outstanding'}
-                                </p>
+                            <div class="w-7 h-7 bg-emerald-500/20 backdrop-blur-md border border-emerald-500/40 rounded-full flex items-center justify-center shadow-sm shadow-emerald-900/20">
+                                <span class="text-[14px] font-black text-emerald-400 leading-none">
+                                    ₹
+                                </span>
                             </div>
                         </div>
 
