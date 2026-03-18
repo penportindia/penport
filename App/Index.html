@@ -97,7 +97,7 @@
 
         .app-header {
             background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
-            padding: 60px 25px 80px;
+            padding: 80px 25px 80px;
             border-bottom-left-radius: 45px;
             border-bottom-right-radius: 45px;
         }
@@ -206,18 +206,6 @@
 
         .menu-label.multi-word {
             white-space: normal;
-        }
-        .square-popup {
-            height: 100px !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            border-radius: 15px !important;
-        }
-
-        .swal2-icon {
-            margin: 0 !important;
-            scale: 0.8;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -1031,15 +1019,11 @@
 
                     Swal.fire({
                         icon: 'success',
-                        width: '100px',
-                        padding: '0',
-                        showConfirmButton: false,
-                        timer: 800,
+                        toast: true,
+                        width: '93px',
                         position: 'center',
-                        background: '#fff',
-                        customClass: {
-                            popup: 'square-popup'
-                        }
+                        showConfirmButton: false,
+                        timer: 2000
                     });
 
                     this.navigate('home');
