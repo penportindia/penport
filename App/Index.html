@@ -353,44 +353,21 @@
 
     <div id="app-shell" class="hidden">
         <div class="app-header">
-            <div class="flex justify-between items-center p-5 bg-gradient-to-r from-indigo-900/40 to-purple-900/40 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl">
-    
-                <div class="flex items-center gap-5">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-4">
                     <button id="back-btn" onclick="history.back()"
-                        class="hidden bg-white/10 hover:bg-indigo-500 p-3 rounded-2xl transition-all duration-300 group shadow-lg border border-white/5">
-                        <i data-lucide="arrow-left" class="w-6 h-6 text-white group-hover:-translate-x-1 transition-transform"></i>
+                        class="hidden bg-white/20 p-3 rounded-2xl backdrop-blur-md">
+                        <i data-lucide="arrow-left" class="w-6 h-6 text-white"></i>
                     </button>
-
-                    <div class="relative">
-                        <div class="relative">
-                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-md border border-black/5 overflow-hidden">
-                            <img src="https://i.ibb.co/9kGbqWb7/Logo.png" alt="Logo" class="w-10 h-10 object-contain">
-                            
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2 py-0.5 bg-indigo-500/20 text-indigo-300 text-[10px] font-bold rounded-md border border-indigo-500/30 uppercase tracking-[0.2em]">
-                                The Wings
-                            </span>
-                        </div>
-                        <h2 id="welcome-msg" class="text-2xl font-extrabold text-white tracking-tight leading-tight">
-                            Hi, <span id="user-display-name" class="bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-200"></span> 👋
-                        </h2>
-                        <p id="sub-title" class="text-[11px] font-medium text-indigo-200/60 mt-0.5 flex items-center gap-1">
-                            <i data-lucide="map-pin" class="w-3 h-3"></i>
-                        </p>
+                    <div>
+                        <p id="sub-title" class="text-[10px] font-black text-indigo-200 uppercase tracking-widest">
+                            BRANCH</p>
+                        <h2 id="welcome-msg" class="text-2xl font-bold text-white tracking-tight">Hi, <span
+                                id="user-display-name">User</span></h2>
                     </div>
                 </div>
-
-                <div class="flex items-center gap-3">
-                    <div class="relative group cursor-pointer">
-                        <div class="w-12 h-12 bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center border border-white/10 transition-all duration-300 group-active:scale-90">
-                            <i data-lucide="bell-ring" class="w-6 h-6 text-indigo-100 group-hover:rotate-12 transition-transform"></i>
-                        </div>
-                    </div>
+                <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/10">
+                    <i data-lucide="bell-ring" class="w-6 h-6 text-white"></i>
                 </div>
             </div>
 
