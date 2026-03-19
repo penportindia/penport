@@ -817,7 +817,7 @@
                         window[func](this.state.user);
                     }
                 };
-
+                
                 document.body.appendChild(script);
             },
 
@@ -1159,8 +1159,11 @@
                 const nameEl = document.getElementById('user-display-name');
                 const roleEl = document.getElementById('user-display-role');
                 const subEl = document.getElementById('sub-title');
-
-                if (nameEl) nameEl.innerText = user.name || user.profile?.studentName || "User";
+                const fullName = user.name || user.profile?.studentName || "";
+                const ignoreList = ["md", "mr", "mrs", "dr", "ms", "miss", "prof", "rev", "fr", "sr", "jr", "kumari", "smt", "shri", "sri", "kumar", "raj", "raaj",];
+                const parts = fullName.trim().split(" ");
+                const firstName = parts.find(n => !ignoreList.includes(n.toLowerCase())) || "User";
+                if (nameEl) nameEl.innerText = firstName;
                 if (roleEl) roleEl.innerText = role;
                 if (subEl) subEl.innerText = branchName || "";
 
@@ -1228,13 +1231,13 @@
 
                     snap.forEach(child=>{
                         updates.push(child.ref.update({
-                            password:newPass
+                            password: btoa(newPass)
                         }));
                     });
 
                     await Promise.all(updates);
 
-                    App.state.user.password = newPass;
+                    App.state.user.password = btoa(newPass);
 
                     Swal.fire({
                         icon:"success",
