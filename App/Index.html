@@ -192,20 +192,25 @@
             max-width: 92px;
             text-align: center;
             line-height: 1.2;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
-            text-transform: uppercase;
+            text-transform: none;
             letter-spacing: -0.5px;
             word-break: keep-all;
             overflow-wrap: normal;
         }
-
+        #page-title {
+            text-transform: none;
+        }
         .menu-label.single-word {
             white-space: nowrap;
         }
 
         .menu-label.multi-word {
             white-space: normal;
+        }
+        #user-display-name {
+            color: rgb(255, 255, 0);
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -489,9 +494,9 @@
                     { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/principal/support.js' }
                 ],
                 'ACCOUNTANT': [
-                    { id: 'due_demand', label: 'Fee Collection', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/accountant/due_demand.js' },
-                    { id: 'payout', label: 'Staff Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/accountant/payout.js' },
-                    { id: 'expenses', label: 'Daily Expenses', icon: 'trending-down', color: 'bg-rose-600', file: 'modules/accountant/expenses.js' },
+                    { id: 'due_demand', label: 'Due & Demand', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/accountant/due_demand.js' },
+                    { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/accountant/payout.js' },
+                    { id: 'expenses', label: 'Expenses', icon: 'trending-down', color: 'bg-rose-600', file: 'modules/accountant/expenses.js' },
                     { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/accountant/student_list.js' },
                     { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/accountant/staff_list.js' },
                     { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/accountant/notice.js' },
@@ -508,9 +513,9 @@
                     { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/admin/homework.js' },
                     { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/admin/exam.js' },
                     { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/admin/notice.js' },
-                    { id: 'due_demand', label: 'Fee Collection', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/admin/due_demand.js' },
-                    { id: 'payout', label: 'Staff Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/admin/payout.js' },
-                    { id: 'expenses', label: 'Daily Expenses', icon: 'trending-down', color: 'bg-rose-600', file: 'modules/admin/expenses.js' },
+                    { id: 'due_demand', label: 'Due & Demand', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/admin/due_demand.js' },
+                    { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/admin/payout.js' },
+                    { id: 'expenses', label: 'Expenses', icon: 'trending-down', color: 'bg-rose-600', file: 'modules/admin/expenses.js' },
                     { id: 'accounts_report', label: 'Finance Report', icon: 'bar-chart-3', color: 'bg-gray-800', file: 'modules/admin/finance_report.js' },
                     { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/admin/support.js' }
                 ]
@@ -778,7 +783,7 @@
                     <div class="px-6 mt-6 space-y-4 animate-pulse">
                         <div class="h-12 bg-slate-200 rounded-3xl w-3/4"></div>
                         <div class="h-40 bg-slate-100 rounded-[35px] w-full"></div>
-                        <p class="text-center text-[10px] font-black text-slate-400 uppercase tracking-widest pt-4">
+                        <p class="text-center text-[10px] font-black text-slate-400 tracking-widest pt-4">
                             Loading ${module.label}...
                         </p>
                     </div>`;
