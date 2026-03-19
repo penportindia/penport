@@ -210,7 +210,7 @@
             white-space: normal;
         }
         #user-display-name {
-            color: rgb(255, 255, 0);
+            color: #ffff00;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -353,21 +353,27 @@
 
     <div id="app-shell" class="hidden">
         <div class="app-header">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center py-4 px-3">
                 <div class="flex items-center gap-4">
                     <button id="back-btn" onclick="history.back()"
-                        class="hidden bg-white/20 p-3 rounded-2xl backdrop-blur-md">
+                        class="hidden bg-white/10 p-3 rounded-2xl backdrop-blur-xl border border-white/20 hover:bg-white/20 transition-all shadow-lg shadow-black/5">
                         <i data-lucide="arrow-left" class="w-6 h-6 text-white"></i>
                     </button>
+                    
                     <div>
-                        <p id="sub-title" class="text-[10px] font-black text-indigo-200 uppercase tracking-widest">
-                            BRANCH</p>
-                        <h2 id="welcome-msg" class="text-2xl font-bold text-white tracking-tight">Hi, <span
-                                id="user-display-name">User</span></h2>
+                        <p id="sub-title" class="text-[9px] font-black text-indigo-300/80 uppercase tracking-[0.2em] mb-0.5">
+                            BRANCH
+                        </p>
+                        <h2 id="welcome-msg" class="text-2xl font-extrabold text-white tracking-tight">
+                            Hi, <span id="user-display-name" class="bg-gradient-to-r from-yellow-500 to-[#ffff00] bg-clip-text text-transparent">User</span>
+                        </h2>
                     </div>
                 </div>
-                <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/10">
-                    <i data-lucide="bell-ring" class="w-6 h-6 text-white"></i>
+
+                <div class="flex flex-col items-center group">
+                    <div class="w-14 h-14 bg-yellow-400 rounded-2xl flex items-center justify-center shadow-[0_8px_30px_rgba(250,204,21,0.3)] border border-yellow-300/50 overflow-hidden transform group-hover:scale-105 transition-transform duration-300">
+                        <img src="https://i.ibb.co/9kGbqWb7/Logo.png" alt="Logo" class="w-10 h-10 object-contain">
+                    </div>
                 </div>
             </div>
 
