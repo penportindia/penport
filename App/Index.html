@@ -161,7 +161,37 @@
             color: #94A3B8;
             font-size: 10px;
             font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.25s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .nav-tab:hover {
+            color: white;
+            transform: translateY(-6px);
+        }
+
+        .nav-tab:hover i {
+            background: var(--primary);
+            padding: 10px;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+            transform: scale(1.1);
+        }
+
+        .nav-tab::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: radial-gradient(circle at center, rgba(79,70,229,0.15), transparent 70%);
+            opacity: 0;
             transition: 0.3s;
+        }
+
+        .nav-tab:hover::after {
+            opacity: 1;
         }
 
         .nav-tab.active {
@@ -176,6 +206,15 @@
             box-shadow: 0 8px 15px rgba(79, 70, 229, 0.4);
         }
 
+        .nav-tab:active {
+            transform: scale(0.9);
+            opacity: 0.7;
+        }
+
+        .nav-tab:active i {
+            transform: scale(0.85);
+        }
+
         .loader-overlay {
             position: fixed;
             inset: 0;
@@ -186,6 +225,7 @@
             align-items: center;
             justify-content: center;
         }
+
         .menu-label {
             display: block;
             width: 100%;
@@ -199,6 +239,28 @@
             word-break: keep-all;
             overflow-wrap: normal;
         }
+        .tap-effect {
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .tap-effect:hover {
+            transform: translateY(-6px) scale(1.05);
+        }
+
+        .tap-effect:hover .w-16 {
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transform: scale(1.1);
+        }
+
+        .tap-effect:hover i {
+            transform: scale(1.15);
+        }
+
+        .tap-effect:active {
+            transform: scale(0.92);
+        }
+
         #page-title {
             text-transform: none;
         }
@@ -208,9 +270,6 @@
 
         .menu-label.multi-word {
             white-space: normal;
-        }
-        #user-display-name {
-            color: #ffff00;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -354,7 +413,9 @@
     <div id="app-shell" class="hidden">
         <div class="app-header">
             <div class="flex justify-between items-center py-4 px-3">
+    
                 <div class="flex items-center gap-4">
+                    
                     <button id="back-btn" onclick="history.back()"
                         class="hidden bg-white/10 p-3 rounded-2xl backdrop-blur-xl border border-white/20 hover:bg-white/20 transition-all shadow-lg shadow-black/5">
                         <i data-lucide="arrow-left" class="w-6 h-6 text-white"></i>
@@ -364,17 +425,33 @@
                         <p id="sub-title" class="text-[9px] font-black text-indigo-300/80 uppercase tracking-[0.2em] mb-0.5">
                             BRANCH
                         </p>
+                        
                         <h2 id="welcome-msg" class="text-2xl font-extrabold text-white tracking-tight">
-                            Hi, <span id="user-display-name" class="bg-gradient-to-r from-yellow-500 to-[#ffff00] bg-clip-text text-transparent">User</span>
+                            Hi, 
+                            <span id="user-display-name" class="text-[#FFE500]">
+                                User
+                            </span>
                         </h2>
                     </div>
+
                 </div>
 
                 <div class="flex flex-col items-center group">
-                    <div class="w-14 h-14 bg-yellow-400 rounded-2xl flex items-center justify-center shadow-[0_8px_30px_rgba(250,204,21,0.3)] border border-yellow-300/50 overflow-hidden transform group-hover:scale-105 transition-transform duration-300">
-                        <img src="https://i.ibb.co/9kGbqWb7/Logo.png" alt="Logo" class="w-10 h-10 object-contain">
+                    
+                    <div class="w-14 h-14 bg-[#FFE500] rounded-2xl flex items-center justify-center 
+                                shadow-[0_8px_30px_rgba(255,229,0,0.3)] 
+                                border border-[#FFE500]/50 
+                                overflow-hidden 
+                                transform group-hover:scale-105 transition-transform duration-300">
+                        
+                        <img src="https://i.ibb.co/9kGbqWb7/Logo.png" 
+                            alt="Logo" 
+                            class="w-10 h-10 object-contain">
+                    
                     </div>
+                    
                 </div>
+
             </div>
 
             <div id="role-tag"
@@ -452,13 +529,13 @@
             roleMap: {
                 'STUDENT': [
                     { id: 'att', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/student/attendance.js' },
-                    { id: 'fees', label: 'Due & Demand', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/student/fees.js' },
+                    { id: 'fees', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/student/fees.js' },
                     { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/student/routine.js' },
                     { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/student/syllabus.js' },
                     { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/student/exam.js' },
                     { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/student/homework.js' },
                     { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/student/notice.js' },
-                    { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/student/support.js' }
+                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/student/support.js' }
                 ],
                 'TEACHER': [
                     { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/teacher/attendance.js' },
@@ -469,7 +546,7 @@
                     { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/teacher/homework.js' },
                     { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/teacher/notice.js' },
                     { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/teacher/payout.js' },
-                    { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/teacher/support.js' }
+                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/teacher/support.js' }
                 ],
                 'COORDINATOR': [
                     { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/coordinator/attendance.js' },
@@ -481,9 +558,9 @@
                     { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/coordinator/homework.js' },
                     { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/coordinator/exam.js' },
                     { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/coordinator/notice.js' },
-                    { id: 'due_demand', label: 'Due & Demand', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/coordinator/due_demand.js' },
+                    { id: 'due_demand', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/coordinator/due_demand.js' },
                     { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/coordinator/payout.js' },
-                    { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/coordinator/support.js' }
+                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/coordinator/support.js' }
                 ],
                 'PRINCIPAL': [
                     { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/principal/attendance.js' },
@@ -495,19 +572,19 @@
                     { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/principal/homework.js' },
                     { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/principal/exam.js' },
                     { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/principal/notice.js' },
-                    { id: 'due_demand', label: 'Due & Demand', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/principal/due_demand.js' },
+                    { id: 'due_demand', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/principal/due_demand.js' },
                     { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/principal/payout.js' },
-                    { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/principal/support.js' }
+                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/principal/support.js' }
                 ],
                 'ACCOUNTANT': [
-                    { id: 'due_demand', label: 'Due & Demand', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/accountant/due_demand.js' },
+                    { id: 'due_demand', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/accountant/due_demand.js' },
                     { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/accountant/payout.js' },
                     { id: 'expenses', label: 'Expenses', icon: 'trending-down', color: 'bg-rose-600', file: 'modules/accountant/expenses.js' },
                     { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/accountant/student_list.js' },
                     { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/accountant/staff_list.js' },
                     { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/accountant/notice.js' },
-                    { id: 'accounts_report', label: 'Finance Report', icon: 'bar-chart-3', color: 'bg-gray-800', file: 'modules/accountant/finance_report.js' },
-                    { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/accountant/support.js' }
+                    { id: 'accounts_report', label: 'Reports', icon: 'bar-chart-3', color: 'bg-gray-800', file: 'modules/accountant/finance_report.js' },
+                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/accountant/support.js' }
                 ],
                 'ADMIN': [
                     { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/admin/attendance.js' },
@@ -519,11 +596,25 @@
                     { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/admin/homework.js' },
                     { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/admin/exam.js' },
                     { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/admin/notice.js' },
-                    { id: 'due_demand', label: 'Due & Demand', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/admin/due_demand.js' },
+                    { id: 'due_demand', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/admin/due_demand.js' },
                     { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/admin/payout.js' },
                     { id: 'expenses', label: 'Expenses', icon: 'trending-down', color: 'bg-rose-600', file: 'modules/admin/expenses.js' },
-                    { id: 'accounts_report', label: 'Finance Report', icon: 'bar-chart-3', color: 'bg-gray-800', file: 'modules/admin/finance_report.js' },
-                    { id: 'support', label: 'Help & Support', icon: 'headset', color: 'bg-teal-600', file: 'modules/admin/support.js' }
+                    { id: 'accounts_report', label: 'Reports', icon: 'bar-chart-3', color: 'bg-gray-800', file: 'modules/admin/finance_report.js' },
+                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/admin/support.js' }
+                ],
+                'CLERK': [
+                    { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/clerk/attendance.js' },
+                    { id: 'att_view', label: 'Logs', icon: 'calendar-check-2', color: 'bg-emerald-500', file: 'modules/clerk/att_view.js' },
+                    { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/clerk/routine.js' },
+                    { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/clerk/student_list.js' },
+                    { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/clerk/staff_list.js' },
+                    { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/clerk/syllabus.js' },
+                    { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/clerk/homework.js' },
+                    { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/clerk/exam.js' },
+                    { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/clerk/notice.js' },
+                    { id: 'due_demand', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/clerk/due_demand.js' },
+                    { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/clerk/payout.js' },
+                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/clerk/support.js' }
                 ]
             },
 
@@ -661,6 +752,10 @@
                 } catch (e) { return branchId; }
             },
 
+            setScrollLock(isHome) {
+                document.body.style.overflow = isHome ? 'hidden' : 'auto';
+            },
+
             navigate(tab, fromPop = false) {
 
                 if (!fromPop) {
@@ -682,9 +777,11 @@
 
                 if (tab === 'home') {
                     document.getElementById('btn-home')?.classList.add('active');
+                    this.setScrollLock(true);
                     this.renderDashboard();
                 } else if (tab === 'profile') {
                     document.getElementById('btn-profile')?.classList.add('active');
+                    this.setScrollLock(false);
                     this.renderProfile();
                 }
 
@@ -753,6 +850,13 @@
 
             async loadModule(moduleId, fromPop = false) {
 
+                this.setScrollLock(false);
+
+                document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+
+                if (moduleId === 'homework') document.getElementById('btn-hw').classList.add('active');
+                if (moduleId === 'notice') document.getElementById('btn-notif').classList.add('active');
+                
                 if (!moduleId) return;
 
                 this.cleanupCurrentModule();
@@ -1103,6 +1207,7 @@
                             else if (designation.includes('ACCOUNTANT')) role = 'ACCOUNTANT';
                             else if (designation.includes('TEACHER')) role = 'TEACHER';
                             else if (designation.includes('STUDENT')) role = 'STUDENT';
+                            else if (designation.includes('CLERK')) role = 'CLERK';
 
                             return true;
                         });
