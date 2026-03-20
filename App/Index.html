@@ -1083,7 +1083,7 @@
                         localStorage.setItem('school_app_session', JSON.stringify(sessionData));
                     }
 
-                    document.getElementById('user-display-name').innerText = newStudent.profile.studentName;
+                    document.getElementById('user-display-name').innerText = getShortName(newStudent.profile.studentName);
                     document.getElementById('sub-title').innerText = this.state.branchName;
 
                     Swal.fire({
@@ -1099,6 +1099,17 @@
                 }
             }
         };
+
+        function getShortName(fullName = "") {
+            const ignoreList = [
+                "md","mr","mrs","dr","ms","miss","prof","rev",
+                "fr","sr","jr","kumari","smt","shri","sri",
+                "kumar","raj","raaj"
+            ];
+
+            const parts = fullName.trim().split(" ");
+            return parts.find(n => !ignoreList.includes(n.toLowerCase())) || "User";
+        }
 
         const Auth = {
             async handleLogin() {
@@ -1224,18 +1235,16 @@
                 const nameEl = document.getElementById('user-display-name');
                 const roleEl = document.getElementById('user-display-role');
                 const subEl = document.getElementById('sub-title');
+
                 const fullName = user.name || user.profile?.studentName || "";
-                const ignoreList = ["md", "mr", "mrs", "dr", "ms", "miss", "prof", "rev", "fr", "sr", "jr", "kumari", "smt", "shri", "sri", "kumar", "raj", "raaj",];
-                const parts = fullName.trim().split(" ");
-                const firstName = parts.find(n => !ignoreList.includes(n.toLowerCase())) || "User";
-                if (nameEl) nameEl.innerText = firstName;
+
+                if (nameEl) nameEl.innerText = getShortName(fullName);
                 if (roleEl) roleEl.innerText = role;
                 if (subEl) subEl.innerText = branchName || "";
 
                 App.initNoticeListener?.();
                 history.replaceState({ type: 'page', value: 'home' }, '', '?page=home');
                 handleRoute();
-
             },
 
             init() {
