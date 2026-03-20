@@ -695,13 +695,17 @@
                 } catch (e) { return branchId; }
             },
 
-            setScrollLock(lock) {
+            setScrollLock(lock, reset = false) {
                 if (lock) {
+                    if (reset) window.scrollTo(0, 0);
                     this.scrollY = window.scrollY;
-                    document.body.classList.add('no-scroll');
+                    document.body.style.position = 'fixed';
                     document.body.style.top = `-${this.scrollY}px`;
+                    document.body.style.width = '100%';
                 } else {
-                    document.body.classList.remove('no-scroll');
+                    document.body.style.position = '';
+                    document.body.style.top = '';
+                    document.body.style.width = '';
                     window.scrollTo(0, this.scrollY || 0);
                 }
             },
@@ -727,7 +731,7 @@
 
                 if (tab === 'home') {
                     document.getElementById('btn-home')?.classList.add('active');
-                    this.setScrollLock(true);
+                    this.setScrollLock(true, true);
                     this.renderDashboard();
                 } else if (tab === 'profile') {
                     document.getElementById('btn-profile')?.classList.add('active');
