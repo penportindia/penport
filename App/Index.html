@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png">
@@ -18,7 +19,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <style>
         :root {
             --primary: #4F46E5;
@@ -160,37 +160,7 @@
             color: #94A3B8;
             font-size: 10px;
             font-weight: 700;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.25s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .nav-tab:hover {
-            color: white;
-            transform: translateY(-6px);
-        }
-
-        .nav-tab:hover i {
-            background: var(--primary);
-            padding: 10px;
-            border-radius: 18px;
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
-            transform: scale(1.1);
-        }
-
-        .nav-tab::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 20px;
-            background: radial-gradient(circle at center, rgba(79,70,229,0.15), transparent 70%);
-            opacity: 0;
             transition: 0.3s;
-        }
-
-        .nav-tab:hover::after {
-            opacity: 1;
         }
 
         .nav-tab.active {
@@ -205,15 +175,6 @@
             box-shadow: 0 8px 15px rgba(79, 70, 229, 0.4);
         }
 
-        .nav-tab:active {
-            transform: scale(0.9);
-            opacity: 0.7;
-        }
-
-        .nav-tab:active i {
-            transform: scale(0.85);
-        }
-
         .loader-overlay {
             position: fixed;
             inset: 0;
@@ -224,7 +185,6 @@
             align-items: center;
             justify-content: center;
         }
-
         .menu-label {
             display: block;
             width: 100%;
@@ -238,28 +198,6 @@
             word-break: keep-all;
             overflow-wrap: normal;
         }
-        .tap-effect {
-            transition: all 0.25s ease;
-            position: relative;
-        }
-
-        .tap-effect:hover {
-            transform: translateY(-6px) scale(1.05);
-        }
-
-        .tap-effect:hover .w-16 {
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            transform: scale(1.1);
-        }
-
-        .tap-effect:hover i {
-            transform: scale(1.15);
-        }
-
-        .tap-effect:active {
-            transform: scale(0.92);
-        }
-
         #page-title {
             text-transform: none;
         }
@@ -269,6 +207,12 @@
 
         .menu-label.multi-word {
             white-space: normal;
+        }
+        .no-scroll {
+            overflow: hidden;
+            height: 100vh;
+            position: fixed;
+            width: 100%;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -751,8 +695,15 @@
                 } catch (e) { return branchId; }
             },
 
-            setScrollLock(isHome) {
-                document.body.style.overflow = isHome ? 'hidden' : 'auto';
+            setScrollLock(lock) {
+                if (lock) {
+                    this.scrollY = window.scrollY;
+                    document.body.classList.add('no-scroll');
+                    document.body.style.top = `-${this.scrollY}px`;
+                } else {
+                    document.body.classList.remove('no-scroll');
+                    window.scrollTo(0, this.scrollY || 0);
+                }
             },
 
             navigate(tab, fromPop = false) {
