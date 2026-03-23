@@ -154,28 +154,6 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .nav-tab {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #94A3B8;
-            font-size: 10px;
-            font-weight: 700;
-            transition: 0.3s;
-        }
-
-        .nav-tab.active {
-            color: white;
-        }
-
-        .nav-tab.active i {
-            background: var(--primary);
-            padding: 10px;
-            border-radius: 18px;
-            transform: translateY(-8px);
-            box-shadow: 0 8px 15px rgba(79, 70, 229, 0.4);
-        }
-
         .loader-overlay {
             position: fixed;
             inset: 0;
@@ -210,14 +188,24 @@
             white-space: normal;
         }
         .no-scroll {
-            overflow: hidden;
-            height: 100vh;
             position: fixed;
             width: 100%;
+            overflow: hidden;
         }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .tap-effect:active { transform: scale(0.92); transition: 0.1s; }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .tap-effect:active {
+            transform: scale(0.92);
+            transition: transform 0.1s;
+        }
     </style>
 </head>
 
@@ -765,51 +753,87 @@
                 } catch (e) { return branchId; }
             },
 
+            data() {
+                return {
+                    scrollY: 0,
+                    isScrollLocked: false
+                };
+            },
+
             setScrollLock(lock, reset = false) {
+                const body = document.body;
+
                 if (lock) {
-                    if (reset) window.scrollTo(0, 0);
-                    this.scrollY = window.scrollY;
-                    document.body.style.position = 'fixed';
-                    document.body.style.top = `-${this.scrollY}px`;
-                    document.body.style.width = '100%';
+                    if (this.isScrollLocked) return;
+
+                    this.scrollY = window.scrollY || window.pageYOffset;
+
+                    if (reset) {
+                        this.scrollY = 0;
+                        window.scrollTo(0, 0);
+                    }
+
+                    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+                    body.style.paddingRight = scrollBarWidth + 'px';
+
+                    body.classList.add('no-scroll');
+                    body.style.top = `-${this.scrollY}px`;
+
+                    this.isScrollLocked = true;
+
                 } else {
-                    document.body.style.position = '';
-                    document.body.style.top = '';
-                    document.body.style.width = '';
-                    window.scrollTo(0, this.scrollY || 0);
+                    if (!this.isScrollLocked) return;
+
+                    const y = this.scrollY;
+
+                    body.classList.remove('no-scroll');
+                    body.style.top = '';
+                    body.style.paddingRight = '';
+
+                    setTimeout(() => {
+                        window.scrollTo(0, y || 0);
+                    }, 0);
+
+                    this.isScrollLocked = false;
                 }
             },
 
             navigate(tab, fromPop = false) {
-
                 if (!fromPop) {
                     history.pushState({ type: 'page', value: tab }, '', '');
                 }
 
-                const tabs = document.querySelectorAll('.nav-tab');
-                if (tabs) tabs.forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.nav-tab').forEach(el => {
+                    el.classList.remove('active');
+                });
 
                 const backBtn = document.getElementById('back-btn');
                 const welcomeMsg = document.getElementById('welcome-msg');
                 const roleTag = document.getElementById('role-tag');
                 const pageTitle = document.getElementById('page-title');
 
-                if (backBtn) backBtn.classList.add('hidden');
-                if (welcomeMsg) welcomeMsg.classList.remove('hidden');
-                if (roleTag) roleTag.classList.remove('hidden');
-                if (pageTitle) pageTitle.classList.add('hidden');
+                backBtn?.classList.add('hidden');
+                welcomeMsg?.classList.remove('hidden');
+                roleTag?.classList.remove('hidden');
+                pageTitle?.classList.add('hidden');
 
-                if (tab === 'home') {
-                    document.getElementById('btn-home')?.classList.add('active');
-                    this.setScrollLock(true, true);
-                    this.renderDashboard();
-                } else if (tab === 'profile') {
-                    document.getElementById('btn-profile')?.classList.add('active');
-                    this.setScrollLock(false);
-                    this.renderProfile();
+                switch (tab) {
+                    case 'home':
+                        document.getElementById('btn-home')?.classList.add('active');
+                        this.setScrollLock(true, true);
+                        this.renderDashboard();
+                        break;
+
+                    case 'profile':
+                        document.getElementById('btn-profile')?.classList.add('active');
+                        this.setScrollLock(false);
+                        this.renderProfile();
+                        break;
                 }
 
-                if (window.lucide) lucide.createIcons();
+                requestAnimationFrame(() => {
+                    if (window.lucide) lucide.createIcons();
+                });
             },
 
             renderDashboard() {
