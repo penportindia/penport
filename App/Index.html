@@ -47,43 +47,75 @@
         }
 
         .login-hero {
-        background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
-        min-height: clamp(280px, 45svh, 520px);
-        padding-top: max(env(safe-area-inset-top), 20px);
-        padding-bottom: clamp(20px, 5vh, 40px);
-        padding-left: 16px;
-        padding-right: 16px;
-        border-bottom-left-radius: clamp(30px, 8vw, 60px);
-        border-bottom-right-radius: clamp(30px, 8vw, 60px);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: clamp(12px, 2vh, 24px);
-        position: relative;
-        overflow: hidden;
-        text-align: center;
-    }
-        
-        .logo-box {
-            background: white;
-            padding: 25px;
-            border-radius: 35px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            z-index: 10;
-            animation: float 4s ease-in-out infinite;
+            background: linear-gradient(-45deg, #4F46E5, #3730A3, #4338CA, #6366F1);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            min-height: clamp(200px, 35svh, 340px);
+            padding: max(env(safe-area-inset-top), 15px) 16px clamp(15px, 3vh, 25px);
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
         }
 
-        @keyframes float {
+        .login-hero::before,
+        .login-hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.6;
+            z-index: 1;
+        }
 
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
+        .login-hero::before {
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            top: -50px;
+            left: -50px;
+            animation: floatOrb 12s infinite ease-in-out;
+        }
 
-            50% {
-                transform: translateY(-15px);
-            }
+        .login-hero::after {
+            width: 150px;
+            height: 150px;
+            background: rgba(99, 102, 241, 0.4);
+            bottom: -30px;
+            right: -30px;
+            animation: floatOrb 10s infinite ease-in-out reverse;
+        }
+
+        .logo-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 35px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+            z-index: 10;
+            margin-top: 25px;
+            animation: floatOnly 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(20px) translateX(10px); }
+        }
+
+        @keyframes floatOnly {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
         }
 
         .glass-input-box {
