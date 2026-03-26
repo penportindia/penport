@@ -48,12 +48,10 @@
 
         .login-hero {
             background: linear-gradient(-45deg, #4F46E5, #3730A3, #4338CA, #6366F1);
-            background-size: 400% 400%;
-            animation: gradientShift 10s ease infinite;
             min-height: clamp(200px, 35svh, 340px);
             padding: max(env(safe-area-inset-top), 15px) 16px clamp(15px, 3vh, 25px);
-            border-bottom-left-radius: 60px;
-            border-bottom-right-radius: 60px;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -61,34 +59,6 @@
             position: relative;
             overflow: hidden;
             text-align: center;
-        }
-
-        .login-hero::before,
-        .login-hero::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(50px);
-            opacity: 0.6;
-            z-index: 1;
-        }
-
-        .login-hero::before {
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.2);
-            top: -50px;
-            left: -50px;
-            animation: floatOrb 12s infinite ease-in-out;
-        }
-
-        .login-hero::after {
-            width: 150px;
-            height: 150px;
-            background: rgba(99, 102, 241, 0.4);
-            bottom: -30px;
-            right: -30px;
-            animation: floatOrb 10s infinite ease-in-out reverse;
         }
 
         .logo-box {
@@ -100,12 +70,6 @@
             z-index: 10;
             margin-top: 25px;
             animation: floatOnly 4s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         @keyframes floatOrb {
@@ -363,7 +327,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-center items-center pt-16 pb-10 -mt-4">
+            <div class="flex justify-center items-center pt-12 pb-10 -mt-4">
                 <a href="https://penportindia.github.io/penport/" target="_blank"
                     class="group relative px-6 py-3 transition-all duration-500">
                     <div
