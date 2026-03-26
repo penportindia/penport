@@ -1,7 +1,6 @@
 if (!window.__GALLERY_INIT__) {
 window.__GALLERY_INIT__ = true;
-    window.previewImages = [];
-    window.previewIndex = 0;
+
     window.socialUtils = window.socialUtils || {
         timeAgo: (ts) => {
             const ms = Date.now() - ts;
@@ -13,21 +12,8 @@ window.__GALLERY_INIT__ = true;
             if (hr < 24) return hr + "h ago";
             return Math.floor(hr / 24) + "d ago";
         },
-
-        downloadImage: (url, filename) => {
-            const isAndroid = /Android/i.test(navigator.userAgent);
-
-            if (isAndroid) {
-                window.location.href = url;
-            } else {
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = filename || 'wings-academy-photo.jpg';
-                link.target = '_blank';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
+        previewImage: (url) => {
+            window.open(url, '_blank');
         }
     };
 
@@ -150,52 +136,51 @@ window.__GALLERY_INIT__ = true;
     };
 
     window.handleImagePreview = (input) => {
-        const preview = document.getElementById('media-preview');
-        preview.innerHTML = '';
         [...input.files].forEach(file => {
             const reader = new FileReader();
             reader.onload = (e) => {
-                preview.innerHTML += `<div class="aspect-square"><img src="${e.target.result}" class="w-full h-full object-cover rounded-xl"></div>`;
+                const imgWindow = window.open('', '_blank');
+                imgWindow.document.write(`
+                    <html>
+                        <head><title>Image Preview</title></head>
+                        <body style="margin:0; display:flex; justify-content:center; align-items:center; height:100vh; background:#000;">
+                            <img src="${e.target.result}" style="max-width:100%; max-height:100%;" />
+                        </body>
+                    </html>
+                `);
+                imgWindow.document.close();
             };
             reader.readAsDataURL(file);
         });
     };
 
-    window.openFullPreview = (images, index = 0) => {
+    window.openFullPreview = (url) => {
         const modal = document.getElementById('full-preview-modal');
         const img = document.getElementById('full-preview-img');
         const dlBtn = document.getElementById('download-btn-dynamic');
-
-        window.previewImages = images;
-        window.previewIndex = index;
-
-        img.src = images[index];
+        img.src = url;
         modal.style.display = 'flex';
+        dlBtn.onclick = async () => {
+            try {
+                const response = await fetch(url);
+                const blob = await response.blob();
 
-        dlBtn.onclick = () => {
-            socialUtils.downloadImage(window.previewImages[window.previewIndex]);
-        };
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = 'wings-photo.jpg';
 
-        let startX = 0;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
 
-        modal.ontouchstart = (e) => {
-            startX = e.touches[0].clientX;
-        };
-
-        modal.ontouchend = (e) => {
-            const endX = e.changedTouches[0].clientX;
-            const diff = startX - endX;
-
-            if (Math.abs(diff) < 50) return;
-
-            if (diff > 0) {
-                window.previewIndex = (window.previewIndex + 1) % window.previewImages.length;
-            } else {
-                window.previewIndex = (window.previewIndex - 1 + window.previewImages.length) % window.previewImages.length;
+                window.URL.revokeObjectURL(blobUrl);
+            } catch (e) {
+                const downloadUrl = url.replace('/upload/', '/upload/fl_attachment/');
+                window.open(downloadUrl, '_blank');
             }
-
-            img.src = window.previewImages[window.previewIndex];
         };
+        if(window.lucide) lucide.createIcons();
     };
 
     window.closeFullPreview = () => { document.getElementById('full-preview-modal').style.display = 'none'; };
@@ -338,7 +323,7 @@ window.__GALLERY_INIT__ = true;
                     <div class="px-4 pb-4">
                         <div class="${getGridClass(post.images.length)} rounded-[30px] overflow-hidden gap-1">
                             ${post.images.map((img, i) => `
-                                <img src="${img}" onclick='openFullPreview(${JSON.stringify(post.images)}, ${i})'
+                                <img src="${img}" onclick="openFullPreview('${img}')"
                                 class="w-full h-full object-cover img-grid-item ${getSpanClass(post.images.length, i)}">
                             `).join('')}
                         </div>
@@ -375,31 +360,4 @@ window.__GALLERY_INIT__ = true;
         const res = await Swal.fire({ title: 'Delete?', showCancelButton: true });
         if (res.isConfirmed) db.ref(`social_feed/${id}`).remove();
     }
-
-    let startX = 0;
-
-    const modal = document.getElementById('full-preview-modal');
-
-    modal.addEventListener('touchstart', (e) => {
-        if (!window.previewImages.length) return;
-        startX = e.touches[0].clientX;
-    });
-
-    modal.addEventListener('touchend', (e) => {
-        if (!window.previewImages.length) return;
-
-        const endX = e.changedTouches[0].clientX;
-        const diff = startX - endX;
-
-        if (Math.abs(diff) < 50) return;
-
-        if (diff > 0) {
-            window.previewIndex = (window.previewIndex + 1) % window.previewImages.length;
-        } else {
-            window.previewIndex = (window.previewIndex - 1 + window.previewImages.length) % window.previewImages.length;
-        }
-
-        document.getElementById('full-preview-img').src =
-            window.previewImages[window.previewIndex];
-    });
 }
