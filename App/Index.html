@@ -69,6 +69,7 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             z-index: 10;
             animation: float 4s ease-in-out infinite;
+            margin-top: 40px;
         }
 
         @keyframes float {
@@ -97,7 +98,7 @@
 
         .app-header {
             background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
-            padding: 80px 25px 60px;
+            padding: clamp(40px, 8vh, 80px) 25px clamp(30px, 6vh, 60px);
             border-bottom-left-radius: 45px;
             border-bottom-right-radius: 45px;
         }
@@ -107,7 +108,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             padding: 0 20px;
-            margin-top: -45px;
+            margin-top: -clamp(20px, 5vh, 45px);
         }
 
         .modern-card {
@@ -359,7 +360,7 @@
     </div>
 
     <div id="app-shell" class="hidden">
-        <div class="app-header">
+        <div id="app-header" class="app-header">
             <div class="flex justify-between items-center py-4 px-3">
     
                 <div class="flex items-center justify-between w-full px-2 py-4">
@@ -816,6 +817,7 @@
                 const welcomeMsg = document.getElementById('welcome-msg');
                 const roleTag = document.getElementById('role-tag');
                 const pageTitle = document.getElementById('page-title');
+                const header = document.getElementById('app-header');
 
                 backBtn?.classList.add('hidden');
                 welcomeMsg?.classList.remove('hidden');
@@ -826,12 +828,14 @@
                     case 'home':
                         document.getElementById('btn-home')?.classList.add('active');
                         this.setScrollLock(true, true);
+                        header?.classList.remove('hidden');
                         this.renderDashboard();
                         break;
 
                     case 'profile':
                         document.getElementById('btn-profile')?.classList.add('active');
                         this.setScrollLock(false);
+                        header?.classList.remove('hidden');
                         this.renderProfile();
                         break;
                 }
@@ -904,6 +908,9 @@
             async loadModule(moduleId, fromPop = false) {
 
                 this.setScrollLock(false);
+
+                const header = document.getElementById('app-header');
+                header?.classList.add('hidden');
 
                 document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
 
