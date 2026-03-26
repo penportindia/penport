@@ -1,6 +1,7 @@
 if (!window.__GALLERY_INIT__) {
 window.__GALLERY_INIT__ = true;
-
+    window.previewImages = [];
+    window.previewIndex = 0;
     window.socialUtils = window.socialUtils || {
         timeAgo: (ts) => {
             const ms = Date.now() - ts;
@@ -12,20 +13,20 @@ window.__GALLERY_INIT__ = true;
             if (hr < 24) return hr + "h ago";
             return Math.floor(hr / 24) + "d ago";
         },
-        downloadImage: async (url, filename) => {
-            try {
-                const response = await fetch(url);
-                const blob = await response.blob();
-                const blobUrl = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = blobUrl;
-                a.download = filename || 'wings-academy-photo.jpg';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(blobUrl);
-            } catch (e) {
-                Swal.fire('Error', 'Download failed.', 'error');
+
+        downloadImage: (url, filename) => {
+            const isAndroid = /Android/i.test(navigator.userAgent);
+
+            if (isAndroid) {
+                window.location.href = url;
+            } else {
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename || 'wings-academy-photo.jpg';
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             }
         }
     };
@@ -160,33 +161,41 @@ window.__GALLERY_INIT__ = true;
         });
     };
 
-    window.openFullPreview = (url) => {
+    window.openFullPreview = (images, index = 0) => {
         const modal = document.getElementById('full-preview-modal');
         const img = document.getElementById('full-preview-img');
         const dlBtn = document.getElementById('download-btn-dynamic');
-        img.src = url;
+
+        window.previewImages = images;
+        window.previewIndex = index;
+
+        img.src = images[index];
         modal.style.display = 'flex';
-        dlBtn.onclick = async () => {
-            try {
-                const response = await fetch(url);
-                const blob = await response.blob();
 
-                const blobUrl = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = blobUrl;
-                a.download = 'wings-photo.jpg';
-
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-
-                window.URL.revokeObjectURL(blobUrl);
-            } catch (e) {
-                const downloadUrl = url.replace('/upload/', '/upload/fl_attachment/');
-                window.open(downloadUrl, '_blank');
-            }
+        dlBtn.onclick = () => {
+            socialUtils.downloadImage(window.previewImages[window.previewIndex]);
         };
-        if(window.lucide) lucide.createIcons();
+
+        let startX = 0;
+
+        modal.ontouchstart = (e) => {
+            startX = e.touches[0].clientX;
+        };
+
+        modal.ontouchend = (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+
+            if (Math.abs(diff) < 50) return;
+
+            if (diff > 0) {
+                window.previewIndex = (window.previewIndex + 1) % window.previewImages.length;
+            } else {
+                window.previewIndex = (window.previewIndex - 1 + window.previewImages.length) % window.previewImages.length;
+            }
+
+            img.src = window.previewImages[window.previewIndex];
+        };
     };
 
     window.closeFullPreview = () => { document.getElementById('full-preview-modal').style.display = 'none'; };
@@ -329,7 +338,7 @@ window.__GALLERY_INIT__ = true;
                     <div class="px-4 pb-4">
                         <div class="${getGridClass(post.images.length)} rounded-[30px] overflow-hidden gap-1">
                             ${post.images.map((img, i) => `
-                                <img src="${img}" onclick="openFullPreview('${img}')"
+                                <img src="${img}" onclick='openFullPreview(${JSON.stringify(post.images)}, ${i})'
                                 class="w-full h-full object-cover img-grid-item ${getSpanClass(post.images.length, i)}">
                             `).join('')}
                         </div>
@@ -362,8 +371,35 @@ window.__GALLERY_INIT__ = true;
         return count === 1 ? "h-80" : "h-40"; 
     }
 
-    async function deletePost(id) {
+    window.deletePost = async function(id) {
         const res = await Swal.fire({ title: 'Delete?', showCancelButton: true });
         if (res.isConfirmed) db.ref(`social_feed/${id}`).remove();
     }
+
+    let startX = 0;
+
+    const modal = document.getElementById('full-preview-modal');
+
+    modal.addEventListener('touchstart', (e) => {
+        if (!window.previewImages.length) return;
+        startX = e.touches[0].clientX;
+    });
+
+    modal.addEventListener('touchend', (e) => {
+        if (!window.previewImages.length) return;
+
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) < 50) return;
+
+        if (diff > 0) {
+            window.previewIndex = (window.previewIndex + 1) % window.previewImages.length;
+        } else {
+            window.previewIndex = (window.previewIndex - 1 + window.previewImages.length) % window.previewImages.length;
+        }
+
+        document.getElementById('full-preview-img').src =
+            window.previewImages[window.previewIndex];
+    });
 }
