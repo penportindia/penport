@@ -69,7 +69,6 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             z-index: 10;
             animation: float 4s ease-in-out infinite;
-            margin-top: 40px;
         }
 
         @keyframes float {
@@ -141,7 +140,7 @@
 
         .bottom-nav-dock {
             position: fixed;
-            bottom: 25px;
+            bottom: 35px;
             left: 20px;
             right: 20px;
             background: rgba(15, 23, 42, 0.95);
@@ -403,7 +402,7 @@
             </div>
 
             <div id="role-tag"
-                class="mt-6 inline-flex items-center px-4 py-2 bg-white/10 border border-white/10 rounded-full">
+                class="-mt-2 ml-5 inline-flex items-center px-4 py-2 bg-white/10 border border-white/10 rounded-full">
                 <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
                 <span id="user-display-role"
                     class="text-[10px] font-black text-white uppercase tracking-widest">ROLE</span>
@@ -429,9 +428,9 @@
                 <div class="relative">
                     <i data-lucide="bell" class="w-6 h-6 mb-1.5 text-white group-[.active]:text-[#FFE500] group-hover:text-[#FFE500] group-hover:rotate-12 transition-all duration-300"></i>
                     
-                    <span id="notif-badge" class="absolute -top-1.5 -right-1.5 flex h-5 w-5 bg-gradient-to-br from-[#FF0000] to-[#C00000] rounded-full items-center justify-center shadow-[0_0_12px_rgba(255,0,0,0.6)] transition-all duration-300">
+                    <span id="notif-badge" class="absolute -top-1.5 -right-1.5 flex h-5 w-5 bg-gradient-to-br from-[#FF0000] to-[#C00000] rounded-full items-center justify-center transition-all duration-300">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF0000] opacity-40"></span>
-                        <span class="relative text-white text-[10px] font-[1000] leading-none tracking-tighter drop-shadow-[0_1px_2px_rgba(255,255,255,0.4)] brightness-150">
+                        <span class="relative text-white text-[10px] font-[1000] leading-none tracking-tighter brightness-150">
                             0
                         </span>
                         <span class="absolute top-0.5 left-0.5 w-full h-full bg-gradient-to-tr from-transparent via-white/30 to-transparent rounded-full pointer-events-none"></span>
@@ -781,12 +780,10 @@
 
                     const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
                     body.style.paddingRight = scrollBarWidth + 'px';
-
                     body.classList.add('no-scroll');
                     body.style.top = `-${this.scrollY}px`;
 
                     this.isScrollLocked = true;
-
                 } else {
                     if (!this.isScrollLocked) return;
 
@@ -796,22 +793,24 @@
                     body.style.top = '';
                     body.style.paddingRight = '';
 
-                    setTimeout(() => {
+                    requestAnimationFrame(() => {
                         window.scrollTo(0, y || 0);
-                    }, 0);
+                    });
 
                     this.isScrollLocked = false;
                 }
+            },
+
+            setActiveTab(tabId) {
+                document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+                const btn = document.getElementById(tabId);
+                if (btn) btn.classList.add('active');
             },
 
             navigate(tab, fromPop = false) {
                 if (!fromPop) {
                     history.pushState({ type: 'page', value: tab }, '', '');
                 }
-
-                document.querySelectorAll('.nav-tab').forEach(el => {
-                    el.classList.remove('active');
-                });
 
                 const backBtn = document.getElementById('back-btn');
                 const welcomeMsg = document.getElementById('welcome-msg');
@@ -824,20 +823,18 @@
                 roleTag?.classList.remove('hidden');
                 pageTitle?.classList.add('hidden');
 
-                switch (tab) {
-                    case 'home':
-                        document.getElementById('btn-home')?.classList.add('active');
-                        this.setScrollLock(true, true);
-                        header?.classList.remove('hidden');
-                        this.renderDashboard();
-                        break;
+                if (tab === 'home') {
+                    this.setActiveTab('btn-home');
+                    this.setScrollLock(true, true);
+                    header?.classList.remove('hidden');
+                    this.renderDashboard();
+                }
 
-                    case 'profile':
-                        document.getElementById('btn-profile')?.classList.add('active');
-                        this.setScrollLock(false);
-                        header?.classList.remove('hidden');
-                        this.renderProfile();
-                        break;
+                if (tab === 'profile') {
+                    this.setActiveTab('btn-profile');
+                    this.setScrollLock(false);
+                    header?.classList.remove('hidden');
+                    this.renderProfile();
                 }
 
                 requestAnimationFrame(() => {
@@ -861,16 +858,13 @@
 
                         html += `
                         <div onclick="App.loadModule('${m.id}')" class="tap-effect flex flex-col items-center cursor-pointer">
-
                             <div class="w-16 h-16 rounded-[22px] flex items-center justify-center mb-3 shadow-lg relative overflow-hidden ${m.color}">
                                 <div class="absolute inset-0 bg-white/10 opacity-60"></div>
                                 <i data-lucide="${m.icon}" class="w-8 h-8 text-white relative z-10 drop-shadow-md"></i>
                             </div>
-
                             <span class="menu-label ${wordClass}">
                                 ${m.label}
                             </span>
-
                         </div>`;
                     });
 
@@ -891,43 +885,39 @@
                     this.state.activeListeners.forEach(ref => { try { ref.off(); } catch(e){} });
                     this.state.activeListeners = [];
                 }
+
                 if (this.state.activeIntervals?.length) {
                     this.state.activeIntervals.forEach(id => clearInterval(id));
                     this.state.activeIntervals = [];
                 }
+
                 if (this.state.activeTimeouts?.length) {
                     this.state.activeTimeouts.forEach(id => clearTimeout(id));
                     this.state.activeTimeouts = [];
                 }
+
                 const oldScript = document.getElementById('module-script');
                 if (oldScript) oldScript.remove();
+
                 const mainContent = document.getElementById('main-content');
                 if (mainContent) mainContent.innerHTML = '';
             },
 
             async loadModule(moduleId, fromPop = false) {
+                if (!moduleId) return;
 
                 this.setScrollLock(false);
 
                 const header = document.getElementById('app-header');
                 header?.classList.add('hidden');
 
-                document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
-
-                if (moduleId === 'homework') document.getElementById('btn-hw').classList.add('active');
-                if (moduleId === 'notice') document.getElementById('btn-notif').classList.add('active');
-                
-                if (!moduleId) return;
+                if (moduleId === 'homework') this.setActiveTab('btn-hw');
+                if (moduleId === 'notice') this.setActiveTab('btn-notif');
 
                 this.cleanupCurrentModule();
 
                 if (!fromPop) {
                     history.pushState({ type: 'module', value: moduleId }, '', '');
-                }
-
-                if (this.state.activeListeners?.length) {
-                    this.state.activeListeners.forEach(ref => ref.off());
-                    this.state.activeListeners = [];
                 }
 
                 const menu = this.roleMap?.[this.state.role];
@@ -948,6 +938,7 @@
                 document.getElementById('back-btn')?.classList.remove('hidden');
 
                 const mainContent = document.getElementById('main-content');
+
                 if (mainContent) {
                     mainContent.innerHTML = `
                     <div class="px-6 mt-6 space-y-4 animate-pulse">
@@ -987,7 +978,7 @@
                         window[func](this.state.user);
                     }
                 };
-                
+
                 document.body.appendChild(script);
             },
 
