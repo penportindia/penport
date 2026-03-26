@@ -47,7 +47,7 @@
         }
 
         .login-hero {
-            background: linear-gradient(-45deg, #4F46E5, #3730A3, #4338CA, #6366F1);
+            background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
             min-height: clamp(200px, 35svh, 340px);
             padding: max(env(safe-area-inset-top), 15px) 16px clamp(15px, 3vh, 25px);
             border-bottom-left-radius: 50px;
@@ -56,7 +56,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             overflow: hidden;
             text-align: center;
         }
@@ -327,7 +329,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-center items-center pt-12 pb-10 -mt-4">
+            <div class="flex justify-center items-center pt-10 pb-10 -mt-4">
                 <a href="https://penportindia.github.io/penport/" target="_blank"
                     class="group relative px-6 py-3 transition-all duration-500">
                     <div
