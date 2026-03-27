@@ -49,7 +49,7 @@
         .login-hero {
             background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
             min-height: clamp(200px, 35svh, 340px);
-            padding: max(env(safe-area-inset-top), 15px) 16px clamp(15px, 3vh, 25px);
+            padding: max(env(safe-area-inset-top), 10px) 16px clamp(10px, 2vh, 20px);
             border-bottom-left-radius: 50px;
             border-bottom-right-radius: 50px;
             display: flex;
@@ -96,19 +96,9 @@
 
         .app-header {
             background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
-            padding: clamp(40px, 8vh, 80px) 25px clamp(30px, 6vh, 60px);
+            padding: clamp(30px, 6vh, 60px) 25px clamp(20px, 4vh, 40px);
             border-bottom-left-radius: 45px;
             border-bottom-right-radius: 45px;
-        }
-
-        :root {
-            --app-top-space: env(safe-area-inset-top, 16px);
-        }
-
-        .content-area {
-            margin-top: var(--app-top-space);
-            min-height: calc(100svh - 220px);
-            padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 90px);
         }
 
         .dashboard-grid {
@@ -116,9 +106,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             padding: 0 20px;
-            margin: 0 auto;
-            width: 100%;
-            max-width: 520px;
+            margin-top: -clamp(20px, 5vh, 45px);
         }
 
         .modern-card {
@@ -216,6 +204,11 @@
         .tap-effect:active {
             transform: scale(0.92);
             transition: transform 0.1s;
+        }
+        #role-tag {
+            position: absolute;
+            top: 170px;
+            left: 22px;
         }
     </style>
 </head>
@@ -339,7 +332,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-center items-center pt-8 pb-10 -mt-4">
+            <div class="flex justify-center items-center pt-12 pb-10 -mt-4">
                 <a href="https://penportindia.github.io/penport/" target="_blank"
                     class="group relative px-6 py-3 transition-all duration-500">
                     <div
@@ -413,7 +406,7 @@
             </div>
 
             <div id="role-tag"
-                class="-mt-2 ml-5 inline-flex items-center px-4 py-2 bg-white/10 border border-white/10 rounded-full">
+                class="-mt-6 ml-5 inline-flex items-center px-4 py-2 bg-white/10 border border-white/10 rounded-full">
                 <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
                 <span id="user-display-role"
                     class="text-[10px] font-black text-white uppercase tracking-widest">ROLE</span>
@@ -421,7 +414,7 @@
             <h2 id="page-title" class="hidden text-2xl font-black text-white mt-2 uppercase">Module</h2>
         </div>
 
-        <div id="main-content" class="relative z-20 pb-32 content-area"></div>
+        <div id="main-content" class="relative z-20 pb-32"></div>
         
         <div class="bottom-nav-dock flex justify-around items-center bg-black backdrop-blur-lg border-t border-white/10 py-3 rounded-[1.8rem]">
     
@@ -507,7 +500,7 @@
             roleMap: {
                 'STUDENT': [
                     { id: 'att', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/student/attendance.js' },
-                    { id: 'fees', label: 'Fees', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/student/fees.js' },
+                    { id: 'fees', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/student/fees.js' },
                     { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/student/routine.js' },
                     { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/student/syllabus.js' },
                     { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/student/exam.js' },
@@ -970,17 +963,8 @@
 
                 script.onerror = () => {
                     if (mainContent) {
-                        if (window.lastFailed === '${moduleId}') {
-                            setTimeout(() => {
-                                window.lastFailed = null;
-                                window.location.reload();
-                            }, 1000);
-                            return;
-                        }
-
-                        window.lastFailed = '${moduleId}';
                         mainContent.innerHTML = `
-                        <div class="flex flex-col items-center justify-center py-60 px-10 text-center">
+                        <div class="flex flex-col items-center justify-center py-20 px-10 text-center">
                             <i data-lucide="wifi-off" class="w-10 h-10 text-rose-500 mb-4"></i>
                             <h3 class="font-black text-slate-800">Connection Error</h3>
                             <button onclick="App.loadModule('${moduleId}')" 
@@ -1137,33 +1121,6 @@
                     <button onclick="Auth.handleLogout()" class="w-full bg-rose-50 text-rose-600 font-black py-6 rounded-[30px] flex items-center justify-center gap-3 hover:bg-rose-100 active:scale-95 transition-all">
                         <i data-lucide="log-out" class="w-5 h-5"></i> Sign Out
                     </button>
-
-                    <div class="flex justify-center items-center pt-4 pb-10 -mt-4">
-                        <a href="https://penportindia.github.io/penport/" target="_blank"
-                            class="group relative px-6 py-3 transition-all duration-500">
-
-                            <div
-                                class="absolute inset-0 bg-blue-500/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                            </div>
-
-                            <div class="relative flex items-center gap-3">
-                                <span class="relative flex h-2 w-2">
-                                    <span
-                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                                </span>
-
-                                <div class="flex flex-col items-start">
-                                    <p
-                                        class="text-sm font-bold text-slate-200 tracking-wide group-hover:text-white transition-colors duration-300">
-                                        Penport <span class="text-blue-500 group-hover:text-blue-400">India</span>
-                                    </p>
-                                </div>
-                            </div>
-
-                        </a>
-                    </div>
-
                 </div>
             `;
 
