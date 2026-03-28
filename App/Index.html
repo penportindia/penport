@@ -101,18 +101,28 @@
             border-bottom-right-radius: 45px;
         }
 
+        #main-content {
+            min-height: calc(100vh - clamp(140px, 18vh, 220px) - 90px);
+        }
+
+        #main-content.centered {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            gap: clamp(10px, 2vh, 18px);
             padding: 0 20px;
-            margin-top: -clamp(20px, 5vh, 45px);
+            width: 100%;
         }
 
         .modern-card {
             background: white;
-            padding: 18px 10px;
-            border-radius: 28px;
+            padding: clamp(14px, 2.5vh, 22px) clamp(8px, 2vw, 14px);
+            border-radius: clamp(20px, 3vw, 28px);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -127,25 +137,25 @@
         }
 
         .icon-circle {
-            width: 54px;
-            height: 54px;
-            border-radius: 18px;
+            width: clamp(44px, 6vw, 60px);
+            height: clamp(44px, 6vw, 60px);
+            border-radius: clamp(14px, 2vw, 18px);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
+            margin-bottom: clamp(6px, 1.5vh, 12px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
         }
 
         .bottom-nav-dock {
             position: fixed;
-            bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
-            left: 20px;
-            right: 20px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+            left: 16px;
+            right: 16px;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(15px);
             border-radius: 30px;
-            padding: 12px 10px;
+            padding: 10px 8px;
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -414,7 +424,7 @@
             <h2 id="page-title" class="hidden text-2xl font-black text-white mt-2 uppercase">Module</h2>
         </div>
 
-        <div id="main-content" class="relative z-20 pb-32 content-area" style="margin-top: 5px;"></div>
+        <div id="main-content" class="relative z-20 pb-32"></div>
         
         <div class="bottom-nav-dock flex justify-around items-center bg-black backdrop-blur-lg border-t border-white/10 py-3 rounded-[1.8rem]">
     
@@ -772,37 +782,68 @@
             setScrollLock(lock, reset = false) {
                 const body = document.body;
 
-                if (lock) {
-                    if (this.isScrollLocked) return;
+                if (lock === this.isScrollLocked) return;
 
-                    this.scrollY = window.scrollY || window.pageYOffset;
+                try {
+                    if (lock) {
+                        this.scrollY = window.scrollY || window.pageYOffset || 0;
 
-                    if (reset) {
-                        this.scrollY = 0;
-                        window.scrollTo(0, 0);
+                        if (reset) {
+                            this.scrollY = 0;
+                            window.scrollTo(0, 0);
+                        }
+
+                        const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+                        body.style.position = 'fixed';
+                        body.style.top = `-${this.scrollY}px`;
+                        body.style.left = '0';
+                        body.style.right = '0';
+                        body.style.width = '100%';
+                        body.style.overflow = 'hidden';
+
+                        if (scrollBarWidth > 0) {
+                            body.style.paddingRight = scrollBarWidth + 'px';
+                        }
+
+                        this.isScrollLocked = true;
+
+                    } else {
+                        const y = this.scrollY || 0;
+
+                        body.style.position = '';
+                        body.style.top = '';
+                        body.style.left = '';
+                        body.style.right = '';
+                        body.style.width = '';
+                        body.style.overflow = '';
+                        body.style.paddingRight = '';
+
+                        this.isScrollLocked = false;
+
+                        requestAnimationFrame(() => {
+                            window.scrollTo(0, y);
+                        });
                     }
-
-                    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-                    body.style.paddingRight = scrollBarWidth + 'px';
-                    body.classList.add('no-scroll');
-                    body.style.top = `-${this.scrollY}px`;
-
-                    this.isScrollLocked = true;
-                } else {
-                    if (!this.isScrollLocked) return;
-
-                    const y = this.scrollY;
-
-                    body.classList.remove('no-scroll');
-                    body.style.top = '';
-                    body.style.paddingRight = '';
-
-                    requestAnimationFrame(() => {
-                        window.scrollTo(0, y || 0);
-                    });
-
-                    this.isScrollLocked = false;
+                } catch (e) {
+                    this.forceUnlockScroll();
                 }
+            },
+
+            forceUnlockScroll() {
+                const body = document.body;
+
+                body.style.position = '';
+                body.style.top = '';
+                body.style.left = '';
+                body.style.right = '';
+                body.style.width = '';
+                body.style.overflow = '';
+                body.style.paddingRight = '';
+
+                this.isScrollLocked = false;
+
+                window.scrollTo(0, 0);
             },
 
             setActiveTab(tabId) {
@@ -812,6 +853,8 @@
             },
 
             navigate(tab, fromPop = false) {
+                this.forceUnlockScroll();
+
                 if (!fromPop) {
                     history.pushState({ type: 'page', value: tab }, '', '');
                 }
@@ -846,16 +889,32 @@
                 });
             },
 
+            initScrollSafety() {
+                window.addEventListener('popstate', () => {
+                    this.forceUnlockScroll();
+                });
+
+                window.addEventListener('beforeunload', () => {
+                    this.forceUnlockScroll();
+                });
+
+                document.addEventListener('visibilitychange', () => {
+                    if (document.visibilityState === 'hidden') {
+                        this.forceUnlockScroll();
+                    }
+                });
+            },
+
             renderDashboard() {
                 const menu = this.roleMap[this.state.role];
                 if (!menu) return;
 
-                let html = `<div class="no-scrollbar flex overflow-x-auto snap-x snap-mandatory w-full py-8">`;
+                let html = `<div class="no-scrollbar flex overflow-x-auto snap-x snap-mandatory w-full h-full">`;
 
                 for (let i = 0; i < menu.length; i += 9) {
                     const chunk = menu.slice(i, i + 9);
 
-                    html += `<div class="min-w-full grid grid-cols-3 gap-y-10 gap-x-2 px-6 snap-center items-start content-start">`;
+                    html += `<div class="min-w-full h-full grid grid-cols-3 gap-y-8 gap-x-2 px-6 snap-center place-content-center">`;
 
                     chunk.forEach(m => {
                         const wordClass = m.label.trim().split(/\s+/).length === 1 ? 'single-word' : 'multi-word';
@@ -879,6 +938,7 @@
 
                 const content = document.getElementById('main-content');
                 if (content) {
+                    content.classList.add('centered');
                     content.innerHTML = html;
                     if (window.lucide) lucide.createIcons();
                 }
@@ -904,6 +964,9 @@
                 if (oldScript) oldScript.remove();
 
                 const mainContent = document.getElementById('main-content');
+                if (mainContent) {
+                    mainContent.classList.remove('centered');
+                }
                 if (mainContent) mainContent.innerHTML = '';
             },
 
@@ -963,8 +1026,17 @@
 
                 script.onerror = () => {
                     if (mainContent) {
+                        if (window.lastFailed === '${moduleId}') {
+                            setTimeout(() => {
+                                window.lastFailed = null;
+                                window.location.reload();
+                            }, 1000);
+                            return;
+                        }
+
+                        window.lastFailed = '${moduleId}';
                         mainContent.innerHTML = `
-                        <div class="flex flex-col items-center justify-center py-20 px-10 text-center">
+                        <div class="flex flex-col items-center justify-center py-60 px-10 text-center">
                             <i data-lucide="wifi-off" class="w-10 h-10 text-rose-500 mb-4"></i>
                             <h3 class="font-black text-slate-800">Connection Error</h3>
                             <button onclick="App.loadModule('${moduleId}')" 
@@ -996,7 +1068,7 @@
                     : (u.designation || 'Staff Member');
 
                 let profileHTML = `
-                <div class="px-6 -mt-36 space-y-6 pb-20">
+                <div class="w-full px-6 -mt-36 space-y-6 pb-20 self-start">
                     <div class="bg-white rounded-[45px] p-8 flex flex-col items-center text-center shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white/50 relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full -mr-16 -mt-16 opacity-50"></div>
                         <div class="w-28 h-28 bg-gradient-to-br from-indigo-600 to-violet-700 rounded-[40px] flex items-center justify-center text-4xl font-black text-white shadow-2xl mb-6 transform rotate-3 hover:rotate-0 transition-transform duration-500">
@@ -1199,6 +1271,8 @@
                 }
             }
         };
+
+        App.initScrollSafety();
 
         function updateNotifBadge() {
             let count = localStorage.getItem("unreadNotices") || 0;
@@ -1486,7 +1560,10 @@
             }
         }
 
-        window.addEventListener('popstate', (event) => handleRoute(event.state));
+        window.addEventListener('popstate', (event) => {
+            App.forceUnlockScroll();
+            handleRoute(event.state);
+        });
 
         function openNoticeModule() {
             localStorage.setItem("unreadNotices", 0);
