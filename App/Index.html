@@ -18,6 +18,7 @@
     <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="menu.js"></script>
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -476,24 +477,10 @@
         } catch (err) {
             console.error("Firebase Initialization Error:", err);
         }
-        const db = firebase.database();
+        const db = firebase?.database ? firebase.database() : null;
 
         const CLOUDINARY_UPLOAD_PRESET = 'twfauplode';
         const CLOUDINARY_CLOUD_NAME = 'dxci08oys';
-
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => {
-                        console.log('SW Registered');
-                        if ('Notification' in window && Notification.permission === 'default') {
-                            Notification.requestPermission();
-                        }
-                    })
-                    .catch(err => console.log('SW Registration Failed', err));
-            });
-        }
 
         const App = {
             state: {
@@ -507,136 +494,27 @@
                 activeTimeouts: []
             },
 
-            roleMap: {
-                'STUDENT': [
-                    { id: 'att', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/student/attendance.js' },
-                    { id: 'fees', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/student/fees.js' },
-                    { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/student/routine.js' },
-                    { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/student/syllabus.js' },
-                    { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/student/exam.js' },
-                    { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/student/homework.js' },
-                    { id: 'gallery', label: 'Gallery', icon: 'images', color: 'bg-pink-500', file: 'modules/student/gallery.js' },
-                    { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/student/notice.js' },
-                    { id: 'events', label: 'Events', icon: 'calendar-days', color: 'bg-purple-500', file: 'modules/student/events.js' },
-                    { id: 'library', label: 'Library', icon: 'library-big', color: 'bg-stone-600', file: 'modules/student/library.js' },
-                    { id: 'about', label: 'About', icon: 'info', color: 'bg-blue-500', file: 'modules/student/about.js' },
-                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/student/support.js' }
-                ],
-                'TEACHER': [
-                    { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/teacher/attendance.js' },
-                    { id: 'att_view', label: 'Logs', icon: 'calendar-check-2', color: 'bg-emerald-500', file: 'modules/teacher/att_view.js' },
-                    { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/teacher/routine.js' },
-                    { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/teacher/syllabus.js' },
-                    { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/teacher/exam.js' },
-                    { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/teacher/homework.js' },
-                    { id: 'gallery', label: 'Gallery', icon: 'images', color: 'bg-pink-500', file: 'modules/teacher/gallery.js' },
-                    { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/teacher/notice.js' },
-                    { id: 'events', label: 'Events', icon: 'calendar-days', color: 'bg-purple-500', file: 'modules/teacher/events.js' },
-                    { id: 'library', label: 'Library', icon: 'library-big', color: 'bg-stone-600', file: 'modules/teacher/library.js' },
-                    { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/teacher/payout.js' },
-                    { id: 'about', label: 'About', icon: 'info', color: 'bg-blue-500', file: 'modules/teacher/about.js' },
-                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/teacher/support.js' }
-                ],
-                'COORDINATOR': [
-                    { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/coordinator/attendance.js' },
-                    { id: 'att_view', label: 'Logs', icon: 'calendar-check-2', color: 'bg-emerald-500', file: 'modules/coordinator/att_view.js' },
-                    { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/coordinator/routine.js' },
-                    { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/coordinator/student_list.js' },
-                    { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/coordinator/staff_list.js' },
-                    { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/coordinator/syllabus.js' },
-                    { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/coordinator/homework.js' },
-                    { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/coordinator/exam.js' },
-                    { id: 'gallery', label: 'Gallery', icon: 'images', color: 'bg-pink-500', file: 'modules/coordinator/gallery.js' },
-                    { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/coordinator/notice.js' },
-                    { id: 'events', label: 'Events', icon: 'calendar-days', color: 'bg-purple-500', file: 'modules/coordinator/events.js' },
-                    { id: 'library', label: 'Library', icon: 'library-big', color: 'bg-stone-600', file: 'modules/coordinator/library.js' },
-                    { id: 'due_demand', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/coordinator/due_demand.js' },
-                    { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/coordinator/payout.js' },
-                    { id: 'about', label: 'About', icon: 'info', color: 'bg-blue-500', file: 'modules/coordinator/about.js' },
-                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/coordinator/support.js' }
-                ],
-                'PRINCIPAL': [
-                    { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/principal/attendance.js' },
-                    { id: 'att_view', label: 'Logs', icon: 'calendar-check-2', color: 'bg-emerald-500', file: 'modules/principal/att_view.js' },
-                    { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/principal/routine.js' },
-                    { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/principal/student_list.js' },
-                    { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/principal/staff_list.js' },
-                    { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/principal/syllabus.js' },
-                    { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/principal/homework.js' },
-                    { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/principal/exam.js' },
-                    { id: 'gallery', label: 'Gallery', icon: 'images', color: 'bg-pink-500', file: 'modules/principal/gallery.js' },
-                    { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/principal/notice.js' },
-                    { id: 'events', label: 'Events', icon: 'calendar-days', color: 'bg-purple-500', file: 'modules/principal/events.js' },
-                    { id: 'library', label: 'Library', icon: 'library-big', color: 'bg-stone-600', file: 'modules/principal/library.js' },
-                    { id: 'due_demand', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/principal/due_demand.js' },
-                    { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/principal/payout.js' },
-                    { id: 'about', label: 'About', icon: 'info', color: 'bg-blue-500', file: 'modules/principal/about.js' },
-                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/principal/support.js' }
-                ],
-                'ACCOUNTANT': [
-                    { id: 'due_demand', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/accountant/due_demand.js' },
-                    { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/accountant/payout.js' },
-                    { id: 'expenses', label: 'Expenses', icon: 'trending-down', color: 'bg-rose-600', file: 'modules/accountant/expenses.js' },
-                    { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/accountant/student_list.js' },
-                    { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/accountant/staff_list.js' },
-                    { id: 'gallery', label: 'Gallery', icon: 'images', color: 'bg-pink-500', file: 'modules/accountant/gallery.js' },
-                    { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/accountant/notice.js' },
-                    { id: 'events', label: 'Events', icon: 'calendar-days', color: 'bg-purple-500', file: 'modules/accountant/events.js' },
-                    { id: 'library', label: 'Library', icon: 'library-big', color: 'bg-stone-600', file: 'modules/accountant/library.js' },
-                    { id: 'accounts_report', label: 'Reports', icon: 'bar-chart-3', color: 'bg-gray-800', file: 'modules/accountant/finance_report.js' },
-                    { id: 'about', label: 'About', icon: 'info', color: 'bg-blue-500', file: 'modules/accountant/about.js' },
-                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/accountant/support.js' }
-                ],
-                'ADMIN': [
-                    { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/admin/attendance.js' },
-                    { id: 'att_view', label: 'Logs', icon: 'calendar-check-2', color: 'bg-emerald-500', file: 'modules/admin/att_view.js' },
-                    { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/admin/student_list.js' },
-                    { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/admin/staff_list.js' },
-                    { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/admin/routine.js' },
-                    { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/admin/syllabus.js' },
-                    { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/admin/homework.js' },
-                    { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/admin/exam.js' },
-                    { id: 'gallery', label: 'Gallery', icon: 'images', color: 'bg-pink-500', file: 'modules/admin/gallery.js' },
-                    { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/admin/notice.js' },
-                    { id: 'events', label: 'Events', icon: 'calendar-days', color: 'bg-purple-500', file: 'modules/admin/events.js' },
-                    { id: 'library', label: 'Library', icon: 'library-big', color: 'bg-stone-600', file: 'modules/admin/library.js' },
-                    { id: 'due_demand', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/admin/due_demand.js' },
-                    { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/admin/payout.js' },
-                    { id: 'expenses', label: 'Expenses', icon: 'trending-down', color: 'bg-rose-600', file: 'modules/admin/expenses.js' },
-                    { id: 'accounts_report', label: 'Reports', icon: 'bar-chart-3', color: 'bg-gray-800', file: 'modules/admin/finance_report.js' },
-                    { id: 'about', label: 'About', icon: 'info', color: 'bg-blue-500', file: 'modules/admin/about.js' },
-                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/admin/support.js' }
-                ],
-                'CLERK': [
-                    { id: 'att_take', label: 'Attendance', icon: 'user-check', color: 'bg-indigo-600', file: 'modules/clerk/attendance.js' },
-                    { id: 'att_view', label: 'Logs', icon: 'calendar-check-2', color: 'bg-emerald-500', file: 'modules/clerk/att_view.js' },
-                    { id: 'routine', label: 'Class Routine', icon: 'calendar-range', color: 'bg-violet-600', file: 'modules/clerk/routine.js' },
-                    { id: 'student_list', label: 'Students', icon: 'users', color: 'bg-blue-600', file: 'modules/clerk/student_list.js' },
-                    { id: 'staff_list', label: 'Staffs', icon: 'users-round', color: 'bg-cyan-600', file: 'modules/clerk/staff_list.js' },
-                    { id: 'syllabus', label: 'Syllabus', icon: 'book-open-check', color: 'bg-rose-500', file: 'modules/clerk/syllabus.js' },
-                    { id: 'homework', label: 'Homework', icon: 'pen-tool', color: 'bg-amber-500', file: 'modules/clerk/homework.js' },
-                    { id: 'exam', label: 'Exams', icon: 'graduation-cap', color: 'bg-sky-500', file: 'modules/clerk/exam.js' },
-                    { id: 'gallery', label: 'Gallery', icon: 'images', color: 'bg-pink-500', file: 'modules/clerk/gallery.js' },
-                    { id: 'notice', label: 'Notice', icon: 'megaphone', color: 'bg-orange-500', file: 'modules/clerk/notice.js' },
-                    { id: 'events', label: 'Events', icon: 'calendar-days', color: 'bg-purple-500', file: 'modules/clerk/events.js' },
-                    { id: 'library', label: 'Library', icon: 'library-big', color: 'bg-stone-600', file: 'modules/clerk/library.js' },
-                    { id: 'due_demand', label: 'Due', icon: 'hand-coins', color: 'bg-red-500', file: 'modules/clerk/due_demand.js' },
-                    { id: 'payout', label: 'Payroll', icon: 'indian-rupee', color: 'bg-slate-700', file: 'modules/clerk/payout.js' },
-                    { id: 'about', label: 'About', icon: 'info', color: 'bg-blue-500', file: 'modules/clerk/about.js' },
-                    { id: 'support', label: 'Help', icon: 'headset', color: 'bg-teal-600', file: 'modules/clerk/support.js' }
-                ]
-            },
+            currentTab: 'home',
+            currentModule: null,
+            roleMap: MenuConfig.roleMap,
 
             initNoticeListener() {
+                if (this._noticeRef) {
+                    try { this._noticeRef.off(); } catch (e) {}
+                }
+
                 const noticesRef = db.ref('notices');
-                noticesRef.off();
+                this._noticeRef = noticesRef;
 
                 const now = Date.now();
                 const LAST_24_HOURS = now - (24 * 60 * 60 * 1000);
 
-                const seenNotices = new Set(
-                    JSON.parse(localStorage.getItem("seenNotices") || "[]")
-                );
+                let seenNotices;
+                try {
+                    seenNotices = new Set(JSON.parse(localStorage.getItem("seenNotices") || "[]"));
+                } catch {
+                    seenNotices = new Set();
+                }
 
                 noticesRef
                     .orderByChild('timestamp')
@@ -647,32 +525,42 @@
                             const notice = snapshot.val();
                             const noticeId = snapshot.key;
 
-                            if (!notice || !this.state.user) return;
+                            if (!notice || !noticeId || !this.state.user || !this.state.role) return;
 
-                            const noticeTime = notice.timestamp || 0;
-
+                            const noticeTime = typeof notice.timestamp === 'number' ? notice.timestamp : 0;
                             if (noticeTime < LAST_24_HOURS) return;
+
                             if (seenNotices.has(noticeId)) return;
 
-                            seenNotices.add(noticeId);
-                            localStorage.setItem(
-                                "seenNotices",
-                                JSON.stringify([...seenNotices].slice(-50))
-                            );
+                            const nowTime = Date.now();
+                            if (this.lastNoticeTime && nowTime - this.lastNoticeTime < 2000) return;
+                            this.lastNoticeTime = nowTime;
 
                             if (!this.processIncomingNotice(notice)) return;
 
-                            let count = parseInt(localStorage.getItem("unreadNotices") || "0");
+                            seenNotices.add(noticeId);
+                            try {
+                                localStorage.setItem("seenNotices", JSON.stringify(Array.from(seenNotices).slice(-50)));
+                            } catch (e) {}
+
+                            let count = 0;
+                            try {
+                                count = parseInt(localStorage.getItem("unreadNotices") || "0", 10) || 0;
+                            } catch (e) {}
                             count += 1;
-                            localStorage.setItem("unreadNotices", count);
-                            updateNotifBadge();
+                            try {
+                                localStorage.setItem("unreadNotices", String(count));
+                            } catch (e) {}
 
-                            this.triggerNotificationUI(notice);
+                            if (typeof updateNotifBadge === 'function') updateNotifBadge();
 
-                        } catch (err) {
-                            console.error("Notice Processing Error:", err);
-                        }
-                    }, (error) => console.error("Notice Listener Error:", error));
+                            if (!this._lastUIShownTime || nowTime - this._lastUIShownTime > 1500) {
+                                this._lastUIShownTime = nowTime;
+                                this.triggerNotificationUI(notice);
+                            }
+
+                        } catch (e) {}
+                    }, () => {});
             },
 
             processIncomingNotice(notice) {
@@ -699,7 +587,7 @@
 
                 if (!targetMatch) return false;
 
-                if (noticeBranch !== 'ALL' && noticeBranch !== currentBranch) return false;
+                if (noticeBranch && noticeBranch !== 'ALL' && noticeBranch !== currentBranch) return false;
 
                 if (isStudent) {
                     const userClass = normalize(user?.academic?.class);
@@ -707,8 +595,8 @@
 
                     if (!userClass || !userSection) return false;
 
-                    if (noticeClass !== 'ALL' && noticeClass !== userClass) return false;
-                    if (noticeSection !== 'ALL' && noticeSection !== userSection) return false;
+                    if (noticeClass && noticeClass !== 'ALL' && noticeClass !== userClass) return false;
+                    if (noticeSection && noticeSection !== 'ALL' && noticeSection !== userSection) return false;
                 }
 
                 return true;
@@ -716,19 +604,34 @@
 
             triggerNotificationUI(notice) {
                 try {
-                    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3');
-                    audio.volume = 0.4;
-                    audio.play().catch(() => {});
-                } catch {}
-
-                try {
-                    if (Notification.permission === "granted") {
-                        new Notification(`New Notice: ${notice.title || ''}`, {
-                            body: notice.msg || '',
-                            icon: '/icon-192.png'
-                        });
+                    if (!this._audio) {
+                        this._audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3');
+                        this._audio.volume = 0.4;
                     }
-                } catch {}
+
+                    const now = Date.now();
+                    if (!this._lastSoundTime || now - this._lastSoundTime > 1500) {
+                        this._audio.currentTime = 0;
+                        this._audio.play().catch(() => {});
+                        this._lastSoundTime = now;
+                    }
+                } catch (e) {}
+
+                if (typeof Swal === 'undefined') return;
+
+                const escapeHTML = (str = '') =>
+                    str.replace(/[&<>"']/g, m => ({
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        '"': '&quot;',
+                        "'": '&#39;'
+                    }[m]));
+
+                const safeTitle = escapeHTML(String(notice?.title || ''));
+                const safeMsg = escapeHTML(String(notice?.msg || ''));
+
+                if (!safeTitle && !safeMsg) return;
 
                 Swal.fire({
                     toast: true,
@@ -752,13 +655,15 @@
                                     <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest">New Announcement</span>
                                     <span class="text-[10px] text-slate-400 italic">Just now</span>
                                 </div>
-                                <h3 class="text-[14px] font-bold text-slate-800 truncate">${notice.title || ''}</h3>
-                                <p class="text-[12px] text-slate-500 mt-1">${notice.msg || ''}</p>
+                                <h3 class="text-[14px] font-bold text-slate-800 truncate">${safeTitle}</h3>
+                                <p class="text-[12px] text-slate-500 mt-1">${safeMsg}</p>
                             </div>
                         </div>
                     `,
-                    didOpen: (el) => {
-                        if (window.lucide) lucide.createIcons();
+                    didOpen: () => {
+                        if (window.lucide) {
+                            requestAnimationFrame(() => lucide.createIcons());
+                        }
                     },
                     customClass: {
                         popup: 'shadow-lg p-4 rounded-2xl',
@@ -766,10 +671,10 @@
                         timerProgressBar: 'bg-indigo-500 h-[3px]'
                     }
                 }).then(res => {
-                    if (res.isConfirmed) {
-                        localStorage.setItem("unreadNotices", "0");
-                        updateNotifBadge();
-                        this.loadModule('notice');
+                    if (res && res.isConfirmed) {
+                        try { localStorage.setItem("unreadNotices", "0"); } catch (e) {}
+                        if (typeof updateNotifBadge === 'function') updateNotifBadge();
+                        if (this && typeof this.loadModule === 'function') this.loadModule('notice');
                     }
                 });
             },
@@ -854,6 +759,7 @@
                 this.isScrollLocked = false;
 
                 window.scrollTo(0, 0);
+                document.documentElement.style.scrollBehavior = '';
             },
 
             setActiveTab(tabId) {
@@ -864,9 +770,11 @@
 
             navigate(tab, fromPop = false) {
                 this.forceUnlockScroll();
+                this.currentTab = tab;
+                this.currentModule = null;
 
-                if (!fromPop) {
-                    history.pushState({ type: 'page', value: tab }, '', '');
+                if (location.hash !== `#${tab}`) {
+                    history.pushState({ type: 'page', value: tab }, '', `#${tab}`);
                 }
 
                 const backBtn = document.getElementById('back-btn');
@@ -882,7 +790,7 @@
 
                 if (tab === 'home') {
                     this.setActiveTab('btn-home');
-                    this.setScrollLock(true, true);
+                    this.setScrollLock(false, true);
                     header?.classList.remove('hidden');
                     this.renderDashboard();
                 }
@@ -895,14 +803,13 @@
                 }
 
                 requestAnimationFrame(() => {
-                    if (window.lucide) lucide.createIcons();
+                    requestAnimationFrame(() => {
+                        if (window.lucide) lucide.createIcons();
+                    });
                 });
             },
 
             initScrollSafety() {
-                window.addEventListener('popstate', () => {
-                    this.forceUnlockScroll();
-                });
 
                 window.addEventListener('beforeunload', () => {
                     this.forceUnlockScroll();
@@ -930,7 +837,7 @@
                         const wordClass = m.label.trim().split(/\s+/).length === 1 ? 'single-word' : 'multi-word';
 
                         html += `
-                        <div onclick="App.loadModule('${m.id}')" class="tap-effect flex flex-col items-center cursor-pointer">
+                        <div onclick="if(!App._isLoadingModule) App.loadModule('${m.id}')" class="tap-effect flex flex-col items-center cursor-pointer">
                             <div class="w-16 h-16 rounded-[22px] flex items-center justify-center mb-3 shadow-lg relative overflow-hidden ${m.color}">
                                 <div class="absolute inset-0 bg-white/10 opacity-60"></div>
                                 <i data-lucide="${m.icon}" class="w-8 h-8 text-white relative z-10 drop-shadow-md"></i>
@@ -949,82 +856,132 @@
                 const content = document.getElementById('main-content');
                 if (content) {
                     content.classList.add('centered');
-                    content.innerHTML = html;
+                    content.replaceChildren();
+                    content.insertAdjacentHTML('afterbegin', html);
                     if (window.lucide) lucide.createIcons();
                 }
             },
 
             cleanupCurrentModule() {
-                if (this.state.activeListeners?.length) {
-                    this.state.activeListeners.forEach(ref => { try { ref.off(); } catch(e){} });
+                if (Array.isArray(this.state.activeListeners) && this.state.activeListeners.length) {
+                    for (let i = 0; i < this.state.activeListeners.length; i++) {
+                        try {
+                            const ref = this.state.activeListeners[i];
+                            if (ref && typeof ref.off === 'function') ref.off();
+                        } catch (e) {}
+                    }
+                    this.state.activeListeners.length = 0;
+                } else {
                     this.state.activeListeners = [];
                 }
 
-                if (this.state.activeIntervals?.length) {
-                    this.state.activeIntervals.forEach(id => clearInterval(id));
+                if (Array.isArray(this.state.activeIntervals) && this.state.activeIntervals.length) {
+                    for (let i = 0; i < this.state.activeIntervals.length; i++) {
+                        try { clearInterval(this.state.activeIntervals[i]); } catch (e) {}
+                    }
+                    this.state.activeIntervals.length = 0;
+                } else {
                     this.state.activeIntervals = [];
                 }
 
-                if (this.state.activeTimeouts?.length) {
-                    this.state.activeTimeouts.forEach(id => clearTimeout(id));
+                if (Array.isArray(this.state.activeTimeouts) && this.state.activeTimeouts.length) {
+                    for (let i = 0; i < this.state.activeTimeouts.length; i++) {
+                        try { clearTimeout(this.state.activeTimeouts[i]); } catch (e) {}
+                    }
+                    this.state.activeTimeouts.length = 0;
+                } else {
                     this.state.activeTimeouts = [];
                 }
 
                 const oldScript = document.getElementById('module-script');
-                if (oldScript) oldScript.remove();
+                if (oldScript && oldScript.parentNode) {
+                    try {
+                        oldScript.src = '';
+                        oldScript.parentNode.removeChild(oldScript);
+                    } catch (e) {}
+                }
 
                 const mainContent = document.getElementById('main-content');
                 if (mainContent) {
+                    mainContent.style.opacity = 0;
                     mainContent.classList.remove('centered');
+                    mainContent.replaceChildren();
                 }
-                if (mainContent) mainContent.innerHTML = '';
             },
 
             async loadModule(moduleId, fromPop = false) {
-                if (!moduleId) return;
+                if (this._isLoadingModule) return;
+                this._isLoadingModule = true;
+
+                if (!moduleId) {
+                    this._isLoadingModule = false;
+                    return;
+                }
 
                 this.setScrollLock(false);
+                this.currentModule = moduleId;
 
                 const header = document.getElementById('app-header');
-                header?.classList.add('hidden');
+                if (header) header.classList.add('hidden');
 
                 if (moduleId === 'homework') this.setActiveTab('btn-hw');
                 if (moduleId === 'notice') this.setActiveTab('btn-notif');
 
                 this.cleanupCurrentModule();
 
-                if (!fromPop) {
-                    history.pushState({ type: 'module', value: moduleId }, '', '');
+                if (!fromPop && location.hash !== `#module-${moduleId}`) {
+                    history.pushState({ type: 'module', value: moduleId }, '', `#module-${moduleId}`);
                 }
 
-                const menu = this.roleMap?.[this.state.role];
-                if (!menu) return;
+                const menu = this.roleMap && this.roleMap[this.state.role];
+                if (!menu) {
+                    this._isLoadingModule = false;
+                    return;
+                }
 
                 const module = menu.find(m => m.id === moduleId);
-                if (!module) return;
+                if (!module) {
+                    this._isLoadingModule = false;
+                    return;
+                }
 
-                document.getElementById('welcome-msg')?.classList.add('hidden');
-                document.getElementById('role-tag')?.classList.add('hidden');
+                const welcome = document.getElementById('welcome-msg');
+                const roleTag = document.getElementById('role-tag');
+                if (welcome) welcome.classList.add('hidden');
+                if (roleTag) roleTag.classList.add('hidden');
 
                 const pageTitle = document.getElementById('page-title');
                 if (pageTitle) {
                     pageTitle.classList.remove('hidden');
-                    pageTitle.innerText = module.label;
+                    pageTitle.innerText = module.label || '';
                 }
 
-                document.getElementById('back-btn')?.classList.remove('hidden');
+                const backBtn = document.getElementById('back-btn');
+                if (backBtn) backBtn.classList.remove('hidden');
 
                 const mainContent = document.getElementById('main-content');
 
                 if (mainContent) {
-                    mainContent.innerHTML = `
-                    <div class="px-6 mt-6 space-y-4 animate-pulse">
-                        <div class="h-12 bg-slate-200 rounded-3xl w-3/4"></div>
-                        <div class="h-40 bg-slate-100 rounded-[35px] w-full"></div>
-                        <p class="text-center text-[10px] font-black text-slate-400 tracking-widest pt-4">
-                            Loading ${module.label}...
-                        </p>
-                    </div>`;
+                    mainContent.style.opacity = 0;
+
+                    requestAnimationFrame(() => {
+                        const safeLabel = module.label ? String(module.label) : '';
+
+                        mainContent.replaceChildren();
+                        mainContent.insertAdjacentHTML('afterbegin', `
+                            <div class="px-6 mt-6 space-y-4 animate-pulse">
+                                <div class="h-12 bg-slate-200 rounded-3xl w-3/4"></div>
+                                <div class="h-40 bg-slate-100 rounded-[35px] w-full"></div>
+                                <p class="text-center text-[10px] font-black text-slate-400 tracking-widest pt-4">
+                                    Loading ${safeLabel}...
+                                </p>
+                            </div>
+                        `);
+
+                        requestAnimationFrame(() => {
+                            mainContent.style.opacity = 1;
+                        });
+                    });
                 }
 
                 const oldScript = document.getElementById('module-script');
@@ -1032,37 +989,71 @@
 
                 const script = document.createElement('script');
                 script.id = 'module-script';
-                script.src = `${module.file}?v=${Date.now()}`;
+                script.src = module.file;
 
                 script.onerror = () => {
                     if (mainContent) {
-                        if (window.lastFailed === '${moduleId}') {
+                        if (window.lastFailed === moduleId) {
                             setTimeout(() => {
                                 window.lastFailed = null;
                                 window.location.reload();
                             }, 1000);
+                            this._isLoadingModule = false;
                             return;
                         }
 
-                        window.lastFailed = '${moduleId}';
-                        mainContent.innerHTML = `
-                        <div class="flex flex-col items-center justify-center py-60 px-10 text-center">
-                            <i data-lucide="wifi-off" class="w-10 h-10 text-rose-500 mb-4"></i>
-                            <h3 class="font-black text-slate-800">Connection Error</h3>
-                            <button onclick="App.loadModule('${moduleId}')" 
-                                class="mt-4 bg-indigo-600 text-white px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest shadow-lg">
-                                Retry Now
-                            </button>
-                        </div>`;
+                        window.lastFailed = moduleId;
+
+                        mainContent.style.opacity = 0;
+
+                        requestAnimationFrame(() => {
+                            const safeId = String(moduleId);
+
+                            mainContent.replaceChildren();
+                            mainContent.insertAdjacentHTML('afterbegin', `
+                                <div class="flex flex-col items-center justify-center py-60 px-10 text-center">
+                                    <i data-lucide="wifi-off" class="w-10 h-10 text-rose-500 mb-4"></i>
+                                    <h3 class="font-black text-slate-800">Connection Error</h3>
+                                    <button 
+                                        data-retry="${safeId}"
+                                        class="mt-4 bg-indigo-600 text-white px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest shadow-lg">
+                                        Retry Now
+                                    </button>
+                                </div>
+                            `);
+
+                            const btn = mainContent.querySelector('[data-retry]');
+                            if (btn) {
+                                btn.onclick = () => {
+                                    if (window.App && typeof App.loadModule === 'function') {
+                                        App.loadModule(safeId);
+                                    }
+                                };
+                            }
+
+                            requestAnimationFrame(() => {
+                                mainContent.style.opacity = 1;
+                                if (window.lucide) lucide.createIcons();
+                            });
+                        });
                     }
-                    if (window.lucide) lucide.createIcons();
+
+                    this._isLoadingModule = false;
                 };
 
                 script.onload = () => {
-                    const func = `render_${moduleId}`;
-                    if (typeof window[func] === 'function') {
-                        window[func](this.state.user);
+                    const fn = window[`render_${moduleId}`];
+                    if (typeof fn === 'function') {
+                        fn(this.state.user);
                     }
+
+                    requestAnimationFrame(() => {
+                        const content = document.getElementById('main-content');
+                        if (content) content.style.opacity = 1;
+                        if (window.lucide) lucide.createIcons();
+                    });
+
+                    this._isLoadingModule = false;
                 };
 
                 document.body.appendChild(script);
@@ -1278,6 +1269,10 @@
                     });
 
                     this.navigate('home');
+
+                    if (typeof window.initAttendanceAlerts === 'function') {
+                        window.initAttendanceAlerts(this, db);
+                    }
                 }
             }
         };
@@ -1286,7 +1281,7 @@
 
         function updateNotifBadge() {
             let count = localStorage.getItem("unreadNotices") || 0;
-            count = parseInt(count);
+            count = parseInt(count, 10) || 0;
 
             const badge = document.getElementById("notif-badge");
             const text = badge?.querySelector("span.relative");
@@ -1372,16 +1367,7 @@
 
                             user = d;
 
-                            const designation = (d.designation || '').toUpperCase();
-                            if (designation.includes('ADMIN')) role = 'ADMIN';
-                            else if (designation.includes('PRINCIPAL')) role = 'PRINCIPAL';
-                            else if (designation.includes('COORDINATOR')) role = 'COORDINATOR';
-                            else if (designation.includes('ACCOUNTANT')) role = 'ACCOUNTANT';
-                            else if (designation.includes('TEACHER')) role = 'TEACHER';
-                            else if (designation.includes('STUDENT')) role = 'STUDENT';
-                            else if (designation.includes('CLERK')) role = 'CLERK';
-
-                            return true;
+                            role = MenuConfig.roleResolver(d.designation);
                         });
                     }
 
@@ -1462,8 +1448,30 @@
                 if (subEl) subEl.innerText = branchName || "";
 
                 App.initNoticeListener?.();
-                history.replaceState({ type: 'page', value: 'home' }, '', '?page=home');
+
+                history.replaceState({ type: 'page', value: 'home' }, '', '#home');
                 handleRoute();
+
+                if (role === 'STUDENT') {
+                    const run = () => {
+                        try {
+                            if (typeof window.checkAttendanceAlert === 'function') {
+                                window.checkAttendanceAlert(App, db);
+                            } else {
+                                const s = document.createElement('script');
+                                s.src = 'modules/student/attendanceAlert.js';
+                                s.onload = () => window.checkAttendanceAlert?.(App, db);
+                                document.body.appendChild(s);
+                            }
+                        } catch (e) {}
+                    };
+
+                    if ('requestIdleCallback' in window) {
+                        requestIdleCallback(run);
+                    } else {
+                        setTimeout(run, 0);
+                    }
+                }
             },
 
             init() {
@@ -1560,6 +1568,9 @@
                     confirmButtonText: 'Yes, Sign Out'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        if (App._noticeRef) {
+                            App._noticeRef.off();
+                        }
                         localStorage.removeItem('school_app_session');
                         window.location.reload();
                     }
@@ -1574,22 +1585,31 @@
         });
 
         function handleRoute(state = history.state) {
-            if (!App.state.user) return;
-            if (!state) state = { type: 'page', value: 'home' };
-            switch (state.type) {
-                case 'page':
-                    App.navigate(state.value, true);
-                    break;
-                case 'module':
-                    App.loadModule(state.value, true);
-                    break;
-                default:
-                    App.navigate('home', true);
+            if (!App.state.user) {
+                location.reload();
+                return;
+            }
+
+            if (!state || !state.type) {
+                App.navigate('home', true);
+                return;
+            }
+
+            if (state.type === 'module') {
+                App.loadModule(state.value, true);
+            } else {
+                App.navigate(state.value || 'home', true);
             }
         }
 
         window.addEventListener('popstate', (event) => {
             App.forceUnlockScroll();
+
+            if (!event.state) {
+                App.navigate('home', true);
+                return;
+            }
+
             handleRoute(event.state);
         });
 
@@ -1637,12 +1657,14 @@
 
         function toggleHelpNote() {
             const note = document.getElementById('help-note');
+            if (!note) return;
             if (note.classList.contains('hidden')) {
                 note.classList.remove('hidden');
             } else {
                 note.classList.add('hidden');
             }
         }
+        window.App = App;
     </script>
 </body>
 
