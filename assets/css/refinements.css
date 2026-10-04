@@ -33,3 +33,10 @@ body[data-page="home"] .brand-wrapper{overflow:visible}
 body[data-page="home"] .brand-main{line-height:1.08;padding-bottom:.06em}
 
 body[data-page="home"] .brand-sub{top:4%}
+
+body[data-page="home"] main.container,body[data-page="home"] .hero{overflow:visible}
+body[data-page="home"] .profile-img{box-shadow:0 0 24px 4px rgba(0,212,255,.12),0 0 64px 14px rgba(0,212,255,.065)}
+@media(max-width:900px){
+body[data-page="home"] .brand-sub{top:auto;bottom:calc(100% + 4px);right:0;padding:5px 16px;font-size:clamp(.65rem,2vw,.9rem);letter-spacing:1.5px}
+body[data-page="home"] .brand-header{padding-top:5rem}
+}
