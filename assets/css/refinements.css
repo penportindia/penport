@@ -37,6 +37,10 @@ body[data-page="home"] .brand-sub{top:4%}
 body[data-page="home"] main.container,body[data-page="home"] .hero{overflow:visible}
 body[data-page="home"] .profile-img{box-shadow:0 0 24px 4px rgba(0,212,255,.12),0 0 64px 14px rgba(0,212,255,.065)}
 @media(max-width:900px){
-body[data-page="home"] .brand-sub{top:auto;bottom:calc(100% + 4px);right:0;padding:5px 16px;font-size:clamp(.65rem,2vw,.9rem);letter-spacing:1.5px}
+body[data-page="home"] .brand-sub{top:auto;bottom:calc(100% - clamp(4.5rem,18vw,13rem)*.18);right:0;padding:5px 18px;font-size:clamp(.75rem,2.4vw,1rem);line-height:1.15;letter-spacing:1.5px}
 body[data-page="home"] .brand-header{padding-top:5rem}
+}
+
+@media(max-width:420px){
+body[data-page="home"] .brand-sub{padding:4px 13px;font-size:.75rem;letter-spacing:1.2px;bottom:calc(100% - clamp(4.5rem,18vw,13rem)*.16)}
 }
