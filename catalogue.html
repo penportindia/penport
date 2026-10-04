@@ -1,91 +1,643 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Explore Penport India's project catalogue including School ERP, HR Management, Inventory Solution, ID Card Solution, websites, mobile apps and custom software.">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#00d4ff">
-    <link rel="canonical" href="https://penportindia.github.io/penport/catalogue.html">
-    <meta property="og:title" content="Projects & Solutions | Penport India">
-    <meta property="og:description" content="Discover School ERP, HR Management, Inventory Solution, ID Card Solution and custom software for schools, businesses and organizations.">
-    <meta property="og:image" content="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png">
-    <meta property="og:url" content="https://penportindia.github.io/penport/catalogue.html">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Projects & Solutions | Penport India">
-    <meta name="twitter:description" content="Browse Penport India's School ERP, HR, inventory, ID card and custom software catalogue and book a demo.">
-    <meta name="twitter:image" content="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png">
-    <title>Projects & Solutions | Penport India</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png">
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body data-page="catalogue">
-    <div class="bg-glow" aria-hidden="true">
-        <div class="glow-circle glow-one"></div>
-        <div class="glow-circle glow-two"></div>
-    </div>
-
-    <div class="container page-top-actions">
-        <a class="home-pill" href="index.html"><i class="bi bi-house-door" aria-hidden="true"></i> Home</a>
-    </div>
-
-    <main class="container">
-        <section class="page-hero" data-aos="fade-up">
-            <div class="catalogue-hero-panel">
-                <span class="eyebrow">Ready-to-demo software catalogue</span>
-                <h1>Explore Practical Software Built for Real Business Work</h1>
-                <p>School ERP, HR management, inventory control, ID card solutions, websites, apps and automation tools designed to save time, reduce manual work and help teams run faster.</p>
-                <div class="catalogue-highlights" aria-label="Catalogue highlights">
-                    <div><i class="bi bi-boxes" aria-hidden="true"></i><strong>10+</strong><span>solution modules</span></div>
-                    <div><i class="bi bi-lightning-charge" aria-hidden="true"></i><strong>Fast</strong><span>demo booking</span></div>
-                    <div><i class="bi bi-sliders" aria-hidden="true"></i><strong>Custom</strong><span>workflow support</span></div>
-                </div>
-                <div class="hero-actions center">
-                    <a href="book-demo.html" class="btn-main btn-accent"><i class="bi bi-calendar-check" aria-hidden="true"></i> Book a Demo</a>
-                    <a href="https://wa.me/917004848750?text=Hello%20Penport%20India%2C%20I%20would%20like%20to%20book%20a%20software%20demo." class="btn-main btn-outline"><i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp Now</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="page-section" aria-labelledby="catalogueTitle">
-            <h2 id="catalogueTitle" class="sr-only">Project catalogue</h2>
-            <div class="filter-shell" data-aos="fade-up">
-                <div class="filter-heading">
-                    <span>Project catalogue</span>
-                    <strong>Choose a solution type</strong>
-                </div>
-                <div class="filters" id="categoryFilters" aria-label="Filter projects by category"></div>
-            </div>
-            <div class="project-grid" id="projectGrid" aria-live="polite"></div>
-        </section>
-    </main>
-
-    <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle" aria-hidden="true">
-        <div class="modal-box">
-            <div class="modal-head">
-                <h2 id="projectModalTitle">Project Details</h2>
-                <button class="modal-close" type="button" aria-label="Close project details"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-content" id="projectModalContent"></div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="Explore Penport India’s School OS, HR, inventory, ID card and custom software solutions. Compare features and request a personalized demo."
+        />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="theme-color" content="#00d4ff" />
+        <link rel="canonical" href="https://penportindia.github.io/penport/catalogue.html" />
+        <meta property="og:site_name" content="Penport India" />
+        <meta property="og:locale" content="en_IN" />
+        <meta property="og:image:alt" content="Penport India logo" />
+        <meta property="og:title" content="Software Solutions &amp; School ERP | Penport India" />
+        <meta
+            property="og:description"
+            content="Explore Penport India’s School OS, HR, inventory, ID card and custom software solutions. Compare features and request a personalized demo."
+        />
+        <meta property="og:image" content="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png" />
+        <meta property="og:url" content="https://penportindia.github.io/penport/catalogue.html" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Software Solutions &amp; School ERP | Penport India" />
+        <meta
+            name="twitter:description"
+            content="Explore Penport India’s School OS, HR, inventory, ID card and custom software solutions. Compare features and request a personalized demo."
+        />
+        <meta name="twitter:image" content="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png" />
+        <title>Software Solutions &amp; School ERP | Penport India</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+        <link rel="icon" type="image/png" href="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png" />
+        <link rel="stylesheet" href="assets/css/style.css" />
+        <link rel="stylesheet" href="assets/css/components.css" />
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@graph": [
+                    {
+                        "@type": "CollectionPage",
+                        "@id": "https://penportindia.github.io/penport/catalogue.html#webpage",
+                        "url": "https://penportindia.github.io/penport/catalogue.html",
+                        "name": "Software Solutions & School ERP | Penport India",
+                        "description": "Explore Penport India’s School OS, HR, inventory, ID card and custom software solutions. Compare features and request a personalized demo.",
+                        "inLanguage": "en-IN",
+                        "isPartOf": { "@id": "https://penportindia.github.io/penport/#website" },
+                        "about": { "@id": "https://penportindia.github.io/penport/#organization" },
+                        "publisher": {
+                            "@id": "https://penportindia.github.io/penport/#organization"
+                        },
+                        "breadcrumb": {
+                            "@id": "https://penportindia.github.io/penport/catalogue.html#breadcrumbs"
+                        },
+                        "mainEntity": {
+                            "@id": "https://penportindia.github.io/penport/catalogue.html#solutions"
+                        }
+                    },
+                    {
+                        "@type": "BreadcrumbList",
+                        "@id": "https://penportindia.github.io/penport/catalogue.html#breadcrumbs",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://penportindia.github.io/penport/"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Software solutions",
+                                "item": "https://penportindia.github.io/penport/catalogue.html"
+                            }
+                        ]
+                    },
+                    {
+                        "@type": "ItemList",
+                        "@id": "https://penportindia.github.io/penport/catalogue.html#solutions",
+                        "name": "Penport India software solutions",
+                        "numberOfItems": 11,
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "School OS",
+                                    "description": "A complete school management system designed to manage students, staff, attendance, fees, examinations, transport, communication and school administration from one unified platform.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=School%20OS",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "HR Management System",
+                                    "description": "A professional HR management solution for handling employee profiles, attendance, leave requests, payroll records, documents, roles and performance tracking from a clean admin dashboard.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=HR%20Management%20System",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "Inventory Management Solution",
+                                    "description": "A smart inventory system for shops, distributors, warehouses and service businesses to manage stock movement, suppliers, purchases, sales, billing records and inventory reports.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=Inventory%20Management%20Solution",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 4,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "ID Card Solution",
+                                    "description": "A digital ID card solution for schools, colleges, offices and organizations to manage member details, card designs, photo records, bulk generation and print-ready ID card output.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=ID%20Card%20Solution",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 5,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "School Mobile App",
+                                    "description": "A dedicated mobile application for students, parents, teachers and school administrators with real-time academic and communication features.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=School%20Mobile%20App",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 6,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "Fee Management System",
+                                    "description": "A secure fee collection and accounting system for managing student fees, discounts, dues, receipts, reports and financial records.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=Fee%20Management%20System",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 7,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "Attendance Management System",
+                                    "description": "An attendance solution for schools, offices and organizations with real-time records and detailed reports.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=Attendance%20Management%20System",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 8,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "Business Management System",
+                                    "description": "A customizable business management solution for handling customers, employees, sales, expenses, payments and reports.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=Business%20Management%20System",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 9,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "Portfolio and Business Website",
+                                    "description": "Modern responsive websites for businesses, schools, institutes, professionals and organizations.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=Portfolio%20and%20Business%20Website",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 10,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "Admission Enquiry System",
+                                    "description": "A digital admission enquiry management system that records leads, follow-ups, student details and admission status.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=Admission%20Enquiry%20System",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 11,
+                                "item": {
+                                    "@type": "Service",
+                                    "name": "Custom Software Development",
+                                    "description": "Customized software development services designed according to specific organizational and operational requirements.",
+                                    "url": "https://penportindia.github.io/penport/catalogue.html?project=Custom%20Software%20Development",
+                                    "provider": {
+                                        "@id": "https://penportindia.github.io/penport/#organization"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        </script>
+    </head>
+    <body data-page="catalogue">
+        <div class="bg-glow" aria-hidden="true">
+            <div class="glow-circle glow-one"></div>
+            <div class="glow-circle glow-two"></div>
         </div>
-    </div>
 
-    <footer class="site-footer">
-        <p>&copy; 2025 Penport India</p>
-    </footer>
+        <header class="wide-page-header">
+            <a class="wide-brand" href="index.html">Penport<span>India</span></a>
+            <nav aria-label="Page navigation">
+                <a href="index.html">Home</a><a href="catalogue.html">Explore projects</a
+                ><a href="book-demo.html" class="btn-small btn-accent"
+                    >Book a demo <i class="bi bi-arrow-up-right" aria-hidden="true"></i
+                ></a>
+            </nav>
+        </header>
 
-    <div class="floating-actions" aria-label="Quick actions">
-        <a class="float-btn whatsapp" href="https://wa.me/917004848750?text=Hello%20Penport%20India%2C%20I%20would%20like%20to%20book%20a%20software%20demo." aria-label="Chat on WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
-    </div>
+        <main class="container wide-page">
+            <nav class="seo-breadcrumb" aria-label="Breadcrumb">
+                <a href="index.html">Home</a><span aria-hidden="true">/</span
+                ><span aria-current="page">Software solutions</span>
+            </nav>
+            <section class="page-hero" data-aos="fade-up">
+                <div class="catalogue-hero-panel">
+                    <span class="eyebrow">Ready-to-demo software catalogue</span>
+                    <h1>Practical software.<br /><span>Powerful possibilities.</span></h1>
+                    <p>
+                        School ERP, HR management, inventory control, ID card solutions, websites,
+                        apps and automation tools designed to save time, reduce manual work and help
+                        teams run faster.
+                    </p>
+                    <div class="catalogue-highlights" aria-label="Catalogue highlights">
+                        <div>
+                            <i class="bi bi-boxes" aria-hidden="true"></i><strong>10+</strong
+                            ><span>solution modules</span>
+                        </div>
+                        <div>
+                            <i class="bi bi-lightning-charge" aria-hidden="true"></i
+                            ><strong>Fast</strong><span>demo booking</span>
+                        </div>
+                        <div>
+                            <i class="bi bi-sliders" aria-hidden="true"></i><strong>Custom</strong
+                            ><span>workflow support</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions center">
+                        <a href="book-demo.html" class="btn-main btn-accent"
+                            ><i class="bi bi-calendar-check" aria-hidden="true"></i> Book a Demo</a
+                        >
+                        <a
+                            href="https://wa.me/917004848750?text=Hello%20Penport%20India%2C%20I%20would%20like%20to%20book%20a%20software%20demo."
+                            class="btn-main btn-outline"
+                            ><i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp Now</a
+                        >
+                    </div>
+                </div>
+            </section>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/catalogue.js"></script>
-</body>
+            <section class="page-section catalogue-workspace" aria-labelledby="catalogueTitle">
+                <h2 id="catalogueTitle" class="sr-only">Project catalogue</h2>
+                <div class="filter-shell" data-aos="fade-up">
+                    <div class="filter-heading">
+                        <span>Project catalogue</span>
+                        <strong>Choose a solution type</strong>
+                    </div>
+                    <label class="catalogue-search" for="projectSearch"
+                        ><i class="bi bi-search" aria-hidden="true"></i
+                        ><input
+                            type="search"
+                            id="projectSearch"
+                            placeholder="Search projects, features or technologies"
+                            autocomplete="off"
+                    /></label>
+                    <div
+                        class="filters"
+                        id="categoryFilters"
+                        aria-label="Filter projects by category"
+                    ></div>
+                </div>
+                <div class="catalogue-results">
+                    <div class="catalogue-toolbar">
+                        <p id="projectCount" role="status">11 solutions</p>
+                        <span>Explore features · Request a demo</span>
+                    </div>
+                    <div class="project-grid" id="projectGrid">
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-mortarboard" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">School Management</span>
+                                <h2>School OS</h2>
+                                <p>
+                                    A complete school management system designed to manage students,
+                                    staff, attendance, fees, examinations, transport, communication
+                                    and school administration from one unified platform.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=School%20OS"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=School%20OS"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-people" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">HR Management</span>
+                                <h2>HR Management System</h2>
+                                <p>
+                                    A professional HR management solution for handling employee
+                                    profiles, attendance, leave requests, payroll records,
+                                    documents, roles and performance tracking from a clean admin
+                                    dashboard.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=HR%20Management%20System"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=HR%20Management%20System"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-box-seam" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">Inventory Solution</span>
+                                <h2>Inventory Management Solution</h2>
+                                <p>
+                                    A smart inventory system for shops, distributors, warehouses and
+                                    service businesses to manage stock movement, suppliers,
+                                    purchases, sales, billing records and inventory reports.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=Inventory%20Management%20Solution"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=Inventory%20Management%20Solution"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-person-badge" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">ID Card Solution</span>
+                                <h2>ID Card Solution</h2>
+                                <p>
+                                    A digital ID card solution for schools, colleges, offices and
+                                    organizations to manage member details, card designs, photo
+                                    records, bulk generation and print-ready ID card output.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=ID%20Card%20Solution"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=ID%20Card%20Solution"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-phone" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">Mobile Applications</span>
+                                <h2>School Mobile App</h2>
+                                <p>
+                                    A dedicated mobile application for students, parents, teachers
+                                    and school administrators with real-time academic and
+                                    communication features.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=School%20Mobile%20App"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=School%20Mobile%20App"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-receipt" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">School Management</span>
+                                <h2>Fee Management System</h2>
+                                <p>
+                                    A secure fee collection and accounting system for managing
+                                    student fees, discounts, dues, receipts, reports and financial
+                                    records.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=Fee%20Management%20System"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=Fee%20Management%20System"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-calendar2-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">Automation Tools</span>
+                                <h2>Attendance Management System</h2>
+                                <p>
+                                    An attendance solution for schools, offices and organizations
+                                    with real-time records and detailed reports.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=Attendance%20Management%20System"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=Attendance%20Management%20System"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-briefcase" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">Business Management</span>
+                                <h2>Business Management System</h2>
+                                <p>
+                                    A customizable business management solution for handling
+                                    customers, employees, sales, expenses, payments and reports.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=Business%20Management%20System"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=Business%20Management%20System"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-window-stack" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">Websites</span>
+                                <h2>Portfolio and Business Website</h2>
+                                <p>
+                                    Modern responsive websites for businesses, schools, institutes,
+                                    professionals and organizations.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=Portfolio%20and%20Business%20Website"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=Website%20Development"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-person-lines-fill" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">Automation Tools</span>
+                                <h2>Admission Enquiry System</h2>
+                                <p>
+                                    A digital admission enquiry management system that records
+                                    leads, follow-ups, student details and admission status.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=Admission%20Enquiry%20System"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=Admission%20Enquiry%20System"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <div class="project-image">
+                                <i class="bi bi-code-square" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-body">
+                                <span class="category-pill">Custom Software</span>
+                                <h2>Custom Software Development</h2>
+                                <p>
+                                    Customized software development services designed according to
+                                    specific organizational and operational requirements.
+                                </p>
+                                <div class="project-actions">
+                                    <a
+                                        class="btn-small btn-outline"
+                                        href="catalogue.html?project=Custom%20Software%20Development"
+                                        >View details</a
+                                    ><a
+                                        class="btn-small btn-accent"
+                                        href="book-demo.html?project=Custom%20Software%20Development"
+                                        >Book demo</a
+                                    >
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div
+            class="modal"
+            id="projectModal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="projectModalTitle"
+            aria-hidden="true"
+        >
+            <div class="modal-box">
+                <div class="modal-head">
+                    <h2 id="projectModalTitle">Project Details</h2>
+                    <button class="modal-close" type="button" aria-label="Close project details">
+                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-content" id="projectModalContent"></div>
+            </div>
+        </div>
+
+        <footer class="site-footer">
+            <div class="wide-footer-content">
+                <p>&copy; 2026 Penport India</p>
+                <a href="mailto:penportindia@gmail.com">penportindia@gmail.com</a
+                ><a href="tel:+917004848750">+91 70048 48750</a>
+            </div>
+        </footer>
+
+        <div class="floating-actions" aria-label="Quick actions">
+            <a
+                class="float-btn whatsapp"
+                href="https://wa.me/917004848750?text=Hello%20Penport%20India%2C%20I%20would%20like%20to%20book%20a%20software%20demo."
+                aria-label="Chat on WhatsApp"
+                ><i class="bi bi-whatsapp" aria-hidden="true"></i
+            ></a>
+        </div>
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="assets/js/main.js"></script>
+        <script src="assets/js/catalogue.js"></script>
+        <script src="assets/js/accessibility.js"></script>
+    </body>
 </html>
