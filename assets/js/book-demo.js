@@ -33,7 +33,7 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuUPnKkXH47C
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const todayValue = today.toISOString().slice(0, 10);
+    const todayValue = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
     dateField.min = todayValue;
 
     const projectAlias = {
@@ -46,6 +46,13 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuUPnKkXH47C
         const option = Array.from(fields.interestedProject.options).find((item) => item.value.toLowerCase() === wanted.toLowerCase());
         if (option) fields.interestedProject.value = option.value;
     }
+
+    const selectedProjectSummary = document.getElementById("selectedProjectSummary");
+    function updateProjectSummary() {
+        selectedProjectSummary.textContent = fields.interestedProject.value || "Choose a project in the form";
+    }
+    fields.interestedProject.addEventListener("change", updateProjectSummary);
+    updateProjectSummary();
 
     function setError(name, message) {
         const input = fields[name];
@@ -170,6 +177,7 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuUPnKkXH47C
     function setSubmitting(active) {
         isSubmitting = active;
         submitButton.disabled = active;
+        form.setAttribute("aria-busy", String(active));
         submitButton.classList.toggle("loading", active);
         buttonText.textContent = active ? "Submitting..." : "Submit Demo Request";
     }
@@ -187,6 +195,7 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuUPnKkXH47C
 
         if (!validateForm()) {
             if (!status.textContent) setStatus("Please correct the highlighted fields.", "error");
+            form.querySelector('[aria-invalid="true"]')?.focus();
             return;
         }
 

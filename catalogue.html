@@ -24,6 +24,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/refinements.css">
 </head>
 <body data-page="catalogue">
     <div class="bg-glow" aria-hidden="true">
@@ -60,9 +61,10 @@
                     <span>Project catalogue</span>
                     <strong>Choose a solution type</strong>
                 </div>
+                <label class="catalogue-search" for="projectSearch"><i class="bi bi-search" aria-hidden="true"></i><input type="search" id="projectSearch" placeholder="Search projects, features or technologies" autocomplete="off"></label>
                 <div class="filters" id="categoryFilters" aria-label="Filter projects by category"></div>
             </div>
-            <div class="project-grid" id="projectGrid" aria-live="polite"></div>
+            <div class="catalogue-toolbar"><p id="projectCount" role="status"></p><span>Explore features · Request a demo</span></div><div class="project-grid" id="projectGrid"></div>
         </section>
     </main>
 
@@ -87,5 +89,6 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/catalogue.js"></script>
+    <script src="assets/js/refinements.js"></script>
 </body>
 </html>

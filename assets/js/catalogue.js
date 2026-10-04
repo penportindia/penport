@@ -124,6 +124,10 @@ const modalContent = document.getElementById("projectModalContent");
 const modalClose = document.querySelector(".modal-close");
 let currentCategory = "All Projects";
 let lastFocus = null;
+let searchQuery = "";
+let visibleProjects = [];
+const searchInput = document.getElementById("projectSearch");
+const projectCount = document.getElementById("projectCount");
 
 function escapeHtml(value) {
     return String(value).replace(/[&<>"']/g, (char) => ({
@@ -152,10 +156,16 @@ function renderProjects() {
         ? CATALOGUE_PROJECTS
         : CATALOGUE_PROJECTS.filter((project) => project.category === currentCategory);
 
-    grid.innerHTML = items.map((project, index) => `
+    visibleProjects = items.filter((project) => [project.name, project.description, ...project.features, ...project.tags].join(" ").toLowerCase().includes(searchQuery));
+    projectCount.textContent = `${visibleProjects.length} solution${visibleProjects.length === 1 ? "" : "s"}${currentCategory === "All Projects" ? "" : ` in ${currentCategory}`}`;
+    if (!visibleProjects.length) {
+        grid.innerHTML = '<div class="empty-projects"><i class="bi bi-search" aria-hidden="true"></i><h2>No matching solutions</h2><p>Try a different search or choose another category.</p><button class="btn-small btn-outline" id="resetProjects" type="button">Reset filters</button></div>';
+        return;
+    }
+    grid.innerHTML = visibleProjects.map((project, index) => `
         <article class="project-card${project.featured ? " featured-project" : ""}" data-aos="fade-up">
             <div class="project-image" role="img" aria-label="${escapeHtml(project.name)} project placeholder">
-                <i class="bi ${escapeHtml(project.icon)}" aria-hidden="true"></i>
+                <i class="bi ${escapeHtml(project.icon)}" aria-hidden="true"></i><span class="project-art-label">${escapeHtml(project.category)}</span><div class="illustration-lines" aria-hidden="true"><b></b><b></b><b></b></div>
             </div>
             <div class="project-body">
                 <div class="project-meta">
@@ -166,7 +176,7 @@ function renderProjects() {
                 <div class="impact-line"><i class="bi bi-lightning-charge" aria-hidden="true"></i> ${escapeHtml(project.impact || "Built for practical daily operations")}</div>
                 <p>${escapeHtml(project.description)}</p>
                 <ul class="tag-list" aria-label="Technology tags">
-                    ${project.tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join("")}
+                    ${project.tags.slice(0, 3).map((tag) => `<li>${escapeHtml(tag)}</li>`).join("")}
                 </ul>
                 <ul class="feature-list" aria-label="Main features">
                     ${project.features.slice(0, 4).map((feature) => `<li>${escapeHtml(feature)}</li>`).join("")}
@@ -182,9 +192,6 @@ function renderProjects() {
     if (window.AOS) window.AOS.refresh();
 }
 
-function findProjectIndex(project) {
-    return CATALOGUE_PROJECTS.findIndex((item) => item.name === project.name);
-}
 
 function openProjectModal(project) {
     lastFocus = document.activeElement;
@@ -228,11 +235,11 @@ filters.addEventListener("click", (event) => {
 });
 
 grid.addEventListener("click", (event) => {
+    if (event.target.closest("#resetProjects")) {
+        searchQuery = ""; searchInput.value = ""; currentCategory = "All Projects"; renderFilters(); renderProjects(); searchInput.focus(); return;
+    }
     const button = event.target.closest("[data-detail]");
     if (!button) return;
-    const visibleProjects = currentCategory === "All Projects"
-        ? CATALOGUE_PROJECTS
-        : CATALOGUE_PROJECTS.filter((project) => project.category === currentCategory);
     openProjectModal(visibleProjects[Number(button.dataset.detail)]);
 });
 
@@ -242,6 +249,11 @@ modal.addEventListener("click", (event) => {
 });
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && modal.classList.contains("open")) closeProjectModal();
+});
+
+searchInput.addEventListener("input", () => {
+    searchQuery = searchInput.value.trim().toLowerCase();
+    renderProjects();
 });
 
 const params = new URLSearchParams(window.location.search);
