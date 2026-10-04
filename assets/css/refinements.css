@@ -22,14 +22,14 @@ background-size:260% 100%;background-clip:text;-webkit-background-clip:text;colo
 animation:brand-shimmer 10s ease-in-out infinite;filter:drop-shadow(0 0 24px #ffffff15);
 }
 body[data-page="home"] .brand-sub{animation:brand-badge-glow 5s ease-in-out infinite;box-shadow:0 5px 25px #00d4ff40;border-color:#ffffff60}
-body[data-page="home"] .brand-wrapper::after{content:"";position:absolute;left:16%;right:16%;bottom:-20px;height:1px;background:linear-gradient(90deg,transparent,#00d4ff60,transparent);transform-origin:center;animation:brand-underline 5s ease-in-out infinite;pointer-events:none}
 body[data-page="home"] .bg-glow::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,#00d4ff40 1px,transparent 1.5px),radial-gradient(circle,#ffffff24 1px,transparent 1.5px);background-size:170px 170px,250px 250px;background-position:30px 60px,120px 20px;opacity:.22;animation:ambient-drift 30s linear infinite;pointer-events:none}
 @keyframes brand-shimmer{0%,35%{background-position:100% 50%}65%,100%{background-position:0% 50%}}
 @keyframes brand-badge-glow{0%,100%{box-shadow:0 5px 25px #00d4ff40}50%{box-shadow:0 5px 35px #00d4ff70}}
-@keyframes brand-underline{0%,100%{opacity:.35;transform:scaleX(.8)}50%{opacity:.9;transform:scaleX(1)}}
 @keyframes ambient-drift{from{transform:translateY(0)}to{transform:translateY(-170px)}}
-@media(prefers-reduced-motion:reduce){body[data-page="home"] .brand-main{background:none;color:#fff}body[data-page="home"] .brand-main,body[data-page="home"] .brand-sub,body[data-page="home"] .brand-wrapper::after,body[data-page="home"] .bg-glow::before{animation:none}}
+@media(prefers-reduced-motion:reduce){body[data-page="home"] .brand-main{background:none;color:#fff}body[data-page="home"] .brand-main,body[data-page="home"] .brand-sub,body[data-page="home"] .bg-glow::before{animation:none}}
 
 body[data-page="home"] .brand-header{overflow:visible}
 body[data-page="home"] .brand-wrapper{overflow:visible}
 body[data-page="home"] .brand-main{line-height:1.08;padding-bottom:.06em}
+
+body[data-page="home"] .brand-sub{top:4%}
