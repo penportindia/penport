@@ -44,3 +44,5 @@ body[data-page="home"] .brand-header{padding-top:5rem}
 @media(max-width:420px){
 body[data-page="home"] .brand-sub{padding:4px 13px;font-size:.75rem;letter-spacing:1.2px;bottom:calc(100% - clamp(4.5rem,18vw,13rem)*.16)}
 }
+
+.seo-breadcrumb{display:flex;gap:12px;align-items:center;padding-top:1.5rem;font-size:.75rem;color:var(--text-soft)}.seo-breadcrumb a{color:var(--primary);text-decoration:none}.seo-footer{flex-direction:column;gap:1rem;padding:1.5rem 1rem}.seo-footer nav{display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem}.seo-footer nav a{color:var(--text-soft);font-size:.8rem;text-decoration:none}.seo-footer nav a:hover{color:var(--primary)}
