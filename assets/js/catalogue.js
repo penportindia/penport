@@ -5,10 +5,21 @@ const CATALOGUE_PROJECTS = [
         icon: "bi-mortarboard",
         featured: true,
         impact: "Complete school operations in one dashboard",
-        description: "A complete school management system designed to manage students, staff, attendance, fees, examinations, transport, communication and school administration from one unified platform.",
+        description:
+            "A complete school management system designed to manage students, staff, attendance, fees, examinations, transport, communication and school administration from one unified platform.",
         suitableFor: "Schools, academies, private institutions and multi-branch education groups.",
         tags: ["JavaScript", "Firebase", "HTML", "CSS", "Cloud Database"],
-        features: ["Student management", "Staff management", "Attendance", "Fee collection", "Examination management", "Report generation", "Notifications", "Role-based access", "Dashboard analytics"]
+        features: [
+            "Student management",
+            "Staff management",
+            "Attendance",
+            "Fee collection",
+            "Examination management",
+            "Report generation",
+            "Notifications",
+            "Role-based access",
+            "Dashboard analytics"
+        ]
     },
     {
         name: "HR Management System",
@@ -16,10 +27,22 @@ const CATALOGUE_PROJECTS = [
         icon: "bi-people",
         featured: true,
         impact: "Manage employees, attendance, salary and HR records",
-        description: "A professional HR management solution for handling employee profiles, attendance, leave requests, payroll records, documents, roles and performance tracking from a clean admin dashboard.",
-        suitableFor: "Companies, schools, institutes, agencies, factories, service teams and organizations with staff operations.",
+        description:
+            "A professional HR management solution for handling employee profiles, attendance, leave requests, payroll records, documents, roles and performance tracking from a clean admin dashboard.",
+        suitableFor:
+            "Companies, schools, institutes, agencies, factories, service teams and organizations with staff operations.",
         tags: ["JavaScript", "Firebase", "HTML", "CSS", "Dashboard"],
-        features: ["Employee profiles", "Department and role management", "Staff attendance", "Leave management", "Salary records", "Document storage", "Performance notes", "HR reports", "Admin dashboard"]
+        features: [
+            "Employee profiles",
+            "Department and role management",
+            "Staff attendance",
+            "Leave management",
+            "Salary records",
+            "Document storage",
+            "Performance notes",
+            "HR reports",
+            "Admin dashboard"
+        ]
     },
     {
         name: "Inventory Management Solution",
@@ -27,10 +50,22 @@ const CATALOGUE_PROJECTS = [
         icon: "bi-box-seam",
         featured: true,
         impact: "Track stock, purchases, sales and low inventory alerts",
-        description: "A smart inventory system for shops, distributors, warehouses and service businesses to manage stock movement, suppliers, purchases, sales, billing records and inventory reports.",
-        suitableFor: "Retail shops, wholesalers, warehouses, schools, offices, distributors and small businesses.",
+        description:
+            "A smart inventory system for shops, distributors, warehouses and service businesses to manage stock movement, suppliers, purchases, sales, billing records and inventory reports.",
+        suitableFor:
+            "Retail shops, wholesalers, warehouses, schools, offices, distributors and small businesses.",
         tags: ["JavaScript", "Firebase", "HTML", "CSS", "Reports"],
-        features: ["Product catalogue", "Stock in and stock out", "Supplier management", "Purchase records", "Sales records", "Low-stock alerts", "Inventory valuation", "Barcode-ready workflow", "Exportable reports"]
+        features: [
+            "Product catalogue",
+            "Stock in and stock out",
+            "Supplier management",
+            "Purchase records",
+            "Sales records",
+            "Low-stock alerts",
+            "Inventory valuation",
+            "Barcode-ready workflow",
+            "Exportable reports"
+        ]
     },
     {
         name: "ID Card Solution",
@@ -38,84 +73,177 @@ const CATALOGUE_PROJECTS = [
         icon: "bi-person-badge",
         featured: true,
         impact: "Design, manage and print professional ID cards faster",
-        description: "A digital ID card solution for schools, colleges, offices and organizations to manage member details, card designs, photo records, bulk generation and print-ready ID card output.",
-        suitableFor: "Schools, colleges, coaching institutes, offices, NGOs, events, staff teams and membership-based organizations.",
+        description:
+            "A digital ID card solution for schools, colleges, offices and organizations to manage member details, card designs, photo records, bulk generation and print-ready ID card output.",
+        suitableFor:
+            "Schools, colleges, coaching institutes, offices, NGOs, events, staff teams and membership-based organizations.",
         tags: ["HTML", "CSS", "JavaScript", "Print Layout", "Data Management"],
-        features: ["Student and staff ID cards", "Photo and profile records", "Custom card templates", "Bulk ID generation", "Print-ready layout", "QR or barcode-ready design", "Search and filters", "Class or department grouping", "Fast reprint workflow"]
+        features: [
+            "Student and staff ID cards",
+            "Photo and profile records",
+            "Custom card templates",
+            "Bulk ID generation",
+            "Print-ready layout",
+            "QR or barcode-ready design",
+            "Search and filters",
+            "Class or department grouping",
+            "Fast reprint workflow"
+        ]
     },
     {
         name: "School Mobile App",
         category: "Mobile Applications",
         icon: "bi-phone",
         impact: "Real-time school updates on mobile",
-        description: "A dedicated mobile application for students, parents, teachers and school administrators with real-time academic and communication features.",
+        description:
+            "A dedicated mobile application for students, parents, teachers and school administrators with real-time academic and communication features.",
         suitableFor: "Schools that need parent communication, mobile access and real-time updates.",
         tags: ["Android", "Java", "Firebase", "REST API"],
-        features: ["Student profile", "Attendance records", "Fee information", "Homework and notices", "Examination results", "Push notifications", "Parent communication", "Secure login"]
+        features: [
+            "Student profile",
+            "Attendance records",
+            "Fee information",
+            "Homework and notices",
+            "Examination results",
+            "Push notifications",
+            "Parent communication",
+            "Secure login"
+        ]
     },
     {
         name: "Fee Management System",
         category: "School Management",
         icon: "bi-receipt",
         impact: "Fast fee collection with clear dues reports",
-        description: "A secure fee collection and accounting system for managing student fees, discounts, dues, receipts, reports and financial records.",
+        description:
+            "A secure fee collection and accounting system for managing student fees, discounts, dues, receipts, reports and financial records.",
         suitableFor: "Schools, colleges, coaching institutes and education finance offices.",
         tags: ["JavaScript", "Firebase", "HTML", "CSS"],
-        features: ["Fee structure management", "Online and offline collection", "Automatic receipt generation", "Discount management", "Pending dues tracking", "Daily collection report", "Accounting reports", "Student ledger"]
+        features: [
+            "Fee structure management",
+            "Online and offline collection",
+            "Automatic receipt generation",
+            "Discount management",
+            "Pending dues tracking",
+            "Daily collection report",
+            "Accounting reports",
+            "Student ledger"
+        ]
     },
     {
         name: "Attendance Management System",
         category: "Automation Tools",
         icon: "bi-calendar2-check",
         impact: "Daily attendance and reports without manual registers",
-        description: "An attendance solution for schools, offices and organizations with real-time records and detailed reports.",
+        description:
+            "An attendance solution for schools, offices and organizations with real-time records and detailed reports.",
         suitableFor: "Schools, offices, NGOs, teams and field organizations.",
         tags: ["JavaScript", "Firebase", "Cloud Database"],
-        features: ["Daily attendance", "Student and staff attendance", "Monthly reports", "Late arrival records", "Absence tracking", "Dashboard statistics", "Export reports"]
+        features: [
+            "Daily attendance",
+            "Student and staff attendance",
+            "Monthly reports",
+            "Late arrival records",
+            "Absence tracking",
+            "Dashboard statistics",
+            "Export reports"
+        ]
     },
     {
         name: "Business Management System",
         category: "Business Management",
         icon: "bi-briefcase",
         impact: "Customers, sales, expenses and team work in one place",
-        description: "A customizable business management solution for handling customers, employees, sales, expenses, payments and reports.",
+        description:
+            "A customizable business management solution for handling customers, employees, sales, expenses, payments and reports.",
         suitableFor: "Small businesses, service providers, agencies, shops and growing teams.",
         tags: ["JavaScript", "Firebase", "HTML", "CSS"],
-        features: ["Customer management", "Employee management", "Sales tracking", "Expense tracking", "Payment records", "Reports", "Dashboard analytics", "User roles"]
+        features: [
+            "Customer management",
+            "Employee management",
+            "Sales tracking",
+            "Expense tracking",
+            "Payment records",
+            "Reports",
+            "Dashboard analytics",
+            "User roles"
+        ]
     },
     {
         name: "Portfolio and Business Website",
         category: "Websites",
         icon: "bi-window-stack",
         impact: "Modern online presence built for trust and enquiries",
-        description: "Modern responsive websites for businesses, schools, institutes, professionals and organizations.",
+        description:
+            "Modern responsive websites for businesses, schools, institutes, professionals and organizations.",
         suitableFor: "Brands, founders, schools, institutes, professionals and local businesses.",
         tags: ["HTML", "CSS", "JavaScript", "SEO"],
-        features: ["Responsive design", "SEO optimization", "Contact forms", "Social integration", "Service pages", "Project showcase", "Fast performance", "Mobile-friendly layout"]
+        features: [
+            "Responsive design",
+            "SEO optimization",
+            "Contact forms",
+            "Social integration",
+            "Service pages",
+            "Project showcase",
+            "Fast performance",
+            "Mobile-friendly layout"
+        ]
     },
     {
         name: "Admission Enquiry System",
         category: "Automation Tools",
         icon: "bi-person-lines-fill",
         impact: "Capture leads and never miss follow-ups",
-        description: "A digital admission enquiry management system that records leads, follow-ups, student details and admission status.",
+        description:
+            "A digital admission enquiry management system that records leads, follow-ups, student details and admission status.",
         suitableFor: "Schools, colleges, institutes and coaching admission teams.",
         tags: ["JavaScript", "Google Apps Script", "Google Sheets"],
-        features: ["Enquiry registration", "Lead source tracking", "Follow-up reminders", "Admission status", "Contact history", "Reports", "Search and filters", "Google Sheets integration"]
+        features: [
+            "Enquiry registration",
+            "Lead source tracking",
+            "Follow-up reminders",
+            "Admission status",
+            "Contact history",
+            "Reports",
+            "Search and filters",
+            "Google Sheets integration"
+        ]
     },
     {
         name: "Custom Software Development",
         category: "Custom Software",
         icon: "bi-code-square",
         impact: "Build exactly around your workflow",
-        description: "Customized software development services designed according to specific organizational and operational requirements.",
-        suitableFor: "Organizations with specific workflows, reporting needs or automation requirements.",
+        description:
+            "Customized software development services designed according to specific organizational and operational requirements.",
+        suitableFor:
+            "Organizations with specific workflows, reporting needs or automation requirements.",
         tags: ["JavaScript", "Firebase", "APIs", "Cloud Services"],
-        features: ["Requirement analysis", "Custom dashboard", "Workflow automation", "Role management", "Database integration", "Reporting system", "API integration", "Technical support"]
+        features: [
+            "Requirement analysis",
+            "Custom dashboard",
+            "Workflow automation",
+            "Role management",
+            "Database integration",
+            "Reporting system",
+            "API integration",
+            "Technical support"
+        ]
     }
 ];
 
-const CATEGORIES = ["All Projects", "School Management", "HR Management", "Inventory Solution", "ID Card Solution", "Business Management", "Websites", "Mobile Applications", "Automation Tools", "Custom Software"];
+const CATEGORIES = [
+    "All Projects",
+    "School Management",
+    "HR Management",
+    "Inventory Solution",
+    "ID Card Solution",
+    "Business Management",
+    "Websites",
+    "Mobile Applications",
+    "Automation Tools",
+    "Custom Software"
+];
 const grid = document.getElementById("projectGrid");
 const filters = document.getElementById("categoryFilters");
 const modal = document.getElementById("projectModal");
@@ -130,13 +258,17 @@ const searchInput = document.getElementById("projectSearch");
 const projectCount = document.getElementById("projectCount");
 
 function escapeHtml(value) {
-    return String(value).replace(/[&<>"']/g, (char) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-    }[char]));
+    return String(value).replace(
+        /[&<>"']/g,
+        (char) =>
+            ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            })[char]
+    );
 }
 
 function projectBookUrl(name) {
@@ -144,25 +276,36 @@ function projectBookUrl(name) {
 }
 
 function renderFilters() {
-    filters.innerHTML = CATEGORIES.map((category) => `
+    filters.innerHTML = CATEGORIES.map(
+        (category) => `
         <button class="filter-btn${category === currentCategory ? " active" : ""}" type="button" data-category="${escapeHtml(category)}" aria-pressed="${category === currentCategory}">
             ${escapeHtml(category)}
         </button>
-    `).join("");
+    `
+    ).join("");
 }
 
 function renderProjects() {
-    const items = currentCategory === "All Projects"
-        ? CATALOGUE_PROJECTS
-        : CATALOGUE_PROJECTS.filter((project) => project.category === currentCategory);
+    const items =
+        currentCategory === "All Projects"
+            ? CATALOGUE_PROJECTS
+            : CATALOGUE_PROJECTS.filter((project) => project.category === currentCategory);
 
-    visibleProjects = items.filter((project) => [project.name, project.description, ...project.features, ...project.tags].join(" ").toLowerCase().includes(searchQuery));
+    visibleProjects = items.filter((project) =>
+        [project.name, project.description, ...project.features, ...project.tags]
+            .join(" ")
+            .toLowerCase()
+            .includes(searchQuery)
+    );
     projectCount.textContent = `${visibleProjects.length} solution${visibleProjects.length === 1 ? "" : "s"}${currentCategory === "All Projects" ? "" : ` in ${currentCategory}`}`;
     if (!visibleProjects.length) {
-        grid.innerHTML = '<div class="empty-projects"><i class="bi bi-search" aria-hidden="true"></i><h2>No matching solutions</h2><p>Try a different search or choose another category.</p><button class="btn-small btn-outline" id="resetProjects" type="button">Reset filters</button></div>';
+        grid.innerHTML =
+            '<div class="empty-projects"><i class="bi bi-search" aria-hidden="true"></i><h2>No matching solutions</h2><p>Try a different search or choose another category.</p><button class="btn-small btn-outline" id="resetProjects" type="button">Reset filters</button></div>';
         return;
     }
-    grid.innerHTML = visibleProjects.map((project, index) => `
+    grid.innerHTML = visibleProjects
+        .map(
+            (project, index) => `
         <article class="project-card${project.featured ? " featured-project" : ""}" data-aos="fade-up">
             <div class="project-image" role="img" aria-label="${escapeHtml(project.name)} project placeholder">
                 <i class="bi ${escapeHtml(project.icon)}" aria-hidden="true"></i><span class="project-art-label">${escapeHtml(project.category)}</span><div class="illustration-lines" aria-hidden="true"><b></b><b></b><b></b></div>
@@ -176,10 +319,16 @@ function renderProjects() {
                 <div class="impact-line"><i class="bi bi-lightning-charge" aria-hidden="true"></i> ${escapeHtml(project.impact || "Built for practical daily operations")}</div>
                 <p>${escapeHtml(project.description)}</p>
                 <ul class="tag-list" aria-label="Technology tags">
-                    ${project.tags.slice(0, 3).map((tag) => `<li>${escapeHtml(tag)}</li>`).join("")}
+                    ${project.tags
+                        .slice(0, 3)
+                        .map((tag) => `<li>${escapeHtml(tag)}</li>`)
+                        .join("")}
                 </ul>
                 <ul class="feature-list" aria-label="Main features">
-                    ${project.features.slice(0, 4).map((feature) => `<li>${escapeHtml(feature)}</li>`).join("")}
+                    ${project.features
+                        .slice(0, 4)
+                        .map((feature) => `<li>${escapeHtml(feature)}</li>`)
+                        .join("")}
                 </ul>
                 <div class="project-actions">
                     <button class="btn-small btn-outline" type="button" data-detail="${index}">View Details</button>
@@ -187,11 +336,12 @@ function renderProjects() {
                 </div>
             </div>
         </article>
-    `).join("");
+    `
+        )
+        .join("");
 
     if (window.AOS) window.AOS.refresh();
 }
-
 
 function openProjectModal(project) {
     lastFocus = document.activeElement;
@@ -236,7 +386,13 @@ filters.addEventListener("click", (event) => {
 
 grid.addEventListener("click", (event) => {
     if (event.target.closest("#resetProjects")) {
-        searchQuery = ""; searchInput.value = ""; currentCategory = "All Projects"; renderFilters(); renderProjects(); searchInput.focus(); return;
+        searchQuery = "";
+        searchInput.value = "";
+        currentCategory = "All Projects";
+        renderFilters();
+        renderProjects();
+        searchInput.focus();
+        return;
     }
     const button = event.target.closest("[data-detail]");
     if (!button) return;
@@ -267,7 +423,9 @@ renderFilters();
 renderProjects();
 
 if (projectParam) {
-    const project = CATALOGUE_PROJECTS.find((item) => item.name.toLowerCase() === projectParam.toLowerCase());
+    const project = CATALOGUE_PROJECTS.find(
+        (item) => item.name.toLowerCase() === projectParam.toLowerCase()
+    );
     if (project) {
         currentCategory = project.category;
         renderFilters();

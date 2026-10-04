@@ -14,11 +14,31 @@
     }
 
     const projectDemos = [
-        { title: "School ERP Management System", url: "https://www.youtube.com/embed/g8d15z4o5yA", project: "School OS" },
-        { title: "Campaign Design Portfolio", url: "https://www.youtube.com/embed/g8d15z4o5yA", project: "Website Development" },
-        { title: "Custom Enterprise Software", url: "https://www.youtube.com/embed/xJ6vRzU_4dE", project: "Custom Software Development" },
-        { title: "Smart ID Card Solutions", url: "https://drive.google.com/file/d/1rqNv5hwVHLTSgbDALQnN7UOfFu1-J7mC/preview", project: "ID Card Solution" },
-        { title: "HR Management System (Pro)", url: "https://www.youtube.com/embed/Lw99S63YfJk", project: "HR Management System" }
+        {
+            title: "School ERP Management System",
+            url: "https://www.youtube.com/embed/g8d15z4o5yA",
+            project: "School OS"
+        },
+        {
+            title: "Campaign Design Portfolio",
+            url: "https://www.youtube.com/embed/g8d15z4o5yA",
+            project: "Website Development"
+        },
+        {
+            title: "Custom Enterprise Software",
+            url: "https://www.youtube.com/embed/xJ6vRzU_4dE",
+            project: "Custom Software Development"
+        },
+        {
+            title: "Smart ID Card Solutions",
+            url: "https://drive.google.com/file/d/1rqNv5hwVHLTSgbDALQnN7UOfFu1-J7mC/preview",
+            project: "ID Card Solution"
+        },
+        {
+            title: "HR Management System (Pro)",
+            url: "https://www.youtube.com/embed/Lw99S63YfJk",
+            project: "HR Management System"
+        }
     ];
 
     const videoModal = document.getElementById("vModal");

@@ -1,4 +1,5 @@
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuUPnKkXH47CZ7ndvZ6TMvrk5fUe_wKnRRifxV3ZgiBXAJTGYGvUfoSLI3jx8ENCez/exec";
+const GOOGLE_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbzuUPnKkXH47CZ7ndvZ6TMvrk5fUe_wKnRRifxV3ZgiBXAJTGYGvUfoSLI3jx8ENCez/exec";
 
 (function () {
     const form = document.getElementById("demoForm");
@@ -43,13 +44,16 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuUPnKkXH47C
     const selectedProject = new URLSearchParams(window.location.search).get("project");
     if (selectedProject) {
         const wanted = projectAlias[selectedProject] || selectedProject;
-        const option = Array.from(fields.interestedProject.options).find((item) => item.value.toLowerCase() === wanted.toLowerCase());
+        const option = Array.from(fields.interestedProject.options).find(
+            (item) => item.value.toLowerCase() === wanted.toLowerCase()
+        );
         if (option) fields.interestedProject.value = option.value;
     }
 
     const selectedProjectSummary = document.getElementById("selectedProjectSummary");
     function updateProjectSummary() {
-        selectedProjectSummary.textContent = fields.interestedProject.value || "Choose a project in the form";
+        selectedProjectSummary.textContent =
+            fields.interestedProject.value || "Choose a project in the form";
     }
     fields.interestedProject.addEventListener("change", updateProjectSummary);
     updateProjectSummary();
@@ -111,12 +115,14 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuUPnKkXH47C
             valid = false;
         }
 
-        ["organizationType", "interestedProject", "requirementType", "preferredDemoMode"].forEach((name) => {
-            if (!trimValue(name)) {
-                setError(name, "This field is required.");
-                valid = false;
+        ["organizationType", "interestedProject", "requirementType", "preferredDemoMode"].forEach(
+            (name) => {
+                if (!trimValue(name)) {
+                    setError(name, "This field is required.");
+                    valid = false;
+                }
             }
-        });
+        );
 
         if (trimValue("preferredDemoDate")) {
             const chosenDate = new Date(`${trimValue("preferredDemoDate")}T00:00:00`);
@@ -224,17 +230,23 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuUPnKkXH47C
 
             setStatus("Your demo request has been submitted successfully.", "success");
             if (result.whatsapp) {
-                sessionStorage.setItem("penportWhatsappLinks", JSON.stringify({
-                    submissionId: result.submissionId || "",
-                    adminUrl: result.whatsapp.adminUrl || "",
-                    customerUrl: result.whatsapp.customerUrl || ""
-                }));
+                sessionStorage.setItem(
+                    "penportWhatsappLinks",
+                    JSON.stringify({
+                        submissionId: result.submissionId || "",
+                        adminUrl: result.whatsapp.adminUrl || "",
+                        customerUrl: result.whatsapp.customerUrl || ""
+                    })
+                );
             }
             form.reset();
             const id = encodeURIComponent(result.submissionId || "");
             window.location.href = id ? `thank-you.html?id=${id}` : "thank-you.html";
         } catch (error) {
-            setStatus("We could not submit your request. Please check your internet connection and try again.", "error");
+            setStatus(
+                "We could not submit your request. Please check your internet connection and try again.",
+                "error"
+            );
         } finally {
             setSubmitting(false);
         }
