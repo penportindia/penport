@@ -87,6 +87,30 @@ def main():
         print(f"PASS {filename}: metadata, schema JSON, IDs and links")
 
     require(len({p.title for p in pages.values()}) == len(PAGES), "Page titles must be unique")
+    for filename, page in pages.items():
+        if filename == "thank-you.html":
+            continue
+        require(page.meta.get("og:title") == page.title and
+                page.meta.get("twitter:title") == page.title,
+                f"{filename}: social titles must match the page title")
+        require(page.meta.get("og:description") == page.meta["description"] and
+                page.meta.get("twitter:description") == page.meta["description"],
+                f"{filename}: social descriptions must match the search description")
+        require(page.meta.get("og:url") == page.canonicals[0],
+                f"{filename}: social URL must match the canonical")
+
+    organizations = [node for schema in pages["index.html"].schemas
+                     for node in schema.get("@graph", []) if node.get("@type") == "Organization"]
+    require(len(organizations) == 1, "Home must describe one company")
+    company = organizations[0]
+    require(company.get("name") == "Penport India" and company.get("foundingDate") == "2021",
+            "Company name or founding year differs from the confirmed profile")
+    require(company.get("address", {}).get("addressLocality") == "Patna" and
+            company.get("address", {}).get("addressRegion") == "Bihar" and
+            company.get("address", {}).get("addressCountry") == "IN",
+            "Company location differs from the confirmed profile")
+    require(company.get("founder", {}).get("name") == "Raushan Singh",
+            "Company founder differs from the confirmed profile")
     sitemap = ET.parse(ROOT / "sitemap.xml")
     urls = [node.text for node in sitemap.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
     expected = {pages[p].canonicals[0] for p in PAGES if p != "thank-you.html"}

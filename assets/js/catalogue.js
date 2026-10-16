@@ -255,7 +255,6 @@ let lastFocus = null;
 let searchQuery = "";
 let visibleProjects = [];
 const searchInput = document.getElementById("projectSearch");
-const projectCount = document.getElementById("projectCount");
 
 function escapeHtml(value) {
     return String(value).replace(
@@ -297,7 +296,6 @@ function renderProjects() {
             .toLowerCase()
             .includes(searchQuery)
     );
-    projectCount.textContent = `${visibleProjects.length} solution${visibleProjects.length === 1 ? "" : "s"}${currentCategory === "All Projects" ? "" : ` in ${currentCategory}`}`;
     if (!visibleProjects.length) {
         grid.innerHTML =
             '<div class="empty-projects"><i class="bi bi-search" aria-hidden="true"></i><h2>No matching solutions</h2><p>Try a different search or choose another category.</p><button class="btn-small btn-outline" id="resetProjects" type="button">Reset filters</button></div>';

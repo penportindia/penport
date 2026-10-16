@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: 
 
 Sitemap: https://penportindia.github.io/penport/sitemap.xml

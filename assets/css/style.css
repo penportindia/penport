@@ -1085,14 +1085,6 @@ body[data-page="thank-you"] .site-footer {
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
 }
 
-.form-panel::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-}
-
 .form-panel > * {
     position: relative;
 }

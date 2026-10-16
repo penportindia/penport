@@ -56,3 +56,6 @@ The sitemap includes Home, Catalogue and Book Demo. Confirmation pages use noind
 Changes in a review branch do not affect production until merged and published by the configured GitHub Pages setup. Check the Pages deployment after merging. For an already submitted sitemap at the same URL, monitor its read status in Search Console. After significant published updates, a URL Inspection indexing request is optional.
 
 See [architecture and maintenance](docs/architecture.md) for details.
+
+See [company profile and SEO publication](docs/company-seo.md) for the confirmed
+Patna/Bihar company details, search metadata and post-publication checks.
