@@ -1,0 +1,30 @@
+title: Penport India
+description: Practical insights on school administration, education technology and business software.
+url: https://penportindia.github.io
+baseurl: /penport
+timezone: Asia/Kolkata
+markdown: kramdown
+highlighter: rouge
+permalink: /blog/:title/
+future: false
+plugins:
+  - jekyll-feed
+exclude:
+  - docs
+  - scripts
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: blog-single-post
+      author: Penport India
+      image: /assets/images/blog/insights.svg
+      image_alt: An illustration of organized digital school records
+products:
+  school_demo_url: /book-demo.html?project=School%20OS
+  id_card_url: /catalogue.html?project=ID%20Card%20Solution

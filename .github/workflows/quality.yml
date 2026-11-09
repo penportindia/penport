@@ -20,3 +20,11 @@ jobs:
           python-version: "3.12"
       - name: Validate website
         run: python scripts/validate.py
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Build GitHub Pages site
+        run: bundle exec jekyll build --trace
+      - name: Validate generated blog
+        run: python scripts/validate.py --built

@@ -1,0 +1,21 @@
+---
+layout: blog-base
+---
+{% assign minutes = content | strip_html | number_of_words | plus: 199 | divided_by: 200 | at_least: 1 %}
+<nav class="seo-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a><span aria-hidden="true">/</span><a href="{{ '/blog/' | relative_url }}">Blog</a><span aria-hidden="true">/</span><span aria-current="page">{{ page.title | escape }}</span></nav>
+<div class="blog-reading-layout">
+    <article class="blog-article">
+        <header class="blog-article-header"><span class="blog-category">{{ page.category | escape }}</span><h1>{{ page.title | escape }}</h1><p class="blog-deck">{{ page.description | escape }}</p><div class="blog-meta"><span>By {{ page.author | escape }}</span><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%d %b %Y' }}</time><span>{{ minutes }} min read</span></div></header>
+        <img class="blog-cover" src="{{ page.image | relative_url }}" data-fallback="{{ '/assets/images/blog/insights.svg' | relative_url }}" alt="{{ page.image_alt | escape }}" width="720" height="405" decoding="async" fetchpriority="high" />
+        <div class="blog-prose">{{ content }}</div>
+        <div class="blog-share" aria-label="Share this article"><strong>Share this insight</strong><a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url | url_encode }}">LinkedIn</a><a href="https://wa.me/?text={{ page.title | append: ' ' | url_encode }}{{ page.url | absolute_url | url_encode }}">WhatsApp</a><a href="mailto:?subject={{ page.title | url_encode }}&amp;body={{ page.url | absolute_url | url_encode }}">Email</a><button type="button" data-copy-url hidden>Copy link</button><span role="status" data-copy-status></span></div>
+        <a class="blog-read" href="{{ '/blog/' | relative_url }}">← Back to Blog</a>
+    </article>
+    {% include blog-sidebar.html %}
+</div>
+{% if site.posts.size > 1 %}
+<section class="blog-related" aria-labelledby="relatedTitle"><span class="eyebrow">Keep exploring</span><h2 id="relatedTitle">More ideas for your next step</h2><div class="blog-grid">
+{% assign count = 0 %}{% for post in site.posts %}{% if post.url != page.url and post.category == page.category %}{% include blog-card.html post=post %}{% assign count = count | plus: 1 %}{% endif %}{% if count == 3 %}{% break %}{% endif %}{% endfor %}
+{% if count < 3 %}{% for post in site.posts %}{% if post.url != page.url and post.category != page.category %}{% include blog-card.html post=post %}{% assign count = count | plus: 1 %}{% endif %}{% if count == 3 %}{% break %}{% endif %}{% endfor %}{% endif %}
+</div></section>
+{% endif %}

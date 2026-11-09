@@ -60,7 +60,45 @@ def require(condition, message):
         raise ValueError(message)
 
 
+def validate_blog_build():
+    output = ROOT / "_site"
+    articles = list((output / "blog").glob("*/index.html"))
+    require(bool(articles), "Built blog articles are missing")
+    for path in [output / "blog/index.html", *articles]:
+        source = path.read_text(encoding="utf-8")
+        page = Page()
+        page.feed(source)
+        require(page.h1 == 1, f"{path}: expected one H1")
+        require(len(page.ids) == len(set(page.ids)), f"{path}: duplicate IDs")
+        require(len(page.canonicals) == 1 and page.meta.get("description"),
+                f"{path}: missing SEO metadata")
+        require("{{" not in source and "{%" not in source, f"{path}: unrendered Liquid")
+        if path in articles:
+            require(any(schema.get("@type") == "BlogPosting" for schema in page.schemas),
+                    f"{path}: missing BlogPosting schema")
+            require("PenportSchoolMS" in source and "Penport ID Card Solution" in source,
+                    f"{path}: missing product promotion")
+        for link in page.links:
+            url = urlsplit(link)
+            if url.scheme or url.netloc or not url.path:
+                continue
+            require(url.path.startswith("/penport/"), f"{path}: incorrect base URL {link}")
+            target = output / unquote(url.path.removeprefix("/penport/"))
+            require(target.is_file() or (target / "index.html").is_file(),
+                    f"{path}: missing built link {link}")
+    sitemap = ET.parse(output / "sitemap.xml")
+    urls = {node.text for node in sitemap.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc")}
+    for path in articles:
+        url = "https://penportindia.github.io/penport/" + path.parent.relative_to(output).as_posix() + "/"
+        require(url in urls, f"Article missing from sitemap: {url}")
+    ET.parse(output / "feed.xml")
+    print(f"PASS built blog: {len(articles)} articles, SEO, schema, local links, sitemap and feed")
+
+
 def main():
+    if "--built" in sys.argv:
+        validate_blog_build()
+        return
     pages = {}
     for filename in PAGES:
         page = Page()
@@ -78,7 +116,8 @@ def main():
             if url.scheme or url.netloc:
                 continue
             target = ROOT / unquote(url.path) if url.path else ROOT / filename
-            require(target.is_file(), f"{filename}: missing local target {link}")
+            require(target.is_file() or (target.is_dir() and (target / "index.html").is_file()),
+                    f"{filename}: missing local target {link}")
             if url.fragment and target.name in PAGES:
                 target_page = Page()
                 target_page.feed(target.read_text(encoding="utf-8"))
@@ -111,10 +150,15 @@ def main():
             "Company location differs from the confirmed profile")
     require(company.get("founder", {}).get("name") == "Raushan Singh",
             "Company founder differs from the confirmed profile")
-    sitemap = ET.parse(ROOT / "sitemap.xml")
+    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    sitemap = ET.ElementTree(ET.fromstring(sitemap_source.split("---", 2)[-1].strip()))
     urls = [node.text for node in sitemap.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
     expected = {pages[p].canonicals[0] for p in PAGES if p != "thank-you.html"}
-    require(set(urls) == expected and len(urls) == len(expected), "Sitemap must match indexable canonicals")
+    static_urls = [url for url in urls if "{{" not in url]
+    require(set(static_urls) == expected and len(static_urls) == len(expected),
+            "Sitemap must match indexable canonicals")
+    require("for post in site.posts" in sitemap_source and "'/blog/' | absolute_url" in sitemap_source,
+            "Sitemap must include the blog and automatically include posts")
 
     source = (ROOT / "assets/js/catalogue.js").read_text(encoding="utf-8")
     source_names = re.findall(r'name: "([^"]+)"', source.split("const CATEGORIES")[0])

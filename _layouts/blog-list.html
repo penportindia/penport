@@ -1,0 +1,22 @@
+---
+layout: blog-base
+---
+<nav class="seo-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Blog</span></nav>
+<section class="blog-hero">
+    <span class="eyebrow">The Penport India journal</span>
+    <h1>Insights &amp; <span>Resources</span></h1>
+    <p>Clear ideas for better school administration, smarter digital records and more connected businesses.</p>
+    <a href="{{ '/feed.xml' | relative_url }}">Subscribe via RSS <span aria-hidden="true">↗</span></a>
+</section>
+<section aria-label="Articles" data-blog-list>
+    <form class="blog-controls" role="search" hidden>
+        <div><label for="blogSearch">Search articles</label><input id="blogSearch" type="search" placeholder="Search topics, questions or ideas" autocomplete="off" /></div>
+        <div><label for="blogCategory">Category</label><select id="blogCategory"><option value="">All topics</option>{% assign categories = site.posts | map: 'category' | uniq | sort %}{% for category in categories %}<option value="{{ category | escape }}">{{ category | escape }}</option>{% endfor %}</select></div>
+        <button class="btn-small btn-outline" type="reset">Clear filters</button>
+    </form>
+    <p class="blog-result-count" role="status" aria-live="polite"></p>
+    <div class="blog-grid">{% for post in site.posts %}{% include blog-card.html post=post %}{% endfor %}</div>
+    <div class="blog-empty" hidden><h2>No articles found</h2><p>Try another keyword or choose a different topic.</p></div>
+    <button class="btn-main btn-outline blog-load" type="button" hidden>Load more articles</button>
+    {% if site.posts.size == 0 %}<p>Our first insights are on their way. Check back soon.</p>{% endif %}
+</section>

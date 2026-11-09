@@ -2,7 +2,16 @@
 
 ## Application model
 
-A static multipage website served directly by GitHub Pages. Each HTML page owns its content and metadata; shared CSS and browser scripts handle presentation and interactions. Public paths stay at the repository root so existing bookmarks and Search Console URLs continue to resolve.
+A static multipage website served by GitHub Pages. Existing HTML pages own their
+content and metadata; shared CSS and browser scripts handle presentation and
+interactions. Their public paths remain at the repository root. The blog uses
+GitHub Pages-compatible Jekyll to render `_posts` Markdown through `_layouts`
+and `_includes`. `_config.yml` configures the production base URL and product
+CTA destinations. Blog CSS is scoped to `body[data-page="blog"]`; existing page
+styles and scripts remain independent. Search, filtering and Load more enhance
+server-rendered article cards without making article content depend on JavaScript.
+The Jekyll sitemap template includes all published posts, and jekyll-feed generates
+the Atom feed. See README for publishing and local preview instructions.
 
 | Page           | Behaviour                                                                      |
 | -------------- | ------------------------------------------------------------------------------ |
@@ -38,4 +47,6 @@ The sitemap currently uses the GitHub Pages project URL. Google site names are s
 5. Review the pull request and merge when ready.
 6. Confirm the production Pages deployment and inspect changed URLs.
 
-The quality workflow validates source only; it does not publish a site. Browser screenshots, live performance, backend delivery and Google indexing require separate checks.
+The quality workflow validates source, builds Jekyll and checks generated blog
+metadata, schema, links, sitemap and feed. It does not publish a site. Browser
+layout, live performance, backend delivery and Google indexing require separate checks.
