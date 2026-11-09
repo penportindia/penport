@@ -59,7 +59,10 @@
             </nav>
     </header>
     <main id="blogMain" class="blog-shell">{{ content }}</main>
-    <footer class="site-footer"><p>&copy; 2025 Penport India</p></footer>
+    <footer class="site-footer">
+            <p>&copy; 2025 Penport India</p>
+            <a class="footer-blog-link" href="{{ '/blog/' | relative_url }}" aria-label="Blog" title="Blog"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h4"/></svg></a>
+        </footer>
     <script src="{{ '/assets/js/blog.js' | relative_url }}" defer></script>
 </body>
 </html>

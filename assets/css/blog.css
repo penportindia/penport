@@ -80,6 +80,7 @@ body[data-page="blog"] .blog-promotion { padding: 26px; background: #12202c; bor
 body[data-page="blog"] .blog-promotion h2 { font-size: 1.2rem; line-height: 1.4; margin: 16px 0; overflow-wrap: anywhere; }
 body[data-page="blog"] .blog-promotion p { font-size: .83rem; line-height: 1.85; color: #b6c3cf; margin-bottom: 24px; }
 body[data-page="blog"] .blog-promotion .btn-small { width: 100%; border-radius: 10px; font-size: .8rem; }
+body[data-page="blog"] .blog-promotion .blog-read { margin-top: 18px; }
 body[data-page="blog"] .blog-share { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; padding: 28px 0; border-block: 1px solid #283644; margin: 36px 0 24px; font-size: .8rem; }
 body[data-page="blog"] .blog-share a { color: var(--primary); }
 body[data-page="blog"] .blog-share button { color: var(--primary); background: transparent; border: 1px solid #384b5a; border-radius: 6px; padding: 8px; cursor: pointer; }

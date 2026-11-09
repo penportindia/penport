@@ -284,4 +284,4 @@ Discover how PenportSchoolMS can help your institution organize records, simplif
 
 *Less Paperwork. Better Organization. More Time for Education.*
 
-[Explore PenportSchoolMS]({{ '/catalogue.html?project=School%20OS' | relative_url }}) | [Request a Demo]({{ '/book-demo.html?project=School%20OS' | relative_url }})
+[Explore PenportSchoolMS](https://penportschoolms.vercel.app) | [Request a Demo]({{ '/book-demo.html?project=School%20MS' | relative_url }})

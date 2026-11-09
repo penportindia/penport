@@ -26,5 +26,6 @@ defaults:
       image: /assets/images/blog/insights.svg
       image_alt: An illustration of organized digital school records
 products:
-  school_demo_url: /book-demo.html?project=School%20OS
+  school_url: https://penportschoolms.vercel.app
+  school_demo_url: /book-demo.html?project=School%20MS
   id_card_url: /catalogue.html?project=ID%20Card%20Solution

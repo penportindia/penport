@@ -17,7 +17,7 @@
         {
             title: "School ERP Management System",
             url: "https://www.youtube.com/embed/g8d15z4o5yA",
-            project: "School OS"
+            project: "School MS"
         },
         {
             title: "Campaign Design Portfolio",

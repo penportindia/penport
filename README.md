@@ -103,7 +103,7 @@ with search. Collections show six articles at a time with Load more. Without
 JavaScript all article links and content remain available.
 
 Product destinations are configured under `products` in `_config.yml`. The
-PenportSchoolMS demo uses the existing School OS booking option, and Penport ID
+PenportSchoolMS demo uses the existing School MS booking option, and Penport ID
 Card Solution links to the existing catalogue entry. Existing catalogue and
 booking names are preserved.
 

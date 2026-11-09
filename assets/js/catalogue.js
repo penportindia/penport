@@ -1,6 +1,7 @@
 const CATALOGUE_PROJECTS = [
     {
-        name: "School OS",
+        name: "School MS",
+        website: "https://penportschoolms.vercel.app",
         category: "School Management",
         icon: "bi-mortarboard",
         featured: true,
@@ -329,6 +330,7 @@ function renderProjects() {
                         .join("")}
                 </ul>
                 <div class="project-actions">
+                    ${project.website ? `<a class="btn-small btn-outline" href="${escapeHtml(project.website)}">Explore School MS</a>` : ""}
                     <button class="btn-small btn-outline" type="button" data-detail="${index}">View Details</button>
                     <a class="btn-small btn-accent" href="${projectBookUrl(project.name)}">Book Demo</a>
                 </div>
@@ -359,6 +361,7 @@ function openProjectModal(project) {
                 <p>${escapeHtml(project.suitableFor)}</p>
             </div>
         </div>
+        ${project.website ? `<a class="btn-main btn-outline" href="${escapeHtml(project.website)}">Explore School MS</a>` : ""}
         <a class="btn-main btn-accent" href="${projectBookUrl(project.name)}">Book Demo</a>
     `;
     modal.classList.add("open");

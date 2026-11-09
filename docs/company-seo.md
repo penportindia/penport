@@ -5,7 +5,7 @@
 Penport India is a software development company based in Patna, Bihar, India,
 founded by Raushan Singh in 2021. The company develops custom software, school
 ERP, business management systems, websites and mobile applications for schools,
-businesses and organizations. Its catalogue includes School OS, HR management,
+businesses and organizations. Its catalogue includes School MS, HR management,
 inventory management and ID card solutions. Prospective clients can explore
 features and request a personalized demo through the website.
 

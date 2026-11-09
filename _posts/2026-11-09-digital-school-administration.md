@@ -54,4 +54,4 @@ A short checklist is often enough to make a daily process repeatable:
 
 Once the first process is stable, review related work. Reliable student records can support attendance, fee tracking and [professional ID card management]({{ '/blog/school-id-card-solution/' | relative_url }}).
 
-Discuss your priorities in a [PenportSchoolMS demo]({{ '/book-demo.html?project=School%20OS' | relative_url }}). Bring examples of the reports and handovers you want to improve so the conversation stays focused on your school's daily operations.
+Discuss your priorities in a [PenportSchoolMS demo]({{ '/book-demo.html?project=School%20MS' | relative_url }}). Bring examples of the reports and handovers you want to improve so the conversation stays focused on your school's daily operations.
