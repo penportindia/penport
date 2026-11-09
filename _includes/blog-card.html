@@ -7,6 +7,6 @@
         <div class="blog-meta"><time datetime="{{ include.post.date | date: '%Y-%m-%d' }}">{{ include.post.date | date: '%d %b %Y' }}</time><span>{{ minutes }} min read</span></div>
         <h2><a href="{{ include.post.url | relative_url }}">{{ include.post.title | escape }}</a></h2>
         <p>{{ include.post.description | escape }}</p>
-        <a class="blog-read" href="{{ include.post.url | relative_url }}" aria-label="Read more: {{ include.post.title | escape }}">Read more <span aria-hidden="true">↗</span></a>
+        <a class="blog-read" href="{{ include.post.url | relative_url }}" aria-label="Read more: {{ include.post.title | escape }}">Read more</a>
     </div>
 </article>
