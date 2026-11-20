@@ -1,16 +1,76 @@
 (function () {
-    if (window.AOS) {
-        window.AOS.init({ duration: 1000, once: true, easing: "ease-out-quad" });
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const menu = document.querySelector(".site-menu-toggle");
+    const navigation = document.getElementById("siteNavigation");
+
+    if (menu && navigation) {
+        const mobile = window.matchMedia("(max-width: 42rem)");
+        function syncMenu() {
+            menu.hidden = !mobile.matches;
+            navigation.hidden = mobile.matches;
+            menu.setAttribute("aria-expanded", "false");
+        }
+        menu.addEventListener("click", () => {
+            const open = navigation.hidden;
+            navigation.hidden = !open;
+            menu.setAttribute("aria-expanded", String(open));
+        });
+        menu.closest("header").addEventListener("keydown", (event) => {
+            if (event.key !== "Escape" || navigation.hidden || !mobile.matches) return;
+            syncMenu();
+            menu.focus();
+        });
+        mobile.addEventListener("change", syncMenu);
+        syncMenu();
     }
 
-    if (window.Typed && document.querySelector("#typed")) {
-        new window.Typed("#typed", {
-            strings: ["Raushan.", "a Developer.", "a Designer."],
-            typeSpeed: 50,
-            backSpeed: 30,
-            loop: true,
-            backDelay: 2000
-        });
+    if ("IntersectionObserver" in window && !reduceMotion.matches) {
+        const reveal = new IntersectionObserver((entries, observer) => {
+            for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                entry.target.classList.add("is-revealed");
+                observer.unobserve(entry.target);
+            }
+        }, { threshold: 0.1 });
+        document.querySelectorAll("[data-reveal], .blog-card, .showcase-card").forEach((element) => reveal.observe(element));
+    }
+
+    const roleDisplay = document.querySelector(".profile-roles");
+    if (roleDisplay) {
+        const roles = Array.from(roleDisplay.children, (element) => element.textContent);
+        const activeRole = roleDisplay.firstElementChild;
+        let timer;
+
+        function startRoleAnimation() {
+            clearTimeout(timer);
+            activeRole.textContent = roles[0];
+            roleDisplay.classList.toggle("is-typing", !reduceMotion.matches);
+            if (reduceMotion.matches) return;
+
+            let index = 0;
+            let length = roles[0].length;
+            let deleting = true;
+
+            function typeRole() {
+                length += deleting ? -1 : 1;
+                activeRole.textContent = roles[index].slice(0, length);
+                let delay = deleting ? 65 : 105;
+                if (length === 0) {
+                    index = (index + 1) % roles.length;
+                    deleting = false;
+                    delay = 220;
+                } else if (length === roles[index].length) {
+                    deleting = true;
+                    delay = 1500;
+                }
+                timer = setTimeout(typeRole, delay);
+            }
+
+            timer = setTimeout(typeRole, 1500);
+        }
+
+        startRoleAnimation();
+        reduceMotion.addEventListener("change", startRoleAnimation);
     }
 
     const projectDemos = [
@@ -77,12 +137,6 @@
             if (event.target.closest("a")) return;
             openVideoModal(card.dataset.id);
         });
-        card.addEventListener("keydown", (event) => {
-            if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                openVideoModal(card.dataset.id);
-            }
-        });
     });
 
     closeVideo?.addEventListener("click", closeVideoModal);
@@ -91,7 +145,7 @@
     });
 
     document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
+        if (event.key === "Escape" && videoModal?.classList.contains("open")) {
             closeVideoModal();
         }
     });

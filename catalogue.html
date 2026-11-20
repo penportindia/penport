@@ -8,7 +8,7 @@
             content="Explore school ERP, HR, inventory, ID card and custom software from Penport India in Patna, Bihar. Compare features and request a personalized demo."
         />
         <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta name="theme-color" content="#00d4ff" />
+        <meta name="theme-color" content="#f3fbff" />
         <link rel="canonical" href="https://penportindia.github.io/penport/catalogue.html" />
         <meta property="og:site_name" content="Penport India" />
         <meta property="og:locale" content="en_IN" />
@@ -39,10 +39,9 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
         />
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
         <link rel="icon" type="image/png" href="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png" />
-        <link rel="stylesheet" href="assets/css/style.css" />
-        <link rel="stylesheet" href="assets/css/components.css?v=20261016-4" />
+        <link rel="stylesheet" href="assets/css/style.css?v=20261120-cards" />
+        <link rel="stylesheet" href="assets/css/components.css?v=20261120-menu-icon" />
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -249,30 +248,26 @@
             <div class="glow-circle glow-two"></div>
         </div>
 
-        <header class="wide-page-header">
-            <a class="wide-brand" href="index.html">Penport<span>India</span></a>
-            <nav aria-label="Page navigation">
-                <a class="header-icon" href="index.html" aria-label="Home" title="Home">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>
-                </a>
-                <a class="header-icon" href="catalogue.html" aria-label="Explore projects" title="Explore projects" aria-current="page">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="11" rx="1.5"/><rect x="14" y="3" width="7" height="6" rx="1.5"/><rect x="3" y="18" width="7" height="3" rx="1"/><rect x="14" y="13" width="7" height="8" rx="1.5"/></svg>
-                </a>
-                <a class="header-icon header-icon-demo" href="book-demo.html" aria-label="Book a demo" title="Book a demo">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18m-12 5 2 2 4-4"/></svg>
-                </a>
-                <a class="header-icon" href="blog/" aria-label="Blog" title="Blog">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h4"/></svg>
-                </a>
-            </nav>
+        <a class="site-skip" href="#mainContent">Skip to content</a>
+        <header class="site-masthead">
+            <div class="site-masthead-inner">
+                <a class="site-wordmark" href="index.html" aria-label="Penport India"><img src="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png" alt="" width="40" height="40" decoding="async" /><span>enport <strong>India</strong></span></a>
+                <button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="siteNavigation" aria-label="Menu" hidden><span class="site-menu-icon" aria-hidden="true"></span></button>
+                <nav class="site-navigation" id="siteNavigation" aria-label="Page navigation">
+                    <a href="index.html">Home</a>
+                    <a href="catalogue.html" aria-current="page">Explore</a>
+                    <a href="blog/">Blog</a>
+                    <a href="book-demo.html" class="site-nav-cta">Book</a>
+                </nav>
+            </div>
         </header>
 
-        <main class="container wide-page">
+        <main id="mainContent" class="container wide-page">
             <nav class="seo-breadcrumb" aria-label="Breadcrumb">
                 <a href="index.html">Home</a><span aria-hidden="true">/</span
                 ><span aria-current="page">Software solutions</span>
             </nav>
-            <section class="page-hero" data-aos="fade-up">
+            <section class="page-hero" data-reveal>
                 <div class="catalogue-hero-panel">
                     <span class="eyebrow">Ready-to-demo software catalogue</span>
                     <h1>Practical software.<br /><span>Powerful possibilities.</span></h1>
@@ -287,8 +282,7 @@
                             <span>Software for everyday operations</span>
                         </div>
                         <div>
-                            <i class="bi bi-lightning-charge" aria-hidden="true"></i
-                            ><strong>Explore in detail</strong><span>See features before you decide</span>
+                            <i class="bi bi-search" aria-hidden="true"></i><strong>Explore in detail</strong><span>See features before you decide</span>
                         </div>
                         <div>
                             <i class="bi bi-sliders" aria-hidden="true"></i><strong>Built around you</strong>
@@ -297,22 +291,21 @@
                     </div>
                     <div class="hero-actions center">
                         <a href="book-demo.html" class="btn-main btn-accent"
-                            ><i class="bi bi-calendar-check" aria-hidden="true"></i> Book a Demo</a
+                            ><i class="bi bi-calendar-check" aria-hidden="true"></i> Book</a
                         >
                         <a
                             href="https://wa.me/917004848750?text=Hello%20Penport%20India%2C%20I%20would%20like%20to%20book%20a%20software%20demo."
                             class="btn-main btn-outline"
-                            ><i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp Now</a
+                            ><i class="bi bi-whatsapp" aria-hidden="true"></i> WhatsApp</a
                         >
                     </div>
                 </div>
             </section>
 
             <section class="page-section catalogue-workspace" aria-labelledby="catalogueTitle">
-                <h2 id="catalogueTitle" class="sr-only">Project catalogue</h2>
-                <div class="filter-shell" data-aos="fade-up">
+                <h2 id="catalogueTitle" class="sr-only">Software solutions</h2>
+                <div class="filter-shell" data-reveal>
                     <div class="filter-heading">
-                        <span>Project catalogue</span>
                         <strong>Choose a solution type</strong>
                     </div>
                     <label class="catalogue-search" for="projectSearch"
@@ -344,15 +337,15 @@
                                     and school administration from one unified platform.
                                 </p>
                                 <div class="project-actions">
-                                    <a class="btn-small btn-outline" href="https://penportschoolms.vercel.app">Explore School MS</a>
+                                    <a class="btn-small btn-outline" href="https://penportschoolms.vercel.app">Explore</a>
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=School%20MS"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=School%20MS"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -374,11 +367,11 @@
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=HR%20Management%20System"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=HR%20Management%20System"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -399,11 +392,11 @@
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=Inventory%20Management%20Solution"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=Inventory%20Management%20Solution"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -424,11 +417,11 @@
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=ID%20Card%20Solution"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=ID%20Card%20Solution"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -449,11 +442,11 @@
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=School%20Mobile%20App"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=School%20Mobile%20App"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -474,11 +467,11 @@
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=Fee%20Management%20System"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=Fee%20Management%20System"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -498,11 +491,11 @@
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=Attendance%20Management%20System"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=Attendance%20Management%20System"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -522,11 +515,11 @@
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=Business%20Management%20System"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=Business%20Management%20System"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -546,11 +539,11 @@
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=Portfolio%20and%20Business%20Website"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=Website%20Development"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -570,11 +563,11 @@
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=Admission%20Enquiry%20System"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=Admission%20Enquiry%20System"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -594,11 +587,11 @@
                                     <a
                                         class="btn-small btn-outline"
                                         href="catalogue.html?project=Custom%20Software%20Development"
-                                        >View details</a
+                                        >Details</a
                                     ><a
                                         class="btn-small btn-accent"
                                         href="book-demo.html?project=Custom%20Software%20Development"
-                                        >Book demo</a
+                                        >Book</a
                                     >
                                 </div>
                             </div>
@@ -628,8 +621,18 @@
         </div>
 
         <footer class="site-footer">
-            <p>&copy; 2025 Penport India</p>
-            <a class="footer-blog-link" href="blog/" aria-label="Blog" title="Blog"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h4"/></svg></a>
+            <div class="site-footer-inner">
+                <div class="site-footer-identity">
+                    <a href="index.html">Penport India</a>
+                    <p>&copy; 2025 Penport India</p>
+                </div>
+                <nav aria-label="Footer navigation">
+                    <a href="catalogue.html">Explore</a>
+                    <a href="school-management-software.html">School MS</a>
+                    <a href="blog/">Blog</a>
+                    <a href="book-demo.html">Book</a>
+                </nav>
+            </div>
         </footer>
 
         <div class="floating-actions" aria-label="Quick actions">
@@ -641,9 +644,8 @@
             ></a>
         </div>
 
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script src="assets/js/main.js"></script>
-        <script src="assets/js/catalogue.js?v=20261016-1"></script>
+        <script src="assets/js/main.js?v=20261120"></script>
+        <script src="assets/js/catalogue.js?v=20261120-features"></script>
         <script src="assets/js/accessibility.js"></script>
     </body>
 </html>

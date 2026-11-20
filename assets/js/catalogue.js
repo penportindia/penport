@@ -299,30 +299,23 @@ function renderProjects() {
     );
     if (!visibleProjects.length) {
         grid.innerHTML =
-            '<div class="empty-projects"><i class="bi bi-search" aria-hidden="true"></i><h2>No matching solutions</h2><p>Try a different search or choose another category.</p><button class="btn-small btn-outline" id="resetProjects" type="button">Reset filters</button></div>';
+            '<div class="empty-projects"><i class="bi bi-search" aria-hidden="true"></i><h2>No matching solutions</h2><p>Try a different search or choose another category.</p><button class="btn-small btn-outline" id="resetProjects" type="button">Reset</button></div>';
         return;
     }
     grid.innerHTML = visibleProjects
         .map(
             (project, index) => `
-        <article class="project-card${project.featured ? " featured-project" : ""}" data-aos="fade-up">
+        <article class="project-card${project.featured ? " featured-project" : ""}">
             <div class="project-image" role="img" aria-label="${escapeHtml(project.name)} project placeholder">
                 <i class="bi ${escapeHtml(project.icon)}" aria-hidden="true"></i><span class="project-art-label">${escapeHtml(project.category)}</span><div class="illustration-lines" aria-hidden="true"><b></b><b></b><b></b></div>
             </div>
             <div class="project-body">
                 <div class="project-meta">
                     <span class="category-pill">${escapeHtml(project.category)}</span>
-                    ${project.featured ? '<span class="demo-ready-pill">Demo Ready</span>' : ""}
                 </div>
                 <h2>${escapeHtml(project.name)}</h2>
-                <div class="impact-line"><i class="bi bi-lightning-charge" aria-hidden="true"></i> ${escapeHtml(project.impact || "Built for practical daily operations")}</div>
+                <div class="impact-line">${escapeHtml(project.impact || "Built for practical daily operations")}</div>
                 <p>${escapeHtml(project.description)}</p>
-                <ul class="tag-list" aria-label="Technology tags">
-                    ${project.tags
-                        .slice(0, 3)
-                        .map((tag) => `<li>${escapeHtml(tag)}</li>`)
-                        .join("")}
-                </ul>
                 <ul class="feature-list" aria-label="Main features">
                     ${project.features
                         .slice(0, 4)
@@ -330,17 +323,15 @@ function renderProjects() {
                         .join("")}
                 </ul>
                 <div class="project-actions">
-                    ${project.website ? `<a class="btn-small btn-outline" href="${escapeHtml(project.website)}">Explore School MS</a>` : ""}
-                    <button class="btn-small btn-outline" type="button" data-detail="${index}">View Details</button>
-                    <a class="btn-small btn-accent" href="${projectBookUrl(project.name)}">Book Demo</a>
+                    ${project.website ? `<a class="btn-small btn-outline" href="${escapeHtml(project.website)}">Explore</a>` : ""}
+                    <button class="btn-small btn-outline" type="button" data-detail="${index}">Details</button>
+                    <a class="btn-small btn-accent" href="${projectBookUrl(project.name)}">Book</a>
                 </div>
             </div>
         </article>
     `
         )
         .join("");
-
-    if (window.AOS) window.AOS.refresh();
 }
 
 function openProjectModal(project) {
@@ -348,21 +339,19 @@ function openProjectModal(project) {
     modalTitle.textContent = project.name;
     modalContent.innerHTML = `
         <p>${escapeHtml(project.description)}</p>
-        <div class="impact-line modal-impact"><i class="bi bi-lightning-charge" aria-hidden="true"></i> ${escapeHtml(project.impact || "Built for practical daily operations")}</div>
+        <div class="impact-line modal-impact">${escapeHtml(project.impact || "Built for practical daily operations")}</div>
         <div class="modal-grid">
             <div>
                 <h3>Key Features</h3>
                 <ul class="feature-list modal-feature-list">${project.features.map((feature) => `<li>${escapeHtml(feature)}</li>`).join("")}</ul>
             </div>
             <div>
-                <h3>Technology</h3>
-                <ul class="tag-list">${project.tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join("")}</ul>
-                <h3 class="modal-subtitle">Suitable For</h3>
+                <h3>Suitable For</h3>
                 <p>${escapeHtml(project.suitableFor)}</p>
             </div>
         </div>
-        ${project.website ? `<a class="btn-main btn-outline" href="${escapeHtml(project.website)}">Explore School MS</a>` : ""}
-        <a class="btn-main btn-accent" href="${projectBookUrl(project.name)}">Book Demo</a>
+        ${project.website ? `<a class="btn-main btn-outline" href="${escapeHtml(project.website)}">Explore</a>` : ""}
+        <a class="btn-main btn-accent" href="${projectBookUrl(project.name)}">Book</a>
     `;
     modal.classList.add("open");
     modal.setAttribute("aria-hidden", "false");

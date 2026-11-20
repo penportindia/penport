@@ -8,7 +8,6 @@ const GOOGLE_SCRIPT_URL =
     const startedAt = Date.now();
     let isSubmitting = false;
     const submitButton = document.getElementById("submitButton");
-    const buttonText = submitButton.querySelector(".button-text");
     const status = document.getElementById("formStatus");
     const dateField = document.getElementById("preferredDemoDate");
 
@@ -67,9 +66,8 @@ const GOOGLE_SCRIPT_URL =
         input.closest(".field")?.classList.toggle("invalid", Boolean(message));
     }
 
-    function setStatus(message, type) {
+    function setSubmissionError(message) {
         status.textContent = message;
-        status.className = `form-status ${type || ""}`.trim();
     }
 
     function onlyDigits(value) {
@@ -151,7 +149,7 @@ const GOOGLE_SCRIPT_URL =
         }
 
         if (Date.now() - startedAt < 3000) {
-            setStatus("Please take a moment to review your details before submitting.", "error");
+            setSubmissionError("Please take a moment to review your details before submitting.");
             valid = false;
         }
 
@@ -185,7 +183,6 @@ const GOOGLE_SCRIPT_URL =
         submitButton.disabled = active;
         form.setAttribute("aria-busy", String(active));
         submitButton.classList.toggle("loading", active);
-        buttonText.textContent = active ? "Submitting..." : "Submit Demo Request";
     }
 
     form.addEventListener("input", (event) => {
@@ -197,21 +194,19 @@ const GOOGLE_SCRIPT_URL =
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
         if (isSubmitting) return;
-        setStatus("", "");
+        setSubmissionError("");
 
         if (!validateForm()) {
-            if (!status.textContent) setStatus("Please correct the highlighted fields.", "error");
             form.querySelector('[aria-invalid="true"]')?.focus();
             return;
         }
 
         if (GOOGLE_SCRIPT_URL.includes("PASTE_YOUR")) {
-            setStatus("Google Apps Script Web App URL is not configured yet.", "error");
+            setSubmissionError("Google Apps Script Web App URL is not configured yet.");
             return;
         }
 
         setSubmitting(true);
-        setStatus("Submitting your demo request...", "");
 
         try {
             const payload = collectPayload();
@@ -228,7 +223,6 @@ const GOOGLE_SCRIPT_URL =
                 throw new Error(result.message || "Submission failed");
             }
 
-            setStatus("Your demo request has been submitted successfully.", "success");
             if (result.whatsapp) {
                 sessionStorage.setItem(
                     "penportWhatsappLinks",
@@ -243,9 +237,8 @@ const GOOGLE_SCRIPT_URL =
             const id = encodeURIComponent(result.submissionId || "");
             window.location.href = id ? `thank-you.html?id=${id}` : "thank-you.html";
         } catch (error) {
-            setStatus(
-                "We could not submit your request. Please check your internet connection and try again.",
-                "error"
+            setSubmissionError(
+                "We could not submit your request. Please check your internet connection and try again."
             );
         } finally {
             setSubmitting(false);

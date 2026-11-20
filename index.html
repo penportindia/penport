@@ -9,7 +9,7 @@
         />
         <meta name="author" content="Raushan Singh" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta name="theme-color" content="#00d4ff" />
+        <meta name="theme-color" content="#f3fbff" />
         <link rel="canonical" href="https://penportindia.github.io/penport/" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -46,7 +46,6 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
         />
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
         <link
             rel="icon"
             type="image/png"
@@ -59,8 +58,8 @@
             sizes="16x16"
             href="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png"
         />
-        <link rel="stylesheet" href="assets/css/style.css" />
-        <link rel="stylesheet" href="assets/css/components.css?v=20261016-5" />
+        <link rel="stylesheet" href="assets/css/style.css?v=20261120" />
+        <link rel="stylesheet" href="assets/css/components.css?v=20261120-menu-icon" />
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -82,6 +81,7 @@
                             "@type": "Person",
                             "name": "Raushan Singh",
                             "jobTitle": "Founder & Lead Developer",
+                            "sameAs": ["https://www.instagram.com/insraushan/"],
                             "@id": "https://penportindia.github.io/penport/#founder",
                             "worksFor": {
                                 "@id": "https://penportindia.github.io/penport/#organization"
@@ -97,7 +97,6 @@
                         },
                         "sameAs": [
                             "https://www.facebook.com/penportindia",
-                            "https://www.instagram.com/penport",
                             "https://www.youtube.com/penport",
                             "https://www.linkedin.com/company/penport",
                             "https://github.com/penportindia"
@@ -256,87 +255,97 @@
         </script>
     </head>
     <body data-page="home">
-        <div class="bg-glow" aria-hidden="true">
-        </div>
-
-        <header class="container brand-header" data-aos="fade-down">
-            <div class="brand-wrapper">
-                <div class="brand-main" aria-hidden="true">Penport</div>
-                <span class="brand-sub">India</span>
+        <a class="site-skip" href="#mainContent">Skip to content</a>
+        <header class="site-masthead">
+            <div class="site-masthead-inner">
+                <a class="site-wordmark" href="index.html" aria-label="Penport India"><img src="https://i.ibb.co/ym5yxYwM/Penport-logo-001.png" alt="" width="40" height="40" decoding="async" /><span>enport <strong>India</strong></span></a>
+                <button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="siteNavigation" aria-label="Menu" hidden><span class="site-menu-icon" aria-hidden="true"></span></button>
+                <nav class="site-navigation" id="siteNavigation" aria-label="Page navigation">
+                    <a href="index.html" aria-current="page">Home</a>
+                    <a href="catalogue.html">Explore</a>
+                    <a href="blog/">Blog</a>
+                    <a href="book-demo.html" class="site-nav-cta">Book</a>
+                </nav>
             </div>
-            <h1 class="sr-only">Penport India — Software Development Company in Patna, Bihar</h1>
         </header>
 
-        <main class="container">
-            <section class="hero">
-                <div class="hero-content" data-aos="fade-right">
-                    <h2>Hi, I'm <span id="typed" class="text-primary"></span></h2>
+        <main id="mainContent" class="container">
+            <section class="hero company-hero" aria-labelledby="companyTitle">
+                <div class="hero-content" data-reveal>
+                    <h1 id="companyTitle">Penport India <span>A Software Developer Company</span></h1>
+                    <div class="hero-location"><i class="bi bi-geo-alt" aria-hidden="true"></i> Based in Patna, Bihar</div>
                     <p>
-                        Architecting high-performance digital ecosystems with 4+ years of expertise.
-                        From custom ERPs to pixel-perfect UIs, I turn visionary ideas into robust
-                        realities.
+                        We build custom software that makes everyday work simpler. From school ERPs to web
+                        and mobile applications, we bring your operations together so your team can
+                        spend less time on manual tasks and more time on the work that matters.
                     </p>
-                    <div class="hero-actions">
-                        <a href="tel:+917004848750" class="btn-main"
-                            ><i class="bi bi-telephone" aria-hidden="true"></i> Call Now</a
-                        >
+                    <div class="hero-contact-row">
+                        <div class="hero-actions">
+                            <a href="tel:+917004848750" class="btn-main" aria-label="Call Penport India"
+                                ><i class="bi bi-telephone" aria-hidden="true"></i><span class="hero-call-label">Call</span></a
+                            >
+                        </div>
+
+                        <div class="social-links" aria-label="Social links">
+                            <a
+                                href="https://www.facebook.com/penportindia"
+                                aria-label="Visit Penport on Facebook"
+                                ><i class="bi bi-facebook" aria-hidden="true"></i
+                            ></a>
+                            <a
+                                href="https://www.instagram.com/insraushan/"
+                                aria-label="Follow Raushan Singh on Instagram"
+                                ><i class="bi bi-instagram" aria-hidden="true"></i
+                            ></a>
+                            <a
+                                href="https://www.youtube.com/penport"
+                                aria-label="Subscribe to Penport on YouTube"
+                                ><i class="bi bi-youtube" aria-hidden="true"></i
+                            ></a>
+                            <a
+                                href="https://www.linkedin.com/company/penport"
+                                aria-label="Connect with Penport on LinkedIn"
+                                ><i class="bi bi-linkedin" aria-hidden="true"></i
+                            ></a>
+                        </div>
                     </div>
 
-                    <div class="social-links" aria-label="Social links">
-                        <a
-                            href="https://www.facebook.com/penportindia"
-                            aria-label="Visit Penport on Facebook"
-                            ><i class="bi bi-facebook" aria-hidden="true"></i
-                        ></a>
-                        <a
-                            href="https://www.instagram.com/penport"
-                            aria-label="Follow Penport on Instagram"
-                            ><i class="bi bi-instagram" aria-hidden="true"></i
-                        ></a>
-                        <a
-                            href="https://www.youtube.com/penport"
-                            aria-label="Subscribe to Penport on YouTube"
-                            ><i class="bi bi-youtube" aria-hidden="true"></i
-                        ></a>
-                        <a
-                            href="https://www.linkedin.com/company/penport"
-                            aria-label="Connect with Penport on LinkedIn"
-                            ><i class="bi bi-linkedin" aria-hidden="true"></i
-                        ></a>
-                    </div>
-
-                    <div class="demo-grid">
-                        <article class="p-card open-demo" data-id="0" tabindex="0">
-                            <i class="bi bi-grid-1x2" aria-hidden="true"></i>
-                            <h3>School ERP</h3>
-                        </article>
-                        <article class="p-card open-demo" data-id="3" tabindex="0">
-                            <i class="bi bi-person-badge" aria-hidden="true"></i>
-                            <h3>ID Solutions</h3>
-                        </article>
-                        <a class="p-card more-card" href="catalogue.html">
-                            <span>Explore All</span>
-                            <h3>More Projects</h3>
-                        </a>
-                    </div>
                 </div>
 
-                <div class="profile-container" data-aos="fade-left">
+                <figure class="profile-container" data-reveal>
                     <img
                         src="https://i.ibb.co/Q34X2JJj/Whats-App-Image-2026-04-11-at-10-21-41-AM.jpg"
                         class="profile-img"
-                        alt="Raushan Singh - Founder and Lead Developer at Penport India"
+                        alt="Portrait of Raushan Singh"
                         width="380"
                         height="380"
                         decoding="async"
                         fetchpriority="high"
                     />
-                    <div class="profile-caption">
-                        <div>RAUSHAN SINGH</div>
-                        <span>Founder & Lead Developer</span>
-                    </div>
-                </div>
+                    <figcaption class="profile-caption">
+                        <span class="profile-greeting">Hi, I am</span>
+                        <strong>Raushan Singh</strong>
+                        <span class="sr-only">Founder, Developer, and Designer</span>
+                        <div class="profile-roles" aria-hidden="true">
+                            <span>Founder</span>
+                            <span>Developer</span>
+                            <span>Designer</span>
+                        </div>
+                    </figcaption>
+                </figure>
             </section>
+
+            <div class="demo-grid">
+                <button class="p-card open-demo" type="button" data-id="0" aria-haspopup="dialog">
+                    <strong>School ERP</strong>
+                </button>
+                <button class="p-card open-demo" type="button" data-id="3" aria-haspopup="dialog">
+                    <strong>ID Card Solution</strong>
+                </button>
+                <a class="p-card more-card" href="catalogue.html">
+                    <strong>Explore All</strong>
+                </a>
+            </div>
 
             <section class="featured-solutions" aria-labelledby="featuredTitle">
                 <div class="solutions-introduction">
@@ -347,12 +356,7 @@
                             to see its features or request a personalized walkthrough.
                         </p>
                     </div>
-                    <a class="solutions-badge" href="catalogue.html">
-                        <i class="bi bi-grid-1x2" aria-hidden="true"></i>
-                        <span>Projects &amp; Solutions</span>
-                        <span class="solutions-badge-action">Explore projects
-                        </span>
-                    </a>
+                    <a class="solutions-badge" href="catalogue.html"><span>Solutions</span></a>
                 </div>
                 <div class="solution-showcase">
                     <article class="showcase-card">
@@ -371,11 +375,11 @@
                             </p>
                             <div class="showcase-actions">
                                 <a href="https://penportschoolms.vercel.app"
-                                    >Explore School MS</a
+                                    >Explore</a
                                 ><a
                                     class="btn-small btn-accent"
                                     href="book-demo.html?project=School%20MS"
-                                    >Book demo</a
+                                    >Book</a
                                 >
                             </div>
                         </div>
@@ -400,7 +404,7 @@
                                 ><a
                                     class="btn-small btn-accent"
                                     href="book-demo.html?project=HR%20Management%20System"
-                                    >Book demo</a
+                                    >Book</a
                                 >
                             </div>
                         </div>
@@ -424,7 +428,7 @@
                                 ><a
                                     class="btn-small btn-accent"
                                     href="book-demo.html?project=Inventory%20Management%20Solution"
-                                    >Book demo</a
+                                    >Book</a
                                 >
                             </div>
                         </div>
@@ -446,7 +450,7 @@
                                 ><a
                                     class="btn-small btn-accent"
                                     href="book-demo.html?project=ID%20Card%20Solution"
-                                    >Book demo</a
+                                    >Book</a
                                 >
                             </div>
                         </div>
@@ -463,14 +467,11 @@
                         </p>
                     </div>
                     <a class="solutions-badge" href="book-demo.html">
-                        <i class="bi bi-code-slash" aria-hidden="true"></i>
-                        <span>Our Expertise</span>
-                        <span class="solutions-badge-action">Discuss requirements
-                        </span>
+                        <span>Discuss</span>
                     </a>
                 </div>
                 <div class="service-grid">
-                    <article class="s-card" data-aos="fade-up">
+                    <article class="s-card" data-reveal>
                         <span class="service-icon"
                             ><i class="bi bi-window-stack" aria-hidden="true"></i
                         ></span>
@@ -480,7 +481,7 @@
                             stacks.
                         </p>
                     </article>
-                    <article class="s-card" data-aos="fade-up" data-aos-delay="100">
+                    <article class="s-card" data-reveal>
                         <span class="service-icon"
                             ><i class="bi bi-grid-1x2" aria-hidden="true"></i
                         ></span>
@@ -490,7 +491,7 @@
                             operations.
                         </p>
                     </article>
-                    <article class="s-card" data-aos="fade-up" data-aos-delay="200">
+                    <article class="s-card" data-reveal>
                         <span class="service-icon"
                             ><i class="bi bi-bezier2" aria-hidden="true"></i
                         ></span>
@@ -500,14 +501,14 @@
                             experiences.
                         </p>
                     </article>
-                    <article class="s-card" data-aos="fade-up" data-aos-delay="300">
+                    <article class="s-card" data-reveal>
                         <span class="service-icon"
                             ><i class="bi bi-phone" aria-hidden="true"></i
                         ></span>
                         <h3>App Development</h3>
                         <p>Native and Cross-platform mobile apps for Android and iOS devices.</p>
                     </article>
-                    <article class="s-card" data-aos="fade-up" data-aos-delay="400">
+                    <article class="s-card" data-reveal>
                         <span class="service-icon"
                             ><i class="bi bi-cloud-check" aria-hidden="true"></i
                         ></span>
@@ -517,7 +518,7 @@
                             availability.
                         </p>
                     </article>
-                    <article class="s-card" data-aos="fade-up" data-aos-delay="500">
+                    <article class="s-card" data-reveal>
                         <span class="service-icon"
                             ><i class="bi bi-bag-check" aria-hidden="true"></i
                         ></span>
@@ -527,7 +528,7 @@
                             inventory management.
                         </p>
                     </article>
-                    <article class="s-card" data-aos="fade-up" data-aos-delay="600">
+                    <article class="s-card" data-reveal>
                         <span class="service-icon"
                             ><i class="bi bi-database" aria-hidden="true"></i
                         ></span>
@@ -537,7 +538,7 @@
                             retrieval.
                         </p>
                     </article>
-                    <article class="s-card" data-aos="fade-up" data-aos-delay="700">
+                    <article class="s-card" data-reveal>
                         <span class="service-icon"
                             ><i class="bi bi-palette" aria-hidden="true"></i
                         ></span>
@@ -547,7 +548,7 @@
                             for startups.
                         </p>
                     </article>
-                    <article class="s-card" data-aos="fade-up" data-aos-delay="800">
+                    <article class="s-card" data-reveal>
                         <span class="service-icon"
                             ><i class="bi bi-headset" aria-hidden="true"></i
                         ></span>
@@ -565,7 +566,7 @@
                 <h2 id="projectCtaTitle">Have a project <span>in mind?</span></h2>
                 <p>Book a personalized demo or discuss your software requirements with our team.</p>
                 <div class="hero-actions center">
-                    <a href="book-demo.html" class="btn-main btn-accent">Book a Demo
+                    <a href="book-demo.html" class="btn-main btn-accent">Book
                     </a>
                 </div>
             </section>
@@ -579,7 +580,7 @@
                         the right solution for your organization.
                     </p>
                     <a href="book-demo.html" class="btn-main btn-accent"
-                        >Book a personalized demo</a>
+                        >Book</a>
                 </div>
                 <div class="contact-methods">
                     <a href="tel:+917004848750"
@@ -621,8 +622,18 @@
         </main>
 
         <footer class="site-footer">
-            <p>&copy; 2025 Penport India</p>
-            <a class="footer-blog-link" href="blog/" aria-label="Blog" title="Blog"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h4"/></svg></a>
+            <div class="site-footer-inner">
+                <div class="site-footer-identity">
+                    <a href="index.html">Penport India</a>
+                    <p>&copy; 2025 Penport India</p>
+                </div>
+                <nav aria-label="Footer navigation">
+                    <a href="catalogue.html">Explore</a>
+                    <a href="school-management-software.html">School MS</a>
+                    <a href="blog/">Blog</a>
+                    <a href="book-demo.html">Book</a>
+                </nav>
+            </div>
         </footer>
 
         <div
@@ -643,7 +654,7 @@
                 <iframe id="vFrame" src="" allowfullscreen title="Project showcase video"></iframe>
                 <div class="modal-actions">
                     <a id="vBookDemo" class="btn-main btn-accent" href="book-demo.html"
-                        >Book Demo</a
+                        >Book</a
                     >
                 </div>
             </div>
@@ -658,9 +669,7 @@
             ></a>
         </div>
 
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-        <script src="assets/js/main.js"></script>
+        <script src="assets/js/main.js?v=20261120-role-font"></script>
         <script src="assets/js/accessibility.js"></script>
     </body>
 </html>
