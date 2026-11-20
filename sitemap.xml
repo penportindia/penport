@@ -1,13 +1,14 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://penportindia.github.io/penport/</loc><lastmod>2026-10-16</lastmod></url>
-  <url><loc>https://penportindia.github.io/penport/catalogue.html</loc><lastmod>2026-10-16</lastmod></url>
-  <url><loc>https://penportindia.github.io/penport/book-demo.html</loc><lastmod>2026-10-16</lastmod></url>
-  <url><loc>{{ '/blog/' | absolute_url }}</loc></url>
-  {% for post in site.posts %}
-  <url><loc>{{ post.url | absolute_url }}</loc><lastmod>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</lastmod></url>
-  {% endfor %}
+  <url><loc>https://penportindia.github.io/penport/</loc></url>
+  <url><loc>https://penportindia.github.io/penport/catalogue.html</loc></url>
+  <url><loc>https://penportindia.github.io/penport/book-demo.html</loc></url>
+  <url><loc>https://penportindia.github.io/penport/school-management-software.html</loc></url>
+  <url><loc>https://penportindia.github.io/penport/blog/</loc></url>
+  <url><loc>https://penportindia.github.io/penport/blog/digital-school-administration/</loc></url>
+  <url><loc>https://penportindia.github.io/penport/blog/school-id-card-solution/</loc></url>
+  <url><loc>https://penportindia.github.io/penport/blog/school-management-software/</loc></url>
+  <url><loc>https://penportindia.github.io/penport/blog/how-to-choose-school-management-software/</loc></url>
+  <url><loc>https://penportindia.github.io/penport/blog/school-administration-government-portals-bihar/</loc></url>
+  <url><loc>https://penportindia.github.io/penport/blog/school-fee-records-and-receipts/</loc></url>
 </urlset>

@@ -8,7 +8,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ["index.html", "catalogue.html", "book-demo.html", "thank-you.html"]
+PAGES = ["index.html", "catalogue.html", "book-demo.html", "school-management-software.html", "thank-you.html"]
 
 
 class Page(HTMLParser):
@@ -88,9 +88,10 @@ def validate_blog_build():
                     f"{path}: missing built link {link}")
     sitemap = ET.parse(output / "sitemap.xml")
     urls = {node.text for node in sitemap.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc")}
-    for path in articles:
-        url = "https://penportindia.github.io/penport/" + path.parent.relative_to(output).as_posix() + "/"
-        require(url in urls, f"Article missing from sitemap: {url}")
+    blog_url = "https://penportindia.github.io/penport/blog/"
+    article_urls = {blog_url + path.parent.name + "/" for path in articles}
+    require({url for url in urls if url.startswith(blog_url)} == article_urls | {blog_url},
+            "Sitemap blog URLs must match the generated listing and articles")
     ET.parse(output / "feed.xml")
     print(f"PASS built blog: {len(articles)} articles, SEO, schema, local links, sitemap and feed")
 
@@ -150,15 +151,14 @@ def main():
             "Company location differs from the confirmed profile")
     require(company.get("founder", {}).get("name") == "Raushan Singh",
             "Company founder differs from the confirmed profile")
-    sitemap_source = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
-    sitemap = ET.ElementTree(ET.fromstring(sitemap_source.split("---", 2)[-1].strip()))
+    sitemap = ET.parse(ROOT / "sitemap.xml")
     urls = [node.text for node in sitemap.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
     expected = {pages[p].canonicals[0] for p in PAGES if p != "thank-you.html"}
-    static_urls = [url for url in urls if "{{" not in url]
-    require(set(static_urls) == expected and len(static_urls) == len(expected),
+    blog_url = pages["index.html"].canonicals[0] + "blog/"
+    static_urls = {url for url in urls if not url.startswith(blog_url)}
+    require(static_urls == expected and len(urls) == len(set(urls)),
             "Sitemap must match indexable canonicals")
-    require("for post in site.posts" in sitemap_source and "'/blog/' | absolute_url" in sitemap_source,
-            "Sitemap must include the blog and automatically include posts")
+    require(blog_url in urls, "Sitemap must include the blog listing")
 
     source = (ROOT / "assets/js/catalogue.js").read_text(encoding="utf-8")
     source_names = re.findall(r'name: "([^"]+)"', source.split("const CATEGORIES")[0])

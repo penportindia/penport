@@ -10,8 +10,8 @@ and `_includes`. `_config.yml` configures the production base URL and product
 CTA destinations. Blog CSS is scoped to `body[data-page="blog"]`; existing page
 styles and scripts remain independent. Search, filtering and Load more enhance
 server-rendered article cards without making article content depend on JavaScript.
-The Jekyll sitemap template includes all published posts, and jekyll-feed generates
-the Atom feed. See README for publishing and local preview instructions.
+The static sitemap lists published post URLs, and jekyll-feed generates the Atom
+feed. See README for publishing and local preview instructions.
 
 | Page           | Behaviour                                                                      |
 | -------------- | ------------------------------------------------------------------------------ |

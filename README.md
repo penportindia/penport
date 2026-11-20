@@ -96,8 +96,9 @@ featured images fall back to the bundled illustration when JavaScript is enabled
 the default illustration needs no external request. Social previews use the
 existing company logo. Optional `last_modified_at` records a meaningful update.
 
-New posts automatically appear in listing, category filters, search, related
-articles, sitemap and the Atom feed at `/feed.xml`. Reading time uses 200 words
+Add each published post's canonical URL to `sitemap.xml`. New posts automatically
+appear in the listing, category filters, search, related articles and the Atom feed
+at `/feed.xml`. Reading time uses 200 words
 per minute. Search covers titles, descriptions and tags; category filters combine
 with search. Collections show six articles at a time with Load more. Without
 JavaScript all article links and content remain available.
