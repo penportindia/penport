@@ -11,7 +11,6 @@ layout: blog-base
     <form class="blog-controls" role="search" hidden>
         <div><label for="blogSearch">Search articles</label><input id="blogSearch" type="search" placeholder="Search topics, questions or ideas" autocomplete="off" /></div>
         <div><label for="blogCategory">Category</label><select class="select-control" id="blogCategory"><option value="">All topics</option>{% assign categories = site.posts | map: 'category' | uniq | sort %}{% for category in categories %}<option value="{{ category | escape }}">{{ category | escape }}</option>{% endfor %}</select></div>
-        <button class="btn-small btn-outline" type="reset">Reset</button>
     </form>
     <p class="blog-result-count" role="status" aria-live="polite"></p>
     <div class="blog-grid">{% for post in site.posts %}{% include blog-card.html post=post %}{% endfor %}</div>

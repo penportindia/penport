@@ -35,7 +35,6 @@
         form.hidden = false;
         form.addEventListener('submit', (event) => event.preventDefault());
         form.addEventListener('input', () => { limit = 6; render(); });
-        form.addEventListener('reset', () => { setTimeout(() => { limit = 6; render(); search.focus(); }, 0); });
         more.addEventListener('click', () => {
             const hidden = cards.filter((card) => card.hidden);
             limit += 6;
